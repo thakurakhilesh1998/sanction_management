@@ -16,7 +16,24 @@ class DistrictController extends Controller
 
     public function dashboard()
     {
-        return view('District.dashboard');
+        $district=Auth::user()->district;
+        $sanctionCount=Sanction::where('district', $district)->count();
+        $totalFundRecived=Sanction::where('district', $district)->sum('san_amount');
+        $totalNewGP=Sanction::where('district', $district)->where('newGP','yes')->count();
+
+        $progressRecord=Progress::where('isFreeze','yes');
+
+        $sanctionId=$progressRecord->pluck('sanction_id');
+
+        $sanctionData=Sanction::whereIn('id',$sanctionId)->where('district', $district)->get();
+        $freezedSanction=$sanctionData->count();
+        $totalUtilized=$sanctionData->sum('san_amount');
+        $notReported = Sanction::where('district', $district)
+        ->leftJoin('progress', 'sanction.id', '=', 'progress.sanction_id')
+        ->whereNull('progress.sanction_id')
+        ->count();
+
+        return view('District.dashboard',compact('sanctionCount','totalFundRecived','totalNewGP','freezedSanction','totalUtilized','notReported'));
     }
     public function index()
     {
