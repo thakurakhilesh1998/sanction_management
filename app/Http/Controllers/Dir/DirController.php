@@ -15,11 +15,12 @@ class DirController extends Controller
         $sanctionCount=Sanction::count();
         $completedSanction=Progress::where('p_isComplete','yes')->count();
         $totalFundReleased = Sanction::sum('san_amount');
+        $totalNewGPs=Sanction::where('newGP','yes')->count();
         $sumUtilized=Sanction::whereHas('progress',function($query)
         {
             $query->where('isFreeze','yes');
         })->sum('san_amount');
-        return view('Directorate/dashboard',compact('sanctionCount','completedSanction','totalFundReleased','sumUtilized'));
+        return view('Directorate/dashboard',compact('sanctionCount','completedSanction','totalFundReleased','sumUtilized','totalNewGPs'));
     }
 
     public function index()
