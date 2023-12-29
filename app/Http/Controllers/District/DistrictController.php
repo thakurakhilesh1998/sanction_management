@@ -181,4 +181,10 @@ class DistrictController extends Controller
         return redirect(url('district/update'))->with('message',"Progress Updated Successfully");
 
     }
+
+    public function view($id)
+    {
+        $data = Sanction::with('progress.image')->find($id);
+        return view('District.view',compact('data'));
+    }
 }

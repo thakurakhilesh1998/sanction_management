@@ -13,7 +13,7 @@
         <div class="alert alert-info">No Progress to show!</div>
         @else
         <div class="table table-responsive">
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered text-center" id="datatable">
                 <thead>
                     <th>Sr. No.</th>
                     <th>Block Name</th>
@@ -21,7 +21,7 @@
                     <th>Amount</th>
                     <th>Utilized Percentage</th>
                     <th>IsCompleted?</th>
-                    <th>Edit Progress</th>
+                    <th>Edit/View Progress</th>
                     <th>Freeze Progress</th>
                 </thead>
                 <tbody>
@@ -39,6 +39,8 @@
                         <td>
                             @if($san->progress[0]->isFreeze=='no')
                                 <a href="{{ url('district/update-progress/'.$san->id) }}" class="btn btn-primary notforzen" data-id="{{ $san->progress[0]->id }}">Edit</a>
+                            @elseif($san->progress[0]->isFreeze=='yes')
+                                <a href="{{ url('district/view-progress/'.$san->id) }}" class="btn btn-primary notforzen" data-id="{{ $san->progress[0]->id }}">View</a>
                             @endif
                         </td>
                         <td>

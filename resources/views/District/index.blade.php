@@ -13,7 +13,7 @@
         
         @else 
             <div class="table-responsive">
-                <table class="table table-bordered text-center">
+                <table class="table table-bordered text-center" id="datatable">
                     <thead>
                         <th>Sr. No.</th>
                         <th>Block Name</th>
