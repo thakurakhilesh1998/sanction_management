@@ -17,7 +17,6 @@
     {{-- DataTable links --}}
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.2/css/buttons.dataTables.min.css">
 
 </head>
 <body id="page-top">
@@ -68,26 +67,27 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-    <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/popper.min.js')}}"></script>
     <!-- Core plugin JavaScript-->
     <script src="{{asset('assets/js/jquery.easing.min.js')}}"></script>
 
+    <!-- JQuery CDN -->
+    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" integrity="sha256-meaR+uXojrNrr7JHWLNfD5kHCClfjyq+IiGJHjKPd2o=" crossorigin="anonymous" ></script>
     <!-- Custom scripts for all pages-->
     <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- JQuery CDN -->
-    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous" ></script>
+    
 
      {{-- Datatable Script --}}
      <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
      <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.2/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.2/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.2/js/buttons.print.min.js"></script>
+     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
      <script>
         $(document).ready( function () {
-            $('#datatable').DataTable();
+            $('#datatable').DataTable({
+                buttons:['excel', 'pdf']
+            });
             } );
     </script>
     @yield('scripts')
