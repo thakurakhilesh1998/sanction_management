@@ -204,4 +204,12 @@ class DistrictController extends Controller
         $data = Sanction::with('progress.image')->find($id);
         return view('District.view',compact('data'));
     }
+
+    public function allDetails()
+    {
+        $district=Auth::user()->district;
+        $totalSanction=Sanction::where('district',$district)->sum('san_amount');
+        $sanction=Sanction::where('district',$district)->with('progress')->orderBy('sanction_date')->get();
+        return view('District.allsanction',compact('sanction','totalSanction'));
+    }
 }

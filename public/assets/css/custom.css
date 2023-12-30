@@ -72,6 +72,11 @@
     width: 60px;
 }
 
+.dataTables_wrapper .dt-row
+{
+    padding:0.6rem;
+}
+
 .cardt {
     opacity: 0;
     transform: scale(0.9); /* Initial scale */
