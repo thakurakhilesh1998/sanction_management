@@ -24,6 +24,7 @@
                 <tbody>
                     @php
                      $i=1;   
+                     $totalUtilized=0;
                     @endphp
                     @foreach ($sanction as $san)
                     <tr>
@@ -36,12 +37,19 @@
                         <td>
                             @php
                                 $progressExists=optional($san->progress)->isNotEmpty();
-                               
+                                if($progressExists)
+                                {   
+                                    if($san->progress[0]->isFreeze=='yes')
+                                    {
+                                        $totalUtilized+=$san->san_amount;
+                                    }
+                                }
+    
                             @endphp
-                            {{ $progressExists?$san->progress[0]->p_isComplete:'';}}
+                            {{ $progressExists?$san->progress[0]->p_isComplete:'Not Reported';}}
                         </td>
                         <td>
-                            {{ $progressExists?$san->progress[0]->isFreeze:'';}}
+                            {{ $progressExists?$san->progress[0]->isFreeze:'Not Reported';}}
                         </td>
                         <td>{{$san->newGP}}</td>
                         @php
@@ -50,8 +58,10 @@
                     </tr>
                     @endforeach
                     <tfoot>
-                        <td colspan="5" class="text-center"><b>Total</b></td>
+                        <td colspan="5" class="text-center"><b>Total Sanctioned</b></td>
                         <td><b>Rs.{{$totalSanction}}</b></td>
+                        <td colspan="2" class="text-center"><b>Total Utilized</b></td>
+                        <td><b>{{$totalUtilized}}</b></td>
                     </tfoot>
                 </tbody>
             </table>
