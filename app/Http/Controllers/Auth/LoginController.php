@@ -33,11 +33,11 @@ class LoginController extends Controller
     {
         if(Auth::user()->role=="admin")
         {
-            return redirect("/admin");
+            return redirect("/admin/dashboard");
         }
         else if(Auth::user()->role=="dir")
         {
-            return redirect('/dir');
+            return redirect('/dir/dashboard');
         }
         else if(Auth::user()->role="district")
         {

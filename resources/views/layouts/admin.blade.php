@@ -9,9 +9,15 @@
     <title>Admin Dashboard</title>
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="{{asset('assets/css/sb-admin-2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+
+    {{-- DataTable links --}}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -61,16 +67,16 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-    <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/popper.min.js')}}"></script>
     <!-- Core plugin JavaScript-->
     <script src="{{asset('assets/js/jquery.easing.min.js')}}"></script>
 
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- JQuery CDN -->
-    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous" ></script>
 
     @yield('scripts')
 

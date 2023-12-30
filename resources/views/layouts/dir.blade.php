@@ -73,7 +73,10 @@
     <script src="{{asset('assets/js/jquery.easing.min.js')}}"></script>
 
     <!-- JQuery CDN -->
-    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" integrity="sha256-meaR+uXojrNrr7JHWLNfD5kHCClfjyq+IiGJHjKPd2o=" crossorigin="anonymous" ></script>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
 

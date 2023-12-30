@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth','web','adminCheck'])->group(function()
 {
+    Route::get('/dashboard',[AdminController::class,'dashboard']);
     Route::get('/',[AdminController::class,'index']);
     Route::get('/user',[UserController::class,'index']);
     Route::post('/add-user',[UserController::class,'create']);
