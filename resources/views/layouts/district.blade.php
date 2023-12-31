@@ -20,6 +20,7 @@
 
 </head>
 <body id="page-top">
+    @include('layouts/inc/frontend-navbar')
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->

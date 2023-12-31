@@ -20,8 +20,10 @@
 
 </head>
 <body id="page-top">
+    @include('layouts/inc/frontend-navbar')
     <!-- Page Wrapper -->
     <div id="wrapper">
+        
         <!-- Sidebar -->
         @include('layouts/inc/admin-sidebar')
         <!-- End of Sidebar -->
@@ -29,6 +31,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
+                
                 <!-- Topbar -->
                 @include('layouts/inc/admin-navbar')
                 <!-- End of Topbar -->
