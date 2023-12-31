@@ -43,10 +43,30 @@ class DirController extends Controller
         $sanction->save();
         return redirect(url('dir/view'))->with("message","Sanction added successfully!");
     }
-    public function view()
+    public function view($data=null)
     {
-        $sanction=Sanction::with('progress')->get();
-        return view('Directorate/view',compact('sanction'));
+        // dd($data);
+
+        if($data==null)
+        {
+            $sanction=Sanction::with('progress')->get();
+            return view('Directorate/view',compact('sanction'));
+        }
+        elseif($data=='freeze')
+        {
+            $sanction = Sanction::with(['progress' => function ($query) {
+                $query->where('isFreeze', 'yes');
+            }])->whereHas('progress', function ($query) {
+                $query->where('isFreeze', 'yes');
+            })->get();
+            return view('Directorate/view',compact('sanction'));
+        }
+        elseif($data='newgp')
+        {
+            $sanction=Sanction::where('newGP','yes')->with('progress')->get();
+            return view('Directorate/view',compact('sanction'));
+        }
+        
     }
     public function edit($id)
     {
@@ -71,7 +91,7 @@ class DirController extends Controller
         return redirect(url('dir/view'))->with("message","Sanction updated successfully!");
     }
 
-    public function viewProgress()
+    public function viewProgress($data=null)
     {
         $districts = Sanction::distinct()->pluck('district');
         $sanctions = Sanction::with('progress')->get();

@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button> --}}
       {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> --}}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <div class="d-flex align-items-center">
               <img src="{{asset('assets/img/hp_logo.png')}}" alt="image_logo" style="height: auto; width: 100px;" class="m-2">
@@ -29,5 +29,5 @@
       {{-- </div> --}}
     </div>
   </nav>
-
+  <hr style="height: 0.4px; color: white; background-color: white; border: none; margin: 0;">
 </div>
