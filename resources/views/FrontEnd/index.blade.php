@@ -1,6 +1,6 @@
 @extends('layouts/app')
 @section('content')
-<div class="container-fluid">
+<div class="container">
     {{-- Introduction Section --}}
     <div class="card" style="font-family: sans-serif;">
         <div class="card-header">
@@ -25,10 +25,81 @@
         </div>
     </div>
     {{-- Key Parameters Section --}}
-    <div>
-        
-    </div>
+    
+    {{-- KPI Card layout --}}
+    <div class="container my-2">
+        <h3 class="py-2"><b>Key Performance Indicators</b></h3>
+        <div class="card-body">
+            <div class="row">
+                {{-- Total Sanction Amount --}}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">
+                            Total Sanctions Amount
+                            <h3>Rs. </h3>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Total Utilized Amount --}}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-info text-white mb-4">
+                        <div class="card-body">
+                            Total Utilized Amount
+                            <h3>Rs. </h3>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{{url('dir/view-progress')}}">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
 
+                {{-- Total Number of Sanctions --}}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-warning  text-white mb-4">
+                        <div class="card-body">
+                            Total Sanctions Count
+                            <h3>10</h3>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{{url('dir/view')}}">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Total Number of Sanctions --}}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-info text-white mb-4">
+                        <div class="card-body">
+                            Total Utilized Sanctions
+                            <h3>12</h3>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{{url('dir/view/freeze')}}">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Fund Sanctions for New GP --}}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">
+                            Total Sanctions For New Gram Panchayat
+                            <h3>0</h3>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="{{url('dir/view/newgp')}}">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

@@ -18,6 +18,7 @@ use App\Http\Controllers\District\DistrictController;
 */
 
 Route::get('/',[Home::class,'index']);
+Route::get('/details/{data?}',[Home::class,'viewDetails']);
 Auth::routes();
 
 
