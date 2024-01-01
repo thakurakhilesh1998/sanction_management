@@ -14,7 +14,16 @@ class Home extends Controller
         {
             return redirect($user->role);
         }
-        return view('FrontEnd/index');
+        $totalSanction=Sanction::sum('san_amount');
+        $sanctionCount=Sanction::count();
+        $sanctionU=Sanction::whereHas('progress',function($query)
+        {
+            $query->where('isFreeze','yes');
+        })->get();
+        $utilizedSan=$sanctionU->count();
+        $sanUtilized=$sanctionU->sum('san_amount');
+        $newGP=Sanction::where('newGP','yes')->count();
+        return view('FrontEnd/index',compact('totalSanction','sanUtilized','sanctionCount','utilizedSan','newGP'));
     }
 
     public function viewDetails($data=null)
@@ -42,5 +51,11 @@ class Home extends Controller
             $sanction=Sanction::with('progress')->get();
             return view('FrontEnd.details',compact('sanction'));
         }
+    }
+
+    public function showGpDetails($gp)
+    {
+        $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
+        return view('FrontEnd.gpDetails',compact('gpDetails'));
     }
 }

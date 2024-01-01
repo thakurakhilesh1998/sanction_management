@@ -36,7 +36,7 @@
                     <div class="card bg-primary text-white mb-4">
                         <div class="card-body">
                             Total Sanctions Amount
-                            <h3>Rs. </h3>
+                            <h3>Rs.{{$totalSanction}} </h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{{url('/details/sanction')}}">View Details</a>
@@ -49,7 +49,7 @@
                     <div class="card bg-info text-white mb-4">
                         <div class="card-body">
                             Total Utilized Amount
-                            <h3>Rs. </h3>
+                            <h3>Rs. {{$sanUtilized}}</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
@@ -63,7 +63,7 @@
                     <div class="card bg-warning  text-white mb-4">
                         <div class="card-body">
                             Total Sanctions Count
-                            <h3>10</h3>
+                            <h3>{{$sanctionCount}}</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{{url('/details/')}}">View Details</a>
@@ -76,7 +76,7 @@
                     <div class="card bg-info text-white mb-4">
                         <div class="card-body">
                             Total Utilized Sanctions
-                            <h3>12</h3>
+                            <h3>{{$utilizedSan}}</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
@@ -89,7 +89,7 @@
                     <div class="card bg-primary text-white mb-4">
                         <div class="card-body">
                             Total Sanctions For New Gram Panchayat
-                            <h3>0</h3>
+                            <h3>{{$newGP}}</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-white stretched-link" href="{{url('/details/newGp')}}">View Details</a>

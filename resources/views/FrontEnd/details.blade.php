@@ -61,12 +61,12 @@
                                     @endif
 
                                 </td>
-                                <td><a href="">View</a></td>
+                                <td><a href="{{url('/showGpDetails'.'/'.$san->gp)}}">View</a></td>
                             </tr>    
                         @endforeach
                     </tbody>
                 </table>
-                <div>
+                <div class="mb-4">
                     <b><span>Total Sanctioned:{{$totalSanctioned}}</span>&nbsp&nbsp&nbsp&nbsp&nbsp
                     <span>Total Utilized:{{$totalUtilized}}</span></b>
                 </div>
