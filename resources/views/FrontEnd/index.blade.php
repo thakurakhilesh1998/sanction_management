@@ -39,7 +39,7 @@
                             <h3>Rs. </h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
+                            <a class="small text-white stretched-link" href="{{url('/details/sanction')}}">View Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <h3>Rs. </h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{{url('dir/view-progress')}}">View Details</a>
+                            <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             <h3>10</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{{url('dir/view')}}">View Details</a>
+                            <a class="small text-white stretched-link" href="{{url('/details/')}}">View Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                             <h3>12</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{{url('dir/view/freeze')}}">View Details</a>
+                            <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                             <h3>0</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="{{url('dir/view/newgp')}}">View Details</a>
+                            <a class="small text-white stretched-link" href="{{url('/details/newGp')}}">View Details</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>

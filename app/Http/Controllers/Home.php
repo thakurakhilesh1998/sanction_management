@@ -19,8 +19,28 @@ class Home extends Controller
 
     public function viewDetails($data=null)
     {
-        dd('Data is',$data  );
-        $sanction=Sanction::with('progress')->get();
-        return view('FrontEnd.details',compact('sanction'));
+        if($data=='sanction')
+        {
+            $sanction=Sanction::with('progress')->get();
+            return view('FrontEnd.details',compact('sanction'));
+        }
+        elseif($data=='utilized')
+        {
+            $sanction=Sanction::whereHas('progress',function($query)
+            {
+                $query->where('isFreeze','yes');
+            })->get();
+            return view('FrontEnd.details',compact('sanction'));
+        }
+        elseif($data=='newGp')
+        {
+            $sanction=Sanction::where('newGP','yes')->get();
+            return view('FrontEnd.details',compact('sanction'));
+        }
+        else
+        {
+            $sanction=Sanction::with('progress')->get();
+            return view('FrontEnd.details',compact('sanction'));
+        }
     }
 }
