@@ -33,7 +33,7 @@
             <div class="row">
                 {{-- Total Sanction Amount --}}
                 <div class="col-xl-4 col-md-6">
-                    <div class="card bg-primary text-white mb-4">
+                    <div class="card cardt hidden bg-primary text-white mb-4">
                         <div class="card-body">
                             Total Sanctions Amount
                             <h3>Rs.{{$totalSanction}} </h3>
@@ -46,7 +46,7 @@
                 </div>
                 {{-- Total Utilized Amount --}}
                 <div class="col-xl-4 col-md-6">
-                    <div class="card bg-info text-white mb-4">
+                    <div class="card cardt hidden bg-info text-white mb-4">
                         <div class="card-body">
                             Total Utilized Amount
                             <h3>Rs. {{$sanUtilized}}</h3>
@@ -60,7 +60,7 @@
 
                 {{-- Total Number of Sanctions --}}
                 <div class="col-xl-4 col-md-6">
-                    <div class="card bg-warning  text-white mb-4">
+                    <div class="card cardt hidden bg-warning  text-white mb-4">
                         <div class="card-body">
                             Total Sanctions Count
                             <h3>{{$sanctionCount}}</h3>
@@ -73,7 +73,7 @@
                 </div>
                 {{-- Total Number of Sanctions --}}
                 <div class="col-xl-4 col-md-6">
-                    <div class="card bg-info text-white mb-4">
+                    <div class="card cardt hidden bg-info text-white mb-4">
                         <div class="card-body">
                             Total Utilized Sanctions
                             <h3>{{$utilizedSan}}</h3>
@@ -86,7 +86,7 @@
                 </div>
                 {{-- Fund Sanctions for New GP --}}
                 <div class="col-xl-4 col-md-6">
-                    <div class="card bg-primary text-white mb-4">
+                    <div class="card cardt hidden bg-primary text-white mb-4">
                         <div class="card-body">
                             Total Sanctions For New Gram Panchayat
                             <h3>{{$newGP}}</h3>
@@ -101,5 +101,18 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+   $(document).ready(function () {
+            // Add a class to each card to hide them initially
+            $('.cardt').addClass('hidden');
 
+            // Use a setTimeout to delay the appearance of the cards
+            setTimeout(function () {
+                // Remove the 'hidden' class to show the cards with a fade-in effect
+                $('.cardt').removeClass('hidden');
+            }, 400); // You can adjust the delay time (in milliseconds) as needed
+        });
+</script>
 @endsection
