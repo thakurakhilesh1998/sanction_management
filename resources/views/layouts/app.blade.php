@@ -22,10 +22,10 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body class="frontend">
     <div id="app">
         @include('layouts/inc/frontend-navbar')
-        <main class="py-4">
+        <main class="py-4 main">
             @yield('content')
         </main>
         @include('layouts/inc/frontend-footer')
