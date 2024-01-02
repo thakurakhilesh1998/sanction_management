@@ -15,7 +15,7 @@
                 <thead>
                     <tr>
                         <th>Sr. No.</th>
-                        <th>District Name</th>
+                        <th>Gram Panchayat Name</th>
                         <th>Total Sanction Amounts(Rs.)</th>
                         <th>Total Utilized</th>
                     </tr>
@@ -26,7 +26,7 @@
                         $grandTotalSanction = 0;
                         $grandTotalUtilized = 0;
                     @endphp
-                    @foreach ($districts as $d)
+                    @foreach ($gps as $gp)
                         @php
                             $totalSanction=0;
                             $totalUtilized=0;    
@@ -34,8 +34,8 @@
                         <tr>
                             <td>{{$i}}</td>
                             <td>
-                                <a href="{{url('dir/blocks').'/'.$d}}" class="districtCell">
-                                    {{$d}}
+                                <a href="{{url('dir/gpDetails').'/'.$gp}}" class="districtCell">
+                                    {{$gp}}
                                 </a>
                             </td>
 
@@ -43,7 +43,7 @@
                                 $i++;
                             @endphp
                             @foreach($sanctions as $san)
-                                @if($san->district==$d)
+                                @if($san->gp==$gp)
                                     @php
                                         $totalSanction += floatval($san->san_amount);
                                         $progressExists = optional($san->progress)->isNotEmpty();

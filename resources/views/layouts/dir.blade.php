@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin Dashboard</title>
+    <title>Directorate Section</title>
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">

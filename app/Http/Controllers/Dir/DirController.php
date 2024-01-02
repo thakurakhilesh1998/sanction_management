@@ -101,13 +101,15 @@ class DirController extends Controller
     public function getBlocks($district)
     {
         $blocks=Sanction::where('district',$district)->distinct()->pluck('block');
-        return response()->json($blocks);
+        $sanctions=Sanction::where('district',$district)->with('progress')->get();
+        return view('Directorate.view-progress-block',compact('blocks','sanctions'));
     }      
     
     public function getGps($block)
     {
         $gps = Sanction::where('block', $block)->distinct()->pluck('gp');
-        return response()->json($gps);
+        $sanctions=Sanction::where('block',$block)->with('progress')->get();
+        return view('Directorate.view-progress-gp',compact('gps','sanctions'));
     }
 
     public function showGpDetails($gp)
