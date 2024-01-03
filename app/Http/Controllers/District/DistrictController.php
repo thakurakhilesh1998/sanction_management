@@ -205,11 +205,30 @@ class DistrictController extends Controller
         return view('District.view',compact('data'));
     }
 
-    public function allDetails()
+    public function allDetails($data=null)
     {
         $district=Auth::user()->district;
-        $totalSanction=Sanction::where('district',$district)->sum('san_amount');
-        $sanction=Sanction::where('district',$district)->with('progress')->orderBy('sanction_date')->get();
-        return view('District.allsanction',compact('sanction','totalSanction'));
+        if($data==null)
+        {
+            $totalSanction=Sanction::where('district',$district)->sum('san_amount');
+            $sanction=Sanction::where('district',$district)->with('progress')->orderBy('sanction_date')->get();
+            return view('District.allsanction',compact('sanction','totalSanction'));
+        }
+        if($data=='freeze')
+        {
+            $sanction = Sanction::where('district',$district)->with(['progress' => function ($query) {
+                $query->where('isFreeze', 'yes');
+            }])->whereHas('progress', function ($query) {
+                $query->where('isFreeze', 'yes');
+            })->get();
+            $totalSanction=$sanction->sum('san_amount');
+            return view('District.allsanction',compact('sanction','totalSanction'));
+        }
+        elseif($data=='newGP')
+        {
+            $sanction=Sanction::where('district',$district)->where('newGP','yes')->get();
+            $totalSanction=$sanction->sum('san_amount');
+            return view('District.allsanction',compact('sanction','totalSanction'));
+        }
     }
 }
