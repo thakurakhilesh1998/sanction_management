@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'adminCheck' => \App\Http\Middleware\RedirectBasedOnRole::class,
         'dirCheck'=>\App\Http\Middleware\DirCheck::class,
         'distCheck'=>\App\Http\Middleware\DistCheck::class,
+        'preventCache'=>\App\Http\Middleware\PreventCacheMiddleware::class,
     ];
 }

@@ -17,7 +17,9 @@ use App\Http\Controllers\District\DistrictController;
 |
 */
 
-Route::get('/',[Home::class,'index']);
+Route::middleware(['web','preventCache'])->group(function()
+{
+    Route::get('/',[Home::class,'index']);
 Route::get('/details/{data?}',[Home::class,'viewDetails']);
 Route::get('/showGpDetails/{gp}',[Home::class,'showGpDetails']);
 Auth::routes();
@@ -62,3 +64,5 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::get('view-progress/{id}',[DistrictController::class,'view']);
     Route::get('all-details',[DistrictController::class,'allDetails']);
 });
+});
+
