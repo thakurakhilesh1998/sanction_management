@@ -35,6 +35,7 @@ Route::prefix('admin')->middleware(['auth','web','adminCheck'])->group(function(
     Route::get('/user-edit/{id}',[UserController::class,'edit']);
     Route::put('/user-edit/{id}',[UserController::class,'update']);
     Route::get('/change-password',[UserController::class,'changePassword']);
+    Route::put('/change-password',[UserController::class,'updatePassword']);
 
 });
 Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()

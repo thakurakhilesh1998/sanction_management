@@ -60,4 +60,15 @@ class UserController extends Controller
     {
         return view('Admin.Users.changepassword');
     }
+
+    public function updatePassword(Request $req)
+    {
+        $req->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+        $user = auth()->user();
+        dd($user);
+    }
 }

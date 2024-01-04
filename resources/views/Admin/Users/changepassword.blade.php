@@ -11,20 +11,20 @@
             @endforeach
         </div>
         @endif
-        <form method="POST" action="">
+        <form method="POST" action="{{url('admin/change-password')}}">
             @csrf
             @method('PUT')
             <div class="mb-3">
               <label for="email" class="form-label">Enter Current Password</label>
-              <input type="password" class="form-control" id="crntpass" name="crntpass">
+              <input type="password" class="form-control" id="current_password" name="crntpass">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="password" name="password">
+                <input type="password" class="form-control" id="password" name="new_password">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="password" name="password_confirmation">
+                <input type="password" class="form-control" id="password" name="new_password_confirmation">
             </div>
             <button type="submit" class="btn btn-primary">Change Password</button>
           </form>
