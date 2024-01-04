@@ -55,4 +55,9 @@ class UserController extends Controller
             return redirect(url('admin/user/view'))->with('message',"User Data Updated Successfully");
         }
     }
+    
+    public function changePassword()
+    {
+        return view('Admin.Users.changepassword');
+    }
 }

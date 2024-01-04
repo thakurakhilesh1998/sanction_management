@@ -39,14 +39,6 @@
     <hr class="sidebar-divider">
     <!-- Heading -->
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-        <form action="{{route('logout')}}" method="POST" id="logout-form" class="d-none">
-            @csrf
-        </form>
-    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
