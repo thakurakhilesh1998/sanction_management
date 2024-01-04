@@ -17,7 +17,9 @@ use App\Http\Controllers\District\DistrictController;
 |
 */
 
-Route::get('/',[Home::class,'index']);
+Route::middleware(['web','preventCache'])->group(function()
+{
+    Route::get('/',[Home::class,'index']);
 Route::get('/details/{data?}',[Home::class,'viewDetails']);
 Route::get('/showGpDetails/{gp}',[Home::class,'showGpDetails']);
 Auth::routes();
@@ -60,5 +62,7 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::post('update-freeze',[DistrictController::class,'Freeze']);
     Route::put('update-progress/{id}',[DistrictController::class,'change']);
     Route::get('view-progress/{id}',[DistrictController::class,'view']);
-    Route::get('all-details',[DistrictController::class,'allDetails']);
+    Route::get('all-details/{data?}',[DistrictController::class,'allDetails']);
 });
+});
+
