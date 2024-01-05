@@ -23,6 +23,8 @@
             aria-expanded="true" aria-controls="collapseTwo">
             <span>Add Sacntion</span>
         </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link collapsed" href="{{url('/dir/view')}}" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <span>View Sanction</span>
