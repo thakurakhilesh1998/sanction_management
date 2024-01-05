@@ -69,14 +69,12 @@ class UserController extends Controller
             'new_password_confirmation' => 'required|same:new_password',
         ]);
         $user = auth()->user();
-        dd($user);
-
-        if (Hash::check($request->current_password, $user->password)) {
+        if (Hash::check($req->current_password, $user->password)) {
             $user->update([
-                'password' => bcrypt($request->new_password),
+                'password' => bcrypt($req->new_password),
             ]);
 
-            return redirect()->route('home')->with('success', 'Password changed successfully.');
+            return redirect(url('admin/user/view'))->with('message', 'Password changed successfully.');
         }
 
         return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
