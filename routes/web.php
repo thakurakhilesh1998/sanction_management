@@ -50,6 +50,8 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::get('/blocks/{district}',[DirController::class,'getBlocks']);
     Route::get('/gps/{block}',[DirController::class,'getGps']);
     Route::get('/gpDetails/{gp}',[DirController::class,'showGpDetails']);
+    Route::get('/change-password',[DirController::class,'changePassword']);
+    Route::put('/change-password',[DirController::class,'updatePassword']);
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()

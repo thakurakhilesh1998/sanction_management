@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Sanction\sanRequest;
 use App\Models\Sanction;
 use App\Models\Progress;
+use Illuminate\Support\Facades\Hash;
 class DirController extends Controller
 {
 
@@ -116,5 +117,29 @@ class DirController extends Controller
     {
         $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
         return view('Directorate.gpdetails',compact('gpDetails'));
+    }
+
+    public function changePassword()
+    {
+        return view('Directorate.changepassword');
+    }
+
+    public function updatePassword(Request $req)
+    {
+        $req->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+        $user = auth()->user();
+        if (Hash::check($req->current_password, $user->password)) {
+            $user->update([
+                'password' => bcrypt($req->new_password),
+            ]);
+
+            return redirect(url('dir/change-password'))->with('message', 'Password changed successfully.');
+        }
+
+        return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
     }
 }

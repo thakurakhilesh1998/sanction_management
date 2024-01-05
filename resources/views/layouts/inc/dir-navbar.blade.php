@@ -12,7 +12,10 @@
               Directorate <img class="img-profile rounded-circle"
               src="{{url(asset('assets/img/undraw_profile.svg'))}}">
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="{{url('dir/change-password')}}" style="color: black">Change Password</a>
+              </li>
               <li>
                 <a class="dropdown-item" style="color:black" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form action="{{route('logout')}}" method="POST" id="logout-form" class="d-none">
