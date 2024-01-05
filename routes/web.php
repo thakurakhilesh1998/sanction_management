@@ -66,6 +66,8 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::put('update-progress/{id}',[DistrictController::class,'change']);
     Route::get('view-progress/{id}',[DistrictController::class,'view']);
     Route::get('all-details/{data?}',[DistrictController::class,'allDetails']);
+    Route::get('/change-password',[DistrictController::class,'changePassword']);
+    Route::put('/change-password',[DistrictController::class,'updatePassword']);
 });
 });
 

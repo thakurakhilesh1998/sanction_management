@@ -11,6 +11,7 @@ use App\Http\Requests\Progress\ProgressData;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Models\Image;
+use Illuminate\Support\Facades\Hash;
 class DistrictController extends Controller
 {
 
@@ -231,4 +232,28 @@ class DistrictController extends Controller
             return view('District.allsanction',compact('sanction','totalSanction'));
         }
     }
+    public function changePassword()
+    {
+        return view('District.changepassword');
+    }
+
+    public function updatePassword(Request $req)
+    {
+        $req->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+        $user = auth()->user();
+        if (Hash::check($req->current_password, $user->password)) {
+            $user->update([
+                'password' => bcrypt($req->new_password),
+            ]);
+
+            return redirect(url('district/change-password'))->with('message', 'Password changed successfully.');
+        }
+
+        return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
+    }
+
 }
