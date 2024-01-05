@@ -70,5 +70,15 @@ class UserController extends Controller
         ]);
         $user = auth()->user();
         dd($user);
+
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->update([
+                'password' => bcrypt($request->new_password),
+            ]);
+
+            return redirect()->route('home')->with('success', 'Password changed successfully.');
+        }
+
+        return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
     }
 }
