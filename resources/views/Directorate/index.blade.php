@@ -38,6 +38,10 @@
              <div class="mb-3" id="gp-block">
                 
             </div>
+            <div class="mb-3" id="constituency-block">
+                <label for="Constituency" class="form-label">Constituency Name:</label>
+                <input type="text" id="selected-constituency" disabled class="form-control" name="ac" placeholder="Gram Panchayat Constituency will appear here.">
+            </div>
             {{-- New Gram Panchayat Check --}}
            <div class="mb-3 form-control" >
                 <label for="New GP" class="form-label">Whether this Gram Panchayat is newly created?</label>
@@ -84,6 +88,7 @@
                
                 displayDistricts(data.districts);
 
+
                 // Handle district selection
                 $("#district-block").on("change", "#district-list", function() {
                     var selectedDistrict = $(this).val();
@@ -95,6 +100,16 @@
                     var selectedDistrict = $("#district-list").val();
                     var selectedBlock = $(this).val();
                     displayPanchayats(data.data[selectedDistrict][selectedBlock]);
+                });
+
+                // Handle Gram Panchayat Selection
+                $('#gp-block').on("change","#panchayat-list",function()
+                {
+                    let selectedDistrict = $("#district-list").val();
+                    let selectedBlock = $("#block-list").val();
+                    let selectedGramPanchayat=$(this).val();
+                    let selectedConstituency=data.gp_to_constituency_mapping[selectedGramPanchayat];
+                    $("#selected-constituency").val(selectedConstituency);
                 });
             });
         });

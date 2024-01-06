@@ -41,6 +41,7 @@ class DirController extends Controller
         $sanction->sanction_date=$data['sanction_date'];
         $sanction->sanction_head=$data['sanction_head'];
         $sanction->sanction_purpose=$data['sanction_purpose'];
+        $sanction->ac=$data['ac'];
         $sanction->save();
         return redirect(url('dir/view'))->with("message","Sanction added successfully!");
     }

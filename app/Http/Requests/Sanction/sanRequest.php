@@ -30,7 +30,8 @@ class sanRequest extends FormRequest
             'san_amount'=>['required'],
             'sanction_date'=>['required','date'],
             'sanction_head'=>['required','string'],
-            'sanction_purpose'=>['required','string']
+            'sanction_purpose'=>['required','string'],
+            'ac'=>['required','string']
            ];
            return $rules;
     }
