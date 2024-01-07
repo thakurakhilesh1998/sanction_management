@@ -17,6 +17,7 @@
                     <th>District Name</th>
                     <th>Block Name</th>
                     <th>Gram Panchayat Name</th>
+                    <th>Assembly Constituency</th>
                     <th>Is New Gram Panchayat?</th>
                     <th>Financial Year</th>
                     <th>Sanction Amount</th>
@@ -31,6 +32,7 @@
                     <td>{{$s->district}}</td>
                     <td>{{$s->block}}</td>
                     <td>{{$s->gp}}</td>
+                    <td>{{$s->ac}}</td>
                     <td>{{$s->newGP}}</td>
                     <td>{{$s->financial_year}}</td>
                     <td>{{$s->san_amount}}</td>

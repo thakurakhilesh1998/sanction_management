@@ -47,11 +47,9 @@ class DirController extends Controller
     }
     public function view($data=null)
     {
-        // dd($data);
-
         if($data==null)
         {
-            $sanction=Sanction::with('progress')->get();
+            $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->get();
             return view('Directorate/view',compact('sanction'));
         }
         elseif($data=='freeze')
@@ -89,6 +87,7 @@ class DirController extends Controller
         $sanction->sanction_date=$data['sanction_date'];
         $sanction->sanction_head=$data['sanction_head'];
         $sanction->sanction_purpose=$data['sanction_purpose'];
+        $sanction->ac=$data['ac'];
         $sanction->update();
         return redirect(url('dir/view'))->with("message","Sanction updated successfully!");
     }

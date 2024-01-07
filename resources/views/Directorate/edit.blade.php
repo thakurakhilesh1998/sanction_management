@@ -52,6 +52,14 @@
                     <option value="{{$sanction->gp}}">{{$sanction->gp}}</option>
                 </select>
             </div>
+            
+            {{-- Assembly Constituency Name --}}
+            <div class="mb-3" id="constituency-block">
+                <label for='Constituency' class='form-label'>Constituency Name:</label>
+                <input type='text' id='selected-constituency' value="{{$sanction->ac}}" class='form-control' name='ac' readonly>
+            </div>
+
+            {{-- Amount --}}
             {{-- New Gram Panchayat Check --}}
            <div class="mb-3 form-control" >
                 <label for="New GP" class="form-label">Whether this Gram Panchayat is newly created?</label>
@@ -60,7 +68,6 @@
                 <input type="radio" name="newGP" value="No" {{$sanction->newGP=='no'?'checked':''}} class="">
                 <label for="No" class="form-label">No</label>
            </div>
-            {{-- Amount --}}
             <div class="mb-3">
                 <label for="Block Name" class="form-label">Enter Sanction Amount(in Rs.)</label>
                 <input type="number" name="san_amount" id="sanction_amt" class="form-control" value="{{$sanction->san_amount}}">
@@ -109,6 +116,16 @@
                     var selectedDistrict = $("#district-list").val();
                     var selectedBlock = $(this).val();
                     displayPanchayats(data.data[selectedDistrict][selectedBlock]);
+                });
+                $('#gp-block').on("change","#panchayat-list",function()
+                {
+                    let selectedDistrict = $("#district-list").val();
+                    let selectedBlock = $("#block-list").val();
+                    let selectedGramPanchayat=$(this).val();
+                    let selectedConstituency=data.gp_to_constituency_mapping[selectedGramPanchayat];
+                    let constituencyList="<label for='Constituency' class='form-label'>Constituency Name:</label>";
+                    constituencyList+="<input type='text' id='selected-constituency' value='"+ selectedConstituency + "' class='form-control' name='ac' readonly>";
+                    $("#constituency-block").html(constituencyList);
                 });
             });
         });
