@@ -39,8 +39,6 @@
                 
             </div>
             <div class="mb-3" id="constituency-block">
-                <label for="Constituency" class="form-label">Constituency Name:</label>
-                <input type="text" id="selected-constituency" disabled class="form-control" name="ac" placeholder="Gram Panchayat Constituency will appear here.">
             </div>
             {{-- New Gram Panchayat Check --}}
            <div class="mb-3 form-control" >
@@ -109,7 +107,9 @@
                     let selectedBlock = $("#block-list").val();
                     let selectedGramPanchayat=$(this).val();
                     let selectedConstituency=data.gp_to_constituency_mapping[selectedGramPanchayat];
-                    $("#selected-constituency").val(selectedConstituency);
+                    let constituencyList="<label for='Constituency' class='form-label'>Constituency Name:</label>";
+                    constituencyList+="<input type='text' id='selected-constituency' value='"+ selectedConstituency + "' class='form-control' name='ac' readonly>";
+                    $("#constituency-block").html(constituencyList);
                 });
             });
         });
