@@ -3,6 +3,13 @@
 <div class="card m-4">
     <div class="card-header">
         <h3>Directorate Home Page</h3>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <div>{{$error}}</div>
+                @endforeach
+            </div>
+        @endif
     </div>
     <div class="card-body">
         <form action="{{url('dir/sanction-update/'.$sanction->id)}}"  id="sanction" method="POST">
