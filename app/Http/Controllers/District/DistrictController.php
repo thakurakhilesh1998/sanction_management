@@ -40,7 +40,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return view('District.details')->with('error',$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
   
     }
@@ -54,7 +54,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return view('District.details')->with('error',$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -76,7 +76,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return view('District.details')->with('error',$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -104,7 +104,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -146,7 +146,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);;
         }
     }
 
@@ -162,7 +162,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -185,12 +185,12 @@ class DistrictController extends Controller
             }
             else
             {
-                return back()->withErrors(['error' =>'ID not be null']);
+                return redirect()->back()->withErrors(['error' => 'ID not be null']);
             }
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     
@@ -220,7 +220,7 @@ class DistrictController extends Controller
         {
             if($id==null)
             {
-                return back()->withErrors(['error' =>'ID not be null']);
+                return redirect()->back()->withErrors(['error' =>'ID not be null']);
             }
             $currentDate=now();
             $formatDate=$currentDate->format('Y-m-d H:i:s');
@@ -283,7 +283,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
 
     }
@@ -294,14 +294,14 @@ class DistrictController extends Controller
         {
             if($id==null)
             {
-                return back()->withErrors(['error' =>'ID not be null']);
+                return redirect()->back()->withErrors(['error' =>'ID not be null']);
             }
             $data = Sanction::with('progress.image')->find($id);
             return view('District.view',compact('data'));
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -336,7 +336,7 @@ class DistrictController extends Controller
         }
         catch (\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
        
     }
@@ -363,11 +363,11 @@ class DistrictController extends Controller
                 return redirect(url('district/change-password'))->with('message', 'Password changed successfully.');
             }
 
-            return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
+            return redirect()->back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
         }
         catch(\Exception $e)
         {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
 }
 

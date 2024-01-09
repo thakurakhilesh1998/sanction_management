@@ -27,7 +27,7 @@ class DirController extends Controller
         }
         catch(\Exception $e)
         {
-            return view('Directorate/dashboard')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -56,7 +56,7 @@ class DirController extends Controller
         }
         catch(\Exception $e)
         {
-            return view('Directorate/index')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     public function view($data=null)
@@ -84,19 +84,27 @@ class DirController extends Controller
         }
         catch (\Exception $e)
         {
-            return view('Directorate/dashboard')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     public function edit($id)
     {
         try
         {
+            if($id===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Id can not be null']);
+            }
             $sanction=Sanction::find($id);
+            if($sanction->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No sanction find with this ID']);
+            }
             return view('Directorate/edit',compact('sanction'));
         }
         catch (\Exception $e)
         {
-            return view('Directorate/edit')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -105,8 +113,16 @@ class DirController extends Controller
     {
         try
         {
+            if($sanction_id===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Sanction Id can not be null']);
+            }
             $data=$req->validated();
             $sanction=Sanction::find($sanction_id);
+            if($sanction->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No data found with this sanction']);
+            }
             $sanction->financial_year=$data['financial_year'];
             $sanction->district=$data['district'];
             $sanction->block=$data['block'];
@@ -122,7 +138,7 @@ class DirController extends Controller
         }
         catch (\Exception $e)
         {
-            return view('Directorate/edit')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -137,16 +153,41 @@ class DirController extends Controller
         }
         catch (\Exception $e)
         {
-            return view('Directorate/dashboard')->with("error",$e->getMessage());
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
 
     public function getBlocks($district)
     {
-        $blocks=Sanction::where('district',$district)->distinct()->pluck('block');
-        $sanctions=Sanction::where('district',$district)->with('progress')->get();
-        return view('Directorate.view-progress-block',compact('blocks','sanctions'));
+        try
+        {
+
+            if($district===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'District can not be null']);
+            }
+            else
+            {
+                $blocks=Sanction::where('district',$district)->distinct()->pluck('block');
+                if($block->count()===0)
+                {
+                    return redirect()->back()->withErrors(['error' => 'Block Data not found']);
+                }
+                $sanctions=Sanction::where('district',$district)->with('progress')->get();
+                if($sanction->count()===0)
+                {
+                    return redirect()->back()->withErrors(['error' => 'District Data not found']);
+                }
+                return view('Directorate.view-progress-block',compact('blocks','sanctions'));
+            }
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
+        
     }      
     
     public function getGps($block)
