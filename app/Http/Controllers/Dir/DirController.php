@@ -170,12 +170,12 @@ class DirController extends Controller
             else
             {
                 $blocks=Sanction::where('district',$district)->distinct()->pluck('block');
-                if($block->count()===0)
+                if($blocks->count()===0)
                 {
                     return redirect()->back()->withErrors(['error' => 'Block Data not found']);
                 }
                 $sanctions=Sanction::where('district',$district)->with('progress')->get();
-                if($sanction->count()===0)
+                if($sanctions->count()===0)
                 {
                     return redirect()->back()->withErrors(['error' => 'District Data not found']);
                 }
@@ -192,24 +192,58 @@ class DirController extends Controller
     
     public function getGps($block)
     {
-        $gps = Sanction::where('block', $block)->distinct()->pluck('gp');
-        $sanctions=Sanction::where('block',$block)->with('progress')->get();
-        return view('Directorate.view-progress-gp',compact('gps','sanctions'));
+        try
+        {
+            if($block===null)
+            {
+                return redirect()->back()->withErrors(['error' =>'Block can not be null']);
+            }
+            $gps = Sanction::where('block', $block)->distinct()->pluck('gp');
+            if($gps->count()==0)
+            {
+                return redirect()->back()->withErrors(['error' =>'Sanctions Not found']);
+            }
+            $sanctions=Sanction::where('block',$block)->with('progress')->get();
+            if($sanctions->count()==0)
+            {
+                return redirect()->back()->withErrors(['error' =>'Sa Not found']);
+            }
+            return view('Directorate.view-progress-gp',compact('gps','sanctions'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+        
     }
 
     public function showGpDetails($gp)
     {
-        $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
-        return view('Directorate.gpdetails',compact('gpDetails'));
+        try
+        {
+          if($gp===null)
+          {
+            return redirect()->back()->withErrors(['error' =>'Gram Panchayat Can not be null']);
+          }
+            $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
+            if($gpDetails->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' =>'Details Not found']);
+            }
+            return view('Directorate.gpdetails',compact('gpDetails'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
-
     public function changePassword()
     {
         return view('Directorate.changepassword');
     }
-
     public function updatePassword(Request $req)
     {
+       try{
         $req->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:8',
@@ -223,7 +257,11 @@ class DirController extends Controller
 
             return redirect(url('dir/change-password'))->with('message', 'Password changed successfully.');
         }
-
-        return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
+        return redirect()->back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
+    }
+    catch (\Exception $e)
+    {
+        return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+    }
     }
 }
