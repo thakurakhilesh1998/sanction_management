@@ -40,9 +40,9 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return view('District.details')->with('error',$e->getMessage());
         }
-     
+  
     }
     public function index()
     {
@@ -54,7 +54,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return view('District.details')->with('error',$e->getMessage());
         }
         
     }
@@ -69,7 +69,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return view('District.details')->with('error',$e->getMessage());
         }
         
     }
@@ -84,7 +84,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -126,7 +126,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -142,7 +142,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -158,7 +158,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     
@@ -247,7 +247,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
 
     }
@@ -261,7 +261,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
         
     }
@@ -296,7 +296,7 @@ class DistrictController extends Controller
         }
         catch (\Exception $e)
         {
-
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
        
     }
@@ -327,7 +327,7 @@ class DistrictController extends Controller
         }
         catch(\Exception $e)
         {
-            
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
 }
 

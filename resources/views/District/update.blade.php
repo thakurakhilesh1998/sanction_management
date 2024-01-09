@@ -3,6 +3,12 @@
 <div class="card m-4">
     <div class="card-header">
         <h3>District Home Page</h3>
+        @if($errors->has('error'))
+            <div class="alert alert-danger">
+                {{ $errors->first('error') }}
+             </div>
+        @endif
+
         <div>Manage the progress you have reported.</div>
         @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
