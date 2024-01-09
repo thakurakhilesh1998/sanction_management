@@ -13,15 +13,22 @@ class DirController extends Controller
 
     public function dashboard()
     {
-        $sanctionCount=Sanction::count();
-        $completedSanction=Progress::where('p_isComplete','yes')->count();
-        $totalFundReleased = Sanction::sum('san_amount');
-        $totalNewGPs=Sanction::where('newGP','yes')->count();
-        $sumUtilized=Sanction::whereHas('progress',function($query)
+        try
         {
-            $query->where('isFreeze','yes');
-        })->sum('san_amount');
-        return view('Directorate/dashboard',compact('sanctionCount','completedSanction','totalFundReleased','sumUtilized','totalNewGPs'));
+            $sanctionCount=Sanction::count();
+            $completedSanction=Progress::where('p_isComplete','yes')->count();
+            $totalFundReleased = Sanction::sum('san_amount');
+            $totalNewGPs=Sanction::where('newGP','yes')->count();
+            $sumUtilized=Sanction::whereHas('progress',function($query)
+            {
+                $query->where('isFreeze','yes');
+            })->sum('san_amount');
+            return view('Directorate/dashboard',compact('sanctionCount','completedSanction','totalFundReleased','sumUtilized','totalNewGPs'));
+        }
+        catch(\Exception $e)
+        {
+            return view('Directorate/dashboard')->with("error",$e->getMessage());
+        }
     }
 
     public function index()
@@ -30,73 +37,109 @@ class DirController extends Controller
     }
     public function store(sanRequest $req)
     {
-        $data=$req->validated();
-        $sanction=new Sanction;
-        $sanction->financial_year=$data['financial_year'];
-        $sanction->district=$data['district'];
-        $sanction->block=$data['block'];
-        $sanction->gp=$data['gp'];
-        $sanction->newGP=$req['newGP'];
-        $sanction->san_amount=$data['san_amount'];
-        $sanction->sanction_date=$data['sanction_date'];
-        $sanction->sanction_head=$data['sanction_head'];
-        $sanction->sanction_purpose=$data['sanction_purpose'];
-        $sanction->ac=$data['ac'];
-        $sanction->save();
-        return redirect(url('dir/view'))->with("message","Sanction added successfully!");
+        try
+        {   
+            $data=$req->validated();
+            $sanction=new Sanction;
+            $sanction->financial_year=$data['financial_year'];
+            $sanction->district=$data['district'];
+            $sanction->block=$data['block'];
+            $sanction->gp=$data['gp'];
+            $sanction->newGP=$req['newGP'];
+            $sanction->san_amount=$data['san_amount'];
+            $sanction->sanction_date=$data['sanction_date'];
+            $sanction->sanction_head=$data['sanction_head'];
+            $sanction->sanction_purpose=$data['sanction_purpose'];
+            $sanction->ac=$data['ac'];
+            $sanction->save();
+            return redirect(url('dir/view'))->with("message","Sanction added successfully!");
+        }
+        catch(\Exception $e)
+        {
+            return view('Directorate/index')->with("error",$e->getMessage());
+        }
     }
     public function view($data=null)
     {
-        if($data==null)
-        {
-            $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->get();
-            return view('Directorate/view',compact('sanction'));
+        try{    
+            if($data==null)
+            {
+                $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->get();
+                return view('Directorate/view',compact('sanction'));
+            }
+            elseif($data=='freeze')
+            {
+                $sanction = Sanction::with(['progress' => function ($query) {
+                    $query->where('isFreeze', 'yes');
+                }])->whereHas('progress', function ($query) {
+                    $query->where('isFreeze', 'yes');
+                })->get();
+                return view('Directorate/view',compact('sanction'));
+            }
+            elseif($data='newgp')
+            {
+                $sanction=Sanction::where('newGP','yes')->with('progress')->get();
+                return view('Directorate/view',compact('sanction'));
+            }
         }
-        elseif($data=='freeze')
+        catch (\Exception $e)
         {
-            $sanction = Sanction::with(['progress' => function ($query) {
-                $query->where('isFreeze', 'yes');
-            }])->whereHas('progress', function ($query) {
-                $query->where('isFreeze', 'yes');
-            })->get();
-            return view('Directorate/view',compact('sanction'));
+            return view('Directorate/dashboard')->with("error",$e->getMessage());
         }
-        elseif($data='newgp')
-        {
-            $sanction=Sanction::where('newGP','yes')->with('progress')->get();
-            return view('Directorate/view',compact('sanction'));
-        }
-        
     }
     public function edit($id)
     {
-        $sanction=Sanction::find($id);
-        return view('Directorate/edit',compact('sanction'));
+        try
+        {
+            $sanction=Sanction::find($id);
+            return view('Directorate/edit',compact('sanction'));
+        }
+        catch (\Exception $e)
+        {
+            return view('Directorate/edit')->with("error",$e->getMessage());
+        }
+        
     }
 
     public function update(sanRequest $req,$sanction_id)
     {
-        $data=$req->validated();
-        $sanction=Sanction::find($sanction_id);
-        $sanction->financial_year=$data['financial_year'];
-        $sanction->district=$data['district'];
-        $sanction->block=$data['block'];
-        $sanction->gp=$data['gp'];
-        $sanction->newGP=$req['newGP'];
-        $sanction->san_amount=$data['san_amount'];
-        $sanction->sanction_date=$data['sanction_date'];
-        $sanction->sanction_head=$data['sanction_head'];
-        $sanction->sanction_purpose=$data['sanction_purpose'];
-        $sanction->ac=$data['ac'];
-        $sanction->update();
-        return redirect(url('dir/view'))->with("message","Sanction updated successfully!");
+        try
+        {
+            $data=$req->validated();
+            $sanction=Sanction::find($sanction_id);
+            $sanction->financial_year=$data['financial_year'];
+            $sanction->district=$data['district'];
+            $sanction->block=$data['block'];
+            $sanction->gp=$data['gp'];
+            $sanction->newGP=$req['newGP'];
+            $sanction->san_amount=$data['san_amount'];
+            $sanction->sanction_date=$data['sanction_date'];
+            $sanction->sanction_head=$data['sanction_head'];
+            $sanction->sanction_purpose=$data['sanction_purpose'];
+            $sanction->ac=$data['ac'];
+            $sanction->update();
+            return redirect(url('dir/view'))->with("message","Sanction updated successfully!");
+        }
+        catch (\Exception $e)
+        {
+            return view('Directorate/edit')->with("error",$e->getMessage());
+        }
+        
     }
 
     public function viewProgress($data=null)
     {
-        $districts = Sanction::distinct()->pluck('district');
-        $sanctions = Sanction::with('progress')->get();
-        return view('Directorate.view-progress', compact('districts', 'sanctions'));
+        try
+        {
+            $districts = Sanction::distinct()->pluck('district');
+            $sanctions = Sanction::with('progress')->get();
+            return view('Directorate.view-progress', compact('districts', 'sanctions'));
+        }
+        catch (\Exception $e)
+        {
+            return view('Directorate/dashboard')->with("error",$e->getMessage());
+        }
+        
     }
 
     public function getBlocks($district)
