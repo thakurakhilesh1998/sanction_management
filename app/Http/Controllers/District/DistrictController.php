@@ -63,9 +63,16 @@ class DistrictController extends Controller
     {   
         try
         {
-            $district=Auth::user()->district;
-            $sanction=Sanction::where('gp',$gp)->where('district', $district)->get();
-            return view('District.details',compact('sanction'));
+            if($gp!=null)
+            {   
+                $district=Auth::user()->district;
+                $sanction=Sanction::where('gp',$gp)->where('district', $district)->get();
+                if($sanction->count===0)
+                {
+                    return redirect()->back()->withErrors(['error' => 'No data found for the given GP']);
+                }
+                return view('District.details',compact('sanction'));
+            }   
         }
         catch(\Exception $e)
         {
@@ -78,9 +85,22 @@ class DistrictController extends Controller
     {
         try
         {
-            $district=Auth::user()->district;
-            $sanction=Sanction::where('id',$id)->first();
-            return view('District.progress',compact('sanction'));    
+            if($id!=null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Id not be null']);
+            }
+            else
+            {
+                $district=Auth::user()->district;
+                $sanction=Sanction::where('id',$id)->where('district',$district)->first();
+                if($sanction->count()===0)
+                {
+                    return redirect()->back()->withErrors(['error' => 'No data found for the given ID']);
+                }
+    
+                return view('District.progress',compact('sanction'));    
+            }
+          
         }
         catch(\Exception $e)
         {
@@ -151,10 +171,22 @@ class DistrictController extends Controller
     {
         try
         {
-            $sanction=Sanction::find($id);
-            $progress=$sanction->progress;
-            $images=$progress[0]->image;
-            return view('district.update-form',compact('sanction','progress','images'));
+            if($id!=null)
+            {
+                $district=Auth::user()->district;
+                $sanction=Sanction::where('district',$district)->find($id);
+            if($sanction->count()===0)
+            {
+                return back()->withErrors(['error' =>'No sanction found with this id']);
+            }
+                $progress=$sanction->progress;
+                $images=$progress[0]->image;
+                return view('district.update-form',compact('sanction','progress','images'));
+            }
+            else
+            {
+                return back()->withErrors(['error' =>'ID not be null']);
+            }
         }
         catch(\Exception $e)
         {
@@ -186,6 +218,10 @@ class DistrictController extends Controller
     {
         try
         {
+            if($id==null)
+            {
+                return back()->withErrors(['error' =>'ID not be null']);
+            }
             $currentDate=now();
             $formatDate=$currentDate->format('Y-m-d H:i:s');
             $progressValidated=$data->validated();
@@ -256,6 +292,10 @@ class DistrictController extends Controller
     {
         try
         {
+            if($id==null)
+            {
+                return back()->withErrors(['error' =>'ID not be null']);
+            }
             $data = Sanction::with('progress.image')->find($id);
             return view('District.view',compact('data'));
         }
