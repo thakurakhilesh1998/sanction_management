@@ -211,7 +211,6 @@ class DistrictController extends Controller
         {
             return response()->json(['success' => false, 'error' => 'Error freezing progress', 'message' => $e->getMessage()], 500);
         } 
-        
     }
    
     public function change(ProgressData $data,$id)

@@ -6,6 +6,13 @@
         @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
         @endif
+        @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <div>{{$error}}</div>
+            @endforeach
+        </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <h3 class="h3 mb-3 text-gray-800">View User

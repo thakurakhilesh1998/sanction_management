@@ -11,13 +11,6 @@
     </div>
     <div class="card-body">
         <h4>Add Sanction</h3>
-            @if($errors->any())
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    <div>{{$error}}</div>
-                @endforeach
-            </div>
-            @endif
         <form action="{{url('dir/sanction-add')}}"  id="sanction" method="POST">
             @csrf
             {{-- Financial Year --}}

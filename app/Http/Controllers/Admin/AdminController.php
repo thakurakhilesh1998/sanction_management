@@ -16,8 +16,15 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        
-        $user=Auth::user()->count();
-        return view('Admin.Users.dashboard',compact('user'));
+        try
+        {      
+            $user=Auth::user()->count();
+            return view('Admin.Users.dashboard',compact('user'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' =>$e->getMessage()]);
+        }
+       
     }
 }

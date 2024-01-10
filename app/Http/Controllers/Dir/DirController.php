@@ -8,6 +8,7 @@ use App\Http\Requests\Sanction\sanRequest;
 use App\Models\Sanction;
 use App\Models\Progress;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 class DirController extends Controller
 {
 
