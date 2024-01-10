@@ -7,6 +7,11 @@
         Nothing found!
     </div>
     @else 
+    @if($errors->has('error'))
+        <div class="alert alert-danger">
+            {{ $errors->first('error') }}
+        </div>
+    @endif
     <div class="card" style="font-family: sans-serif; font-size:1rem">
         <div class="card-header">
             View Details

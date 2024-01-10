@@ -5,6 +5,11 @@
     @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
     @endif
+    @if($errors->has('error'))
+        <div class="alert alert-danger">
+            {{ $errors->first('error') }}
+        </div>
+    @endif
     <div class="card-header">
         <h3 class="h3 mb-3 text-gray-800">View GP Details
         </h3>

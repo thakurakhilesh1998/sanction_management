@@ -1,6 +1,11 @@
 @extends('layouts/app')
 @section('content')
 <div class="container">
+    @if($errors->has('error'))
+        <div class="alert alert-danger">
+            {{ $errors->first('error') }}
+        </div>
+    @endif
     {{-- Introduction Section --}}
     <div class="card" style="font-family: sans-serif;">
         <div class="card-header">

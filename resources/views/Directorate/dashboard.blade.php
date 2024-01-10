@@ -7,7 +7,7 @@
             <div class="alert alert-danger">
                 {{ $errors->first('error') }}
             </div>
-    @endif
+        @endif
     </div>
     <div class="card-body">
         <div class="row">
