@@ -3,6 +3,12 @@
 <div class="card mx-2">
     <div class="card-header">
         <h3>Dashboard</h3>
+        @if($errors->has('error'))
+            <div class="alert alert-danger">
+            {{ $errors->first('error') }}
+            </div>
+        @endif
+
     </div>
     <div class="card-body">
         <div class="row">

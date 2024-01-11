@@ -5,6 +5,11 @@
     @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
     @endif
+    @if($errors->has('error'))
+            <div class="alert alert-danger">
+                {{ $errors->first('error') }}
+            </div>
+    @endif
     <div class="card-header">
         <h3 class="h3 mb-3 text-gray-800">View Sanction
             <a href="{{url('dir/')}}" class="btn btn-primary btn-sm float-right">Add Sanction</a>

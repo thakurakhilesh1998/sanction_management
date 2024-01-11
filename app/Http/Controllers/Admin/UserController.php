@@ -18,7 +18,8 @@ class UserController extends Controller
 
     public function create(UserDataRequest $req)
     {
-       
+       try
+       {
         $data=$req->validated();
         $user=new User;
         $user->username=$req['username'];
@@ -28,31 +29,78 @@ class UserController extends Controller
         $user->district=$req['district'];
         $user->save();
         return redirect(url('admin/user/view'))->with("message","User Created Successfully");
+       }
+       catch(\Exception $e)
+       {
+            return redirect()->back()->withErrors(['error' =>$e->getMessage()]);
+       }
+       
     }
 
     public function view()
     {
-        $user=User::all();
-        return view('Admin/Users/View',compact('user'));
+        try
+        {
+            $user=User::all();
+            return view('Admin/Users/View',compact('user'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' =>$e->getMessage()]);
+        }
+        
     }
 
     public function edit($id)
     {
-        $user=User::find($id);
-        return view('Admin/Users/edit',compact('user'));
+        try
+        {
+            if($id!=null)
+            {
+                $user=User::find($id);
+                if($user->count()===0)
+                {
+                    return redirect()->back()->withErrors(['error' =>'No user find']);
+                }
+                return view('Admin/Users/edit',compact('user'));
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' =>'ID can not be null']);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+      
     }
 
     public function update(UserUpdateRequest $req,$id)
     {
-        $data=$req->validated();
-        $user=User::find($id);
-        $user->username=$data['username'];
-        $user->email=$data['email'];
-        $user->password=$data['password'];
-        $update=$user->update();
-        if($update)
+        try
         {
-            return redirect(url('admin/user/view'))->with('message',"User Data Updated Successfully");
+            if($id!=null)
+            {
+                $data=$req->validated();
+                $user=User::find($id);
+                $user->username=$data['username'];
+                $user->email=$data['email'];
+                $user->password=$data['password'];
+                $update=$user->update();
+                if($update)
+                {
+                    return redirect(url('admin/user/view'))->with('message',"User Data Updated Successfully");
+                }
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'ID can not be null']);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     
@@ -63,20 +111,27 @@ class UserController extends Controller
 
     public function updatePassword(Request $req)
     {
-        $req->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|min:8',
-            'new_password_confirmation' => 'required|same:new_password',
-        ]);
-        $user = auth()->user();
-        if (Hash::check($req->current_password, $user->password)) {
-            $user->update([
-                'password' => bcrypt($req->new_password),
+        try
+        {
+            $req->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|min:8',
+                'new_password_confirmation' => 'required|same:new_password',
             ]);
+            $user = auth()->user();
+            if (Hash::check($req->current_password, $user->password)) {
+                $user->update([
+                    'password' => bcrypt($req->new_password),
+                ]);
 
-            return redirect(url('admin/user/view'))->with('message', 'Password changed successfully.');
+                return redirect(url('admin/user/view'))->with('message', 'Password changed successfully.');
+            }
+
+            return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);  
         }
-
-        return back()->withErrors(['current_password' => 'The provided current password is incorrect.']);
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

@@ -3,6 +3,13 @@
 <div class="card m-4">
     <div class="card-body">
     <h3>Dashboard</h3>
+    @if($errors->any())
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <div>{{$error}}</div>
+        @endforeach
+    </div>
+    @endif
     <div class="row">
         {{-- Total Sanction Amount --}}
         <div class="col-xl-4 col-md-6">

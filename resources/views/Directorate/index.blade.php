@@ -3,16 +3,14 @@
 <div class="card m-4">
     <div class="card-header">
         <h3>Directorate Home Page</h3>
+        @if($errors->has('error'))
+            <div class="alert alert-danger">
+                {{ $errors->first('error') }}
+            </div>
+    @endif
     </div>
     <div class="card-body">
         <h4>Add Sanction</h3>
-            @if($errors->any())
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    <div>{{$error}}</div>
-                @endforeach
-            </div>
-            @endif
         <form action="{{url('dir/sanction-add')}}"  id="sanction" method="POST">
             @csrf
             {{-- Financial Year --}}

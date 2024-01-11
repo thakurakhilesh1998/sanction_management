@@ -9,53 +9,81 @@ class Home extends Controller
 {
     public function index()
     {
-        $user=Auth::user();
-        if($user)
+        try
         {
-            return redirect($user->role);
+            $user=Auth::user();
+            if($user)
+            {
+                return redirect($user->role);
+            }
+            $totalSanction=Sanction::sum('san_amount');
+            $sanctionCount=Sanction::count();
+            $sanctionU=Sanction::whereHas('progress',function($query)
+            {
+                $query->where('isFreeze','yes');
+            })->get();
+            $utilizedSan=$sanctionU->count();
+            $sanUtilized=$sanctionU->sum('san_amount');
+            $newGP=Sanction::where('newGP','yes')->count();
+            return view('FrontEnd/index',compact('totalSanction','sanUtilized','sanctionCount','utilizedSan','newGP'));
         }
-        $totalSanction=Sanction::sum('san_amount');
-        $sanctionCount=Sanction::count();
-        $sanctionU=Sanction::whereHas('progress',function($query)
+        catch(\Exception $e)   
         {
-            $query->where('isFreeze','yes');
-        })->get();
-        $utilizedSan=$sanctionU->count();
-        $sanUtilized=$sanctionU->sum('san_amount');
-        $newGP=Sanction::where('newGP','yes')->count();
-        return view('FrontEnd/index',compact('totalSanction','sanUtilized','sanctionCount','utilizedSan','newGP'));
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     public function viewDetails($data=null)
     {
-        if($data=='sanction')
+        try
         {
-            $sanction=Sanction::with('progress')->get();
-            return view('FrontEnd.details',compact('sanction'));
-        }
-        elseif($data=='utilized')
-        {
-            $sanction=Sanction::whereHas('progress',function($query)
+            if($data=='sanction')
             {
-                $query->where('isFreeze','yes');
-            })->get();
-            return view('FrontEnd.details',compact('sanction'));
+                $sanction=Sanction::with('progress')->get();
+                return view('FrontEnd.details',compact('sanction'));
+            }
+            elseif($data=='utilized')
+            {
+                $sanction=Sanction::whereHas('progress',function($query)
+                {
+                    $query->where('isFreeze','yes');
+                })->get();
+                return view('FrontEnd.details',compact('sanction'));
+            }
+            elseif($data=='newGp')
+            {
+                $sanction=Sanction::where('newGP','yes')->get();
+                return view('FrontEnd.details',compact('sanction'));
+            }
+            else
+            {
+                $sanction=Sanction::with('progress')->get();
+                return view('FrontEnd.details',compact('sanction'));
+            }
         }
-        elseif($data=='newGp')
+        catch(\Exception $e)
         {
-            $sanction=Sanction::where('newGP','yes')->get();
-            return view('FrontEnd.details',compact('sanction'));
-        }
-        else
-        {
-            $sanction=Sanction::with('progress')->get();
-            return view('FrontEnd.details',compact('sanction'));
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
     public function showGpDetails($gp)
     {
-        $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
-        return view('FrontEnd.gpDetails',compact('gpDetails'));
+        try
+        {
+            if($gp!=null)
+            {
+                $gpDetails=Sanction::where('gp',$gp)->with('progress')->get();
+                return view('FrontEnd.gpDetails',compact('gpDetails'));
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Gram Panchayat Not found']);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
