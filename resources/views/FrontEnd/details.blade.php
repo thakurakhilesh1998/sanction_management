@@ -23,6 +23,7 @@
                         <th>Sr. No.</th>
                         <th>District Name</th>
                         <th>Block Name</th>
+                        <th>Assembly Constituency</th>
                         <th>Gram Panchayat Name</th>
                         <th>Is New Gram Panchayat?</th>
                         <th>Financial Year</th>
@@ -42,6 +43,7 @@
                                 <td>{{$i}}</td>
                                 <td>{{$san->district}}</td>
                                 <td>{{$san->block}}</td>
+                                <td>{{$san->ac}}</td>
                                 <td>{{$san->gp}}</td>
                                 <td>{{$san->newGP}}</td>
                                 <td>{{$san->financial_year}}</td>

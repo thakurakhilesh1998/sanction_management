@@ -39,7 +39,7 @@ class Home extends Controller
         {
             if($data=='sanction')
             {
-                $sanction=Sanction::with('progress')->get();
+                $sanction=Sanction::with('progress')->orderBy('sanction_date','desc')->get();
                 return view('FrontEnd.details',compact('sanction'));
             }
             elseif($data=='utilized')
@@ -47,17 +47,17 @@ class Home extends Controller
                 $sanction=Sanction::whereHas('progress',function($query)
                 {
                     $query->where('isFreeze','yes');
-                })->get();
+                })->orderBy('sanction_date','asc')->get();
                 return view('FrontEnd.details',compact('sanction'));
             }
             elseif($data=='newGp')
             {
-                $sanction=Sanction::where('newGP','yes')->get();
+                $sanction=Sanction::where('newGP','yes')->orderBy('sanction_date','desc')->get();
                 return view('FrontEnd.details',compact('sanction'));
             }
             else
             {
-                $sanction=Sanction::with('progress')->get();
+                $sanction=Sanction::with('progress')->orderBy('sanction_date','desc')->get();
                 return view('FrontEnd.details',compact('sanction'));
             }
         }
