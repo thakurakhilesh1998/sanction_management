@@ -85,7 +85,7 @@ class DistrictController extends Controller
     {
         try
         {
-            if($id!=null)
+            if($id==null)
             {
                 return redirect()->back()->withErrors(['error' => 'Id not be null']);
             }
