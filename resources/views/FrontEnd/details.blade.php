@@ -14,7 +14,9 @@
     @endif
     <div class="card" style="font-family: sans-serif; font-size:1rem">
         <div class="card-header">
-            View Details
+            <h3>View Details
+                <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">Back</a>
+            </h3>
         </div>
         <div class="card-body">
             <div class="table-responsive">
