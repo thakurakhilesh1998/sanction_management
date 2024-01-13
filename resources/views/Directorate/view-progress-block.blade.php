@@ -82,5 +82,8 @@
         </div>
       
     </div>
+    <div class="m-3">
+        <a href="{{url()->previous()}}" class="ml-3 btn btn-primary btn-sm float-right">Back</a>
+    </div>
 </div>
 @endsection
