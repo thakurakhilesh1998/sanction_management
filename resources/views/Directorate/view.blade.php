@@ -1,7 +1,6 @@
 @extends('layouts/dir')
 @section('main')
 <div class="card m-4">
-
     @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
     @endif
@@ -16,7 +15,7 @@
         </h3>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive" style="font-size: 0.9rem">
             <table class="table table-bordered text-center" id="datatable">
             <thead>
                     <th>District Name</th>
@@ -83,6 +82,7 @@
         </table>
         </div>
     </div>
+    <a href="{{url('dir/')}}" class="btn btn-primary btn-sm float-right">Back</a>
 </div>
 @endsection
 
