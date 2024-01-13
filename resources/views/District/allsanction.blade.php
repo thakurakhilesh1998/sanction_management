@@ -2,7 +2,9 @@
 @section('main')
 <div class="card m-4">
     <div class="card-header">
-        <h3>All Sanctions For District Till Now</h3>
+        <h3>All Sanctions For District Till Now
+            <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">Back</a>
+        </h3>
         @if($errors->has('error'))
             <div class="alert alert-danger">
                 {{ $errors->first('error') }}
