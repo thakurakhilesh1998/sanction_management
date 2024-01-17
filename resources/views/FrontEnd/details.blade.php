@@ -14,8 +14,9 @@
     @endif
     <div class="card" style="font-family: sans-serif; font-size:1rem">
         <div class="card-header">
-            <h3>View Details
-                <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">Back</a>
+            <h3 class="d-flex justify-content-between align-items-center">
+                View Details
+                <a href="{{url()->previous()}}" class="btn btn-primary btn-sm">Back</a>
             </h3>
         </div>
         <div class="card-body">

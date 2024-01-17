@@ -47,7 +47,7 @@ class Home extends Controller
                 $sanction=Sanction::whereHas('progress',function($query)
                 {
                     $query->where('isFreeze','yes');
-                })->orderBy('sanction_date','asc')->get();
+                })->orderBy('sanction_date','desc')->get();
                 return view('FrontEnd.details',compact('sanction'));
             }
             elseif($data=='newGp')
