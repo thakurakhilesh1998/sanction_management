@@ -77,67 +77,66 @@
 
 @section('scripts')
 <script>
-   $(document).ready(function() {
-            // Load the JSON data
-            $.getJSON("{{asset('assets/json/gpname.json')}}", function(data) {
-                // Display the list of districts
-               
-                displayDistricts(data.districts);
+    $(document).ready(function() {
+        // Load the JSON data
+        $.getJSON("{{ asset('assets/json/output.json') }}", function(data) {
+            // Display the list of districts
+            displayDistricts(Object.keys(data.data));
 
+            // Handle district selection
+            $("#district-block").on("change", "#district-list", function() {
+                var selectedDistrict = $(this).val();
+                displayBlocks(Object.keys(data.data[selectedDistrict]));
+            });
 
-                // Handle district selection
-                $("#district-block").on("change", "#district-list", function() {
-                    var selectedDistrict = $(this).val();
-                    displayBlocks(data.data[selectedDistrict]);
-                });
+            // Handle block selection
+            $("#blocks-block").on("change", "#block-list", function() {
+                var selectedDistrict = $("#district-list").val();
+                var selectedBlock = $(this).val();
+                displayPanchayats(data.data[selectedDistrict][selectedBlock]);
+            });
 
-                // Handle block selection
-                $("#blocks-block").on("change", "#block-list", function() {
-                    var selectedDistrict = $("#district-list").val();
-                    var selectedBlock = $(this).val();
-                    displayPanchayats(data.data[selectedDistrict][selectedBlock]);
-                });
-
-                // Handle Gram Panchayat Selection
-                $('#gp-block').on("change","#panchayat-list",function()
-                {
-                    let selectedDistrict = $("#district-list").val();
-                    let selectedBlock = $("#block-list").val();
-                    let selectedGramPanchayat=$(this).val();
-                    let selectedConstituency=data.gp_to_constituency_mapping[selectedGramPanchayat];
-                    let constituencyList="<label for='Constituency' class='form-label'>Constituency Name:</label>";
-                    constituencyList+="<input type='text' id='selected-constituency' value='"+ selectedConstituency + "' class='form-control' name='ac' readonly>";
-                    $("#constituency-block").html(constituencyList);
-                });
+            // Handle Gram Panchayat Selection
+            $('#gp-block').on("change", "#panchayat-list", function() {
+                let selectedDistrict = $("#district-list").val();
+                let selectedBlock = $("#block-list").val();
+                let selectedGramPanchayat = $(this).val();
+                let selectedConstituency = data.data[selectedDistrict][selectedBlock][selectedGramPanchayat][0];
+                let constituencyList = "<label for='Constituency' class='form-label'>Constituency Name:</label>";
+                constituencyList += "<input type='text' id='selected-constituency' value='" + selectedConstituency + "' class='form-control' name='ac' readonly>";
+                $("#constituency-block").html(constituencyList);
             });
         });
+    });
+
     function displayDistricts(districts) {
-            var districtList = '<label for="District name" class="form-label">Select District Name</label><select id="district-list" class="form-control" name="district"><option value="-1">--Select District--</option>';
-            $.each(districts, function(index, district) {
-                districtList += '<option value="' + district + '">' + district + '</option>';
-            });
-            districtList += '</select>';
-            $("#district-block").html(districtList);
-        }
-        function displayBlocks(blocks) {
-            var blockList = '<label for="Block name" class="form-label">Select Block Name</label><select id="block-list" class="form-control" name="block"><option value="-1">--Select Block--</option>';
-            $.each(blocks, function(block, panchayats) {
-                blockList += '<option value="' + block + '">' + block + '</option>';
-            });
-            blockList += '</select>';
-            $("#blocks-block").html(blockList);
-        }
+        var districtList = '<label for="District name" class="form-label">Select District Name</label><select id="district-list" class="form-control" name="district"><option value="-1">--Select District--</option>';
+        $.each(districts, function(index, district) {
+            districtList += '<option value="' + district + '">' + district + '</option>';
+        });
+        districtList += '</select>';
+        $("#district-block").html(districtList);
+    }
 
-        function displayPanchayats(panchayats) {
-            var panchayatList = '<label for="Gram Panchayat name" class="form-label">Select Gram Panchayat Name</label><select id="panchayat-list" class="form-control" name="gp"><option value="-1">--Select Gram Panchayat--</option>';
-            $.each(panchayats, function(index, panchayat) {
-                panchayatList += '<option value="' + panchayat + '">' + panchayat + '</option>';
-            });
-            panchayatList += '</select>';
-            $("#gp-block").html(panchayatList);
-        }
+    function displayBlocks(blocks) {
+        var blockList = '<label for="Block name" class="form-label">Select Block Name</label><select id="block-list" class="form-control" name="block"><option value="-1">--Select Block--</option>';
+        $.each(blocks, function(index, block) {
+            blockList += '<option value="' + block + '">' + block + '</option>';
+        });
+        blockList += '</select>';
+        $("#blocks-block").html(blockList);
+    }
 
-   
+    function displayPanchayats(panchayats) {
+        console.log(panchayats);
+        var panchayatList = '<label for="Gram Panchayat name" class="form-label">Select Gram Panchayat Name</label><select id="panchayat-list" class="form-control" name="gp"><option value="-1">--Select Gram Panchayat--</option>';
+        $.each(panchayats, function(panchayat, constituencies) {
+            panchayatList += '<option value="' + panchayat + '">' + panchayat + '</option>';
+        });
+        panchayatList += '</select>';
+        $("#gp-block").html(panchayatList);
+    }
 </script>
+
 <script src="{{asset('assets/js/validation.js')}}"></script>
 @endsection
