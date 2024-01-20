@@ -39,13 +39,17 @@
             <div class="mb-3" id="constituency-block">
             </div>
             {{-- New Gram Panchayat Check --}}
-           <div class="mb-3 form-control" >
-                <label for="New GP" class="form-label">Whether this Gram Panchayat is newly created?</label>
-                <input type="radio" name="newGP" value="Yes" class="ml-5">
-                <label for="yes" class="form-label">Yes</label>
-                <input type="radio" name="newGP" value="No" class="">
-                <label for="No" class="form-label">No</label>
-           </div>
+            <div class="mb-3 row">
+                <label for="newGP" class="form-label col-md-5">Whether this Gram Panchayat is newly created?</label>
+                <div class="col-md-1 d-flex align-items-center ml-2">
+                    <input type="radio" id="yes" name="newGP" value="Yes" class="form-check-input">
+                    <label for="yes" class="form-check-label ml-2">Yes</label>
+                </div>
+                <div class="col-md-1 d-flex align-items-center ml-2">
+                    <input type="radio" id="no" name="newGP" value="No" class="form-check-input">
+                    <label for="no" class="form-check-label ml-2">No</label>
+                </div>
+            </div>
             {{-- Amount --}}
             <div class="mb-3">
                 <label for="Block Name" class="form-label">Enter Sanction Amount(in Rs.)</label>

@@ -68,7 +68,7 @@
             <div class="col-xl-4 col-md-6">
                 <div class="card cardt hidden bg-primary text-white mb-4">
                     <div class="card-body">
-                        Total Sanctions For New Gram Panchayat
+                        Sanctions For New Gram Panchayat
                         <h3>{{$totalNewGPs}}</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
