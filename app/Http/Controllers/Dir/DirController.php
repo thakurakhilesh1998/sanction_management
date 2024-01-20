@@ -8,6 +8,7 @@ use App\Http\Requests\Sanction\sanRequest;
 use App\Models\Sanction;
 use App\Models\Progress;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 class DirController extends Controller
 {
@@ -41,6 +42,26 @@ class DirController extends Controller
         try
         {   
             $data=$req->validated();
+            $jsonFilePath=public_path('assets/json/output.json');
+            if(File::exists($jsonFilePath))
+            {
+                // Read the contents of the JSON file
+                $jsonContents = File::get($jsonFilePath);
+                 // Parse the JSON contents
+                $jsonData = json_decode($jsonContents, true);
+                if(isset($jsonData['data'][$data['district']]))
+                {
+                    
+                    dd($jsonData['data'][$data['district']][$data['block']][$data['gp']]);
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['error' => 'District does not exists']);
+                }
+                // Now $jsonData contains the data from the JSON file
+                 // You can use it as needed in your controller logic
+                 
+            }
             $sanction=new Sanction;
             $sanction->financial_year=$data['financial_year'];
             $sanction->district=$data['district'];
