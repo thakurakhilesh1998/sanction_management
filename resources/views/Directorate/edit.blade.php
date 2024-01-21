@@ -72,13 +72,18 @@
             <div class="mb-3 row">
                 <label for="newGP" class="form-label col-md-5">Whether this Gram Panchayat is newly created?</label>
                 <div class="col-md-1 d-flex align-items-center ml-2">
-                    <input type="radio" id="yes" name="newGP" value="Yes" class="form-check-input">
+                    <input type="radio" id="yes" name="newGP" value="Yes" class="form-check-input" {{$sanction->newGP=='yes'?"checked":''}}>
                     <label for="yes" class="form-check-label ml-2">Yes</label>
                 </div>
                 <div class="col-md-1 d-flex align-items-center ml-2">
-                    <input type="radio" id="no" name="newGP" value="No" class="form-check-input">
+                    <input type="radio" id="no" name="newGP" value="No" class="form-check-input" {{$sanction->newGP=='no'?"checked":''}}>
                     <label for="no" class="form-check-label ml-2">No</label>
                 </div>
+            </div>
+            {{-- Amount --}}
+            <div class="mb-3">
+                <label for="Block Name" class="form-label">Enter Sanction Amount(in Rs.)</label>
+                <input type="number" name="san_amount" id="sanction_amt" class="form-control" value="{{$sanction->san_amount}}">
             </div>
             {{-- Sanction Date --}}
            <div class="mb-3">

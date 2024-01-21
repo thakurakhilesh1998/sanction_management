@@ -42,17 +42,23 @@ class DirController extends Controller
         try
         {   
             $data=$req->validated();
-            $jsonFilePath=public_path('assets/json/output.json');
-            if(File::exists($jsonFilePath))
+            // $jsonFilePath=public_path('assets/json/output.json');
+            $privatePath = storage_path('app/private');
+            $jsonFilePath = $privatePath . '/output.json';
+            if(file_exists($jsonFilePath))
             {
                 // Read the contents of the JSON file
-                $jsonContents = File::get($jsonFilePath);
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                // dd($jsonData);
                  // Parse the JSON contents
-                $jsonData = json_decode($jsonContents, true);
+                // $jsonData = json_decode($jsonContents, true);
                 if(isset($jsonData['data'][$data['district']]))
                 {
-                    
-                    dd($jsonData['data'][$data['district']][$data['block']][$data['gp']]);
+                    $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
+                   if($ac[0]!=$data['ac'])
+                   {
+                        return redirect()->back()->withErrors(['error' => 'Assembly Constituency does not match with the Gram Panchayat']);
+                   } 
                 }
                 else
                 {
@@ -144,6 +150,31 @@ class DirController extends Controller
             if($sanction->count()===0)
             {
                 return redirect()->back()->withErrors(['error' => 'No data found with this sanction']);
+            }
+            $privatePath = storage_path('app/private');
+            $jsonFilePath = $privatePath . '/output.json';
+            if(file_exists($jsonFilePath))
+            {
+                // Read the contents of the JSON file
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                // dd($jsonData);
+                 // Parse the JSON contents
+                // $jsonData = json_decode($jsonContents, true);
+                if(isset($jsonData['data'][$data['district']]))
+                {
+                    $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
+                   if($ac[0]!=$data['ac'])
+                   {
+                        return redirect()->back()->withErrors(['error' => 'Assembly Constituency does not match with the Gram Panchayat']);
+                   } 
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['error' => 'District does not exists']);
+                }
+                // Now $jsonData contains the data from the JSON file
+                 // You can use it as needed in your controller logic
+                 
             }
             $sanction->financial_year=$data['financial_year'];
             $sanction->district=$data['district'];
