@@ -54,6 +54,10 @@ class DirController extends Controller
                 // $jsonData = json_decode($jsonContents, true);
                 if(isset($jsonData['data'][$data['district']]))
                 {
+                    if(!isset($jsonData['data'][$data['district']][$data['block']]))
+                    {
+                        return redirect()->back()->withErrors(['error' => 'Please Select appropriate Gram Panchayat']);    
+                    }
                     $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
                    if($ac[0]!=$data['ac'])
                    {
@@ -162,6 +166,10 @@ class DirController extends Controller
                 // $jsonData = json_decode($jsonContents, true);
                 if(isset($jsonData['data'][$data['district']]))
                 {
+                    if(!isset($jsonData['data'][$data['district']][$data['block']]))
+                    {
+                        return redirect()->back()->withErrors(['error' => 'Please Select appropriate Gram Panchayat']);    
+                    }
                     $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
                    if($ac[0]!=$data['ac'])
                    {

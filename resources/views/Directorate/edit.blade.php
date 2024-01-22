@@ -124,8 +124,21 @@
                 displayBlocks(Object.keys(data.data[selectedDistrict]));
             });
 
+               // Handle district selection
+               $("#district-block").on("click", "#district-list", function() {
+                var selectedDistrict = $(this).val();
+                displayBlocks(Object.keys(data.data[selectedDistrict]));
+            });
+
             // Handle block selection
             $("#blocks-block").on("change", "#block-list", function() {
+                var selectedDistrict = $("#district-list").val();
+                var selectedBlock = $(this).val();
+                displayPanchayats(data.data[selectedDistrict][selectedBlock]);
+            });
+
+            // Handle block selection
+            $("#blocks-block").on("click", "#block-list", function() {
                 var selectedDistrict = $("#district-list").val();
                 var selectedBlock = $(this).val();
                 displayPanchayats(data.data[selectedDistrict][selectedBlock]);
