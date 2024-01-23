@@ -22,8 +22,9 @@ class sanRequest extends FormRequest
      */
     public function rules(): array
     {
+        $validFY=['2020-21','2021-22','2022-23','2023-24'];
         $rules=[
-            'financial_year'=>['required','string'],
+            'financial_year'=>['required','string','in:'.implode(',',$validFY)],
             'district'=>['required','string'],
             'block'=>['required','string'],
             'gp'=>['required','string'],
