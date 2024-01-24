@@ -7,7 +7,12 @@
             <div class="alert alert-danger">
                 {{ $errors->first('error') }}
             </div>
-    @endif
+        @endif
+        @if($errors->has('financial_year'))
+            <div class="alert alert-danger">
+                {{ $errors->first('financial_year') }}
+            </div>
+        @endif
     </div>
     <div class="card-body">
         <h4>Add Sanction</h3>
