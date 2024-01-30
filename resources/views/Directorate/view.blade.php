@@ -15,7 +15,7 @@
         </h3>
     </div>
     <div class="card-body">
-        <div class="table-responsive" style="font-size:11px">
+        <div class="table-responsive" style="font-size:0.9rem">
             <table class="table table-bordered text-center" id="datatable">
             <thead>
                     <th>District Name</th>
