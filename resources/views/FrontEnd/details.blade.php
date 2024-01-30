@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered text-center" id="datatable" style="font-size: 0.8rem">
+                <table class="table table-bordered text-center" id="datatable" style="font-size: 0.9rem">
                     <thead>
                         <th>Sr. No.</th>
                         <th>District Name</th>

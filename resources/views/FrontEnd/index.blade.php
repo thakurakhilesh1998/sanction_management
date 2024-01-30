@@ -79,7 +79,7 @@
     {{-- Introduction Section --}}
     <div class="card" style="font-family: sans-serif;">
         <div class="card-header">
-            <h3>Sanction Management System</h3>
+            <h3 class="text-center">Sanction Management System</h3>
         </div>  
         <div class="row card-body">
             <div class="col md-4 m-1 p-1">
