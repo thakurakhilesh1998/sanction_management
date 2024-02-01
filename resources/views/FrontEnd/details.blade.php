@@ -50,7 +50,7 @@
                                 <td>{{$san->gp}}</td>
                                 <td>{{$san->newGP}}</td>
                                 <td>{{$san->financial_year}}</td>
-                                <td>{{$san->san_amount}}</td>
+                                <td>{{addCommas($san->san_amount)}}</td>
                                 <td>{{$san->sanction_date}}</td>
 
                                 @php

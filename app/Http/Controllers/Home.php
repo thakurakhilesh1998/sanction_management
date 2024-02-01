@@ -33,6 +33,8 @@ class Home extends Controller
         }
     }
 
+
+
     public function viewDetails($data=null)
     {
         try

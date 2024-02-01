@@ -16,7 +16,7 @@
                 <div class="card cardt hidden bg-primary text-white mb-4">
                     <div class="card-body">
                         Total Sanctions Amount
-                        <h3>Rs. {{$totalFundReleased}}</h3>
+                        <h3>{{addCommas($totalFundReleased)}}</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="{{url('dir/view-progress')}}">View Details</a>
@@ -29,7 +29,7 @@
                 <div class="card cardt hidden bg-info text-white mb-4">
                     <div class="card-body">
                         Total Utilized Amount
-                        <h3>Rs. {{$sumUtilized}}</h3>
+                        <h3>{{addCommas($sumUtilized)}}</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="{{url('dir/view-progress')}}">View Details</a>

@@ -39,7 +39,7 @@
                     <td>{{$s->ac}}</td>
                     <td>{{$s->newGP}}</td>
                     <td>{{$s->financial_year}}</td>
-                    <td>{{$s->san_amount}}</td>
+                    <td>{{addCommas($s->san_amount)}}</td>
                     <td>{{$s->sanction_date}}</td>
 
                     <td>
