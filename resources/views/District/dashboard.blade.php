@@ -14,7 +14,7 @@
         <div class="row">
             {{-- Total Sanction Amount --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-primary text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #003f5c">
                     <div class="card-body">
                         Total Funds Received
                         <h3>Rs.{{$totalFundRecived}}</h3>
@@ -27,7 +27,7 @@
             </div>
             {{-- Total Utilized Amount --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-info text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #2f4b7c">
                     <div class="card-body">
                         Total Utilized Amount
                         <h3>Rs.{{$totalUtilized}}</h3>
@@ -41,7 +41,7 @@
 
             {{-- Total Number of Sanctions --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-warning  text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color:#665191">
                     <div class="card-body">
                         Total Sanctions Count
                         <h3>{{$sanctionCount}}</h3>
@@ -54,7 +54,7 @@
             </div>
             {{-- Total Number of Sanctions --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-info text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color:#665191">
                     <div class="card-body">
                         Freezed Sanctions
                         <h3>{{$freezedSanction}}</h3>
@@ -68,7 +68,7 @@
 
             {{-- Not reported Sanctions --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-success text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #003f5c">
                     <div class="card-body">
                         Not Reported Sanctions
                         <h3>{{$notReported}}</h3>
@@ -82,7 +82,7 @@
 
             {{-- Fund Sanctions for New GP --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-secondary text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #2f4b7c">
                     <div class="card-body">
                        Sanctions For New Gram Panchayat
                         <h3>{{$totalNewGP}}</h3>

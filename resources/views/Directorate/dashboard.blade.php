@@ -13,7 +13,7 @@
         <div class="row">
             {{-- Total Sanction Amount --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-primary text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #003f5c">
                     <div class="card-body">
                         Total Sanctions Amount
                         <h3>{{addCommas($totalFundReleased)}}</h3>
@@ -26,7 +26,7 @@
             </div>
             {{-- Total Utilized Amount --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-info text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #2f4b7c">
                     <div class="card-body">
                         Total Utilized Amount
                         <h3>{{addCommas($sumUtilized)}}</h3>
@@ -40,7 +40,7 @@
 
             {{-- Total Number of Sanctions --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-warning  text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #665191">
                     <div class="card-body">
                         Total Sanctions Count
                         <h3>{{$sanctionCount}}</h3>
@@ -53,7 +53,7 @@
             </div>
             {{-- Total Number of Sanctions --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-info text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #2f4b7c">
                     <div class="card-body">
                         Total Utilized Sanctions
                         <h3>{{$completedSanction}}</h3>
@@ -66,7 +66,7 @@
             </div>
             {{-- Fund Sanctions for New GP --}}
             <div class="col-xl-4 col-md-6">
-                <div class="card cardt hidden bg-primary text-white mb-4">
+                <div class="card cardt hidden text-white mb-4" style="background-color: #003f5c">
                     <div class="card-body">
                         Sanctions For New Gram Panchayat
                         <h3>{{$totalNewGPs}}</h3>
