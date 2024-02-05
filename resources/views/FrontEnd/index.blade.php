@@ -1,7 +1,6 @@
 @extends('layouts/app')
 @section('content')
 <div class="container">
-    
     {{-- KPI Card layout --}}
     <div class="container my-2">
         <h3 class="py-2"><b>Key Performance Indicators</b></h3>
