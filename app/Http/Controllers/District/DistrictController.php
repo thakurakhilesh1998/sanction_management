@@ -368,6 +368,12 @@ class DistrictController extends Controller
         {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
-}
+    }
+
+    public function addSanction()
+    {
+        $district=Auth::user()->district;
+        return view('District.addSanction',compact('district'));
+    }
 
 }
