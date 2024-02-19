@@ -70,6 +70,8 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::put('/change-password',[DistrictController::class,'updatePassword']);
     Route::get('/add-sanction',[DistrictController::class,'addSanction']);
     Route::post('/add-sanction',[DistrictController::class,'saveSanction']);
+    Route::get('/view-sanction',[DistrictController::class,'viewSanction']);
+    Route::get('/editSanction/{id}',[DistrictController::class,'edit']);
 });
 });
 

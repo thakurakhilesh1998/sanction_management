@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\District;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Models\Image;
 use Illuminate\Support\Facades\Hash;
+
 class DistrictController extends Controller
 {
 
@@ -435,6 +434,61 @@ class DistrictController extends Controller
             $sanction->ac=$data['ac'];
             $sanction->added_by='district';
             $sanction->save();
+            return redirect(url('district/view-sanction'))->with("message","Sanction added successfully!");
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function viewSanction($data=null)
+    {
+        try{    
+            $districtU=Auth::user()->district;
+            if($data==null)
+            {
+                $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->where('district',$districtU)->where('added_by','district')->get();
+                return view('District/viewSanction',compact('sanction'));
+            }
+            elseif($data=='freeze')
+            {
+                $sanction = Sanction::with(['progress' => function ($query) {
+                    $query->where('isFreeze', 'yes');
+                }])->whereHas('progress', function ($query) {
+                    $query->where('isFreeze', 'yes');
+                })->where('district',$districtU)->where('added_by','district')->get();
+                return view('Directorate/view',compact('sanction'));
+            }
+            elseif($data='newgp')
+            {
+                $sanction=Sanction::where('newGP','yes')->where('district',$districtU)->where('added_by','district')->with('progress')->get();
+                return view('Directorate/view',compact('sanction'));
+            }
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function edit($id)
+    {
+        try
+        {
+            $districtU=Auth::user()->district;
+            if($id==null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Id can not be null']);
+            }
+            $sanction = Sanction::where('added_by','district')
+                    ->where('district',$districtU)
+                    ->find($id);
+            if($sanction->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No sanction found with this ID']);
+            }
+            return view('District/editSanction',compact('sanction'));
         }
         catch(\Exception $e)
         {

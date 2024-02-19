@@ -23,6 +23,10 @@
             aria-expanded="true" aria-controls="collapseTwo">
             <span>Add Sacntion</span>
         </a>
+        <a class="nav-link collapsed" href="{{url('district/view-sanction')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>View Sacntion</span>
+        </a>
         <a class="nav-link collapsed" href="{{url('district/')}}" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <span>View Sacntion<br>(which are not reported)</span>
