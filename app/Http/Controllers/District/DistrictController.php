@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sanction;
+use App\Http\Requests\Sanction\sanRequest;
 use App\Models\Progress;
 use App\Http\Requests\Progress\ProgressData;
 use Illuminate\Support\Facades\DB;
@@ -372,8 +373,73 @@ class DistrictController extends Controller
 
     public function addSanction()
     {
-        $district=Auth::user()->district;
-        return view('District.addSanction',compact('district'));
+        try
+        {
+            $district=Auth::user()->district;
+            return view('District.addSanction',compact('district'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+        
+    }
+
+    public function saveSanction(sanRequest $req)
+    {
+        try
+        {
+            $districtU=Auth::user()->district;
+            $data=$req->validated();
+            $privatePath=storage_path('app/private');
+            $jsonFilePath=$privatePath . '/output.json';
+            // dd($jsonFilePath);
+            if($data['district']!=$districtU)
+            {   
+                return redirect()->back()->withErrors(['error' => 'Selected District does not match with the logged in District']);    
+            }
+            if(file_exists($jsonFilePath))
+            {
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                if(isset($jsonData['data'][$data['district']]))
+                {
+                    if(!isset($jsonData['data'][$data['district']][$data['block']]))
+                    {
+                        return redirect()->back()->withErrors(['error' => 'Please Select appropriate Gram Panchayat']);    
+                    }
+                    $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
+                   if($ac[0]!=$data['ac'])
+                   {
+                        return redirect()->back()->withErrors(['error' => 'Assembly Constituency does not match with the Gram Panchayat']);
+                   } 
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['error' => 'District does not exists']);
+                }
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Something Went Wrong']);  
+            }
+            $sanction=new Sanction();
+            $sanction->financial_year=$data['financial_year'];
+            $sanction->district=$data['district'];
+            $sanction->block=$data['block'];
+            $sanction->gp=$data['gp'];
+            $sanction->newGP=$req['newGP'];
+            $sanction->san_amount=$data['san_amount'];
+            $sanction->sanction_date=$data['sanction_date'];
+            $sanction->sanction_head=$data['sanction_head'];
+            $sanction->sanction_purpose=$data['sanction_purpose'];
+            $sanction->ac=$data['ac'];
+            $sanction->added_by='district';
+            $sanction->save();
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
 }

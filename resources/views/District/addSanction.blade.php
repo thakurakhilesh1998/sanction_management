@@ -91,10 +91,7 @@
 
             // Handle district selection
             let selectedDistrict=$('#district-list option').attr('value');
-            
                 displayBlocks(Object.keys(data.data[selectedDistrict]));
-           
-
             // Handle block selection
             $("#blocks-block").on("change", "#block-list", function() {
                 var selectedDistrict = $("#district-list").val();
@@ -134,7 +131,6 @@
     }
 
     function displayPanchayats(panchayats) {
-        console.log(panchayats);
         var panchayatList = '<label for="Gram Panchayat name" class="form-label">Select Gram Panchayat Name</label><select id="panchayat-list" class="form-control" name="gp"><option value="-1">--Select Gram Panchayat--</option>';
         $.each(panchayats, function(panchayat, constituencies) {
             panchayatList += '<option value="' + panchayat + '">' + panchayat + '</option>';
