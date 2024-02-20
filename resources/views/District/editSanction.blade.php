@@ -105,10 +105,10 @@
 
                 // Handle district selection
                 let selectedDistrict=$('#district-list option').attr('value');
-
-                displayBlocks(Object.keys(data.data[selectedDistrict]));
             // Handle block selection
             $("#blocks-block").on("change", "#block-list", function() {
+                
+                displayBlocks(Object.keys(data.data[selectedDistrict]));
                 var selectedDistrict = $("#district-list").val();
                 var selectedBlock = $(this).val();
                 displayPanchayats(data.data[selectedDistrict][selectedBlock]);
@@ -133,16 +133,6 @@
             });
         });
         });
-    // function displayDistricts(districts) {
-
-    //         var districtList = '<label for="District name" class="form-label">Select District Name</label><select id="district-list" class="form-control" name="district"><option value="-1">--Select District--</option>';
-    //         $.each(districts, function(index, district) {
-    //             districtList += '<option value="' + district + '">' + district + '</option>';
-    //         });
-    //         districtList += '</select>';
-    //         $("#district-block").html(districtList);
-
-    //     }
     function displayBlocks(blocks) {
         var blockList = '<label for="Block name" class="form-label">Select Block Name</label><select id="block-list" class="form-control" name="block"><option value="-1">--Select Block--</option>';
         $.each(blocks, function(index, block) {
