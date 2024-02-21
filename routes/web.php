@@ -72,6 +72,7 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::post('/add-sanction',[DistrictController::class,'saveSanction']);
     Route::get('/view-sanction',[DistrictController::class,'viewSanction']);
     Route::get('/editSanction/{id}',[DistrictController::class,'edit']);
+    Route::put('/update-sanction/{id}',[DistrictController::class,'updateSanction']);
 });
 });
 

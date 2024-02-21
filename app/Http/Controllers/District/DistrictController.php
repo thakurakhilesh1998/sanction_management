@@ -476,7 +476,21 @@ class DistrictController extends Controller
     {
         try
         {
+            $privatePath=storage_path('app/private');
+            $jsonFilePath=$privatePath . '/output.json';
             $districtU=Auth::user()->district;
+            $blocks='';
+
+            if(file_exists($jsonFilePath))
+            {
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                $blocks=$jsonData['data'][$districtU];
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Something went wrong']);
+            }
+        
             if($id==null)
             {
                 return redirect()->back()->withErrors(['error' => 'Id can not be null']);
@@ -488,7 +502,72 @@ class DistrictController extends Controller
             {
                 return redirect()->back()->withErrors(['error' => 'No sanction found with this ID']);
             }
-            return view('District/editSanction',compact('sanction'));
+            // dd($blocks);
+            return view('District/editSanction',compact('sanction','blocks'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateSanction(sanRequest $req,$sanction_id)
+    {
+        try
+        {
+            $districtU=Auth::user()->district;
+            if($sanction_id===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Sanction Id can not be null']);
+            }
+            $data=$req->validated();
+            if($districtU!==$data['district'])
+            {
+                return redirect()->back()->withErrors(['error' => 'District does not watch']);
+            }
+            $sanction=Sanction::find($sanction_id);
+            if($sanction->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No data found with this sanction']);
+            }
+            $privatePath = storage_path('app/private');
+            $jsonFilePath = $privatePath . '/output.json';
+            if(file_exists($jsonFilePath))
+            {
+                // Read the contents of the JSON file
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                // dd($jsonData);
+                 // Parse the JSON contents
+                // $jsonData = json_decode($jsonContents, true);
+                if(isset($jsonData['data'][$data['district']]))
+                {
+                    if(!isset($jsonData['data'][$data['district']][$data['block']]))
+                    {
+                        return redirect()->back()->withErrors(['error' => 'Please Select appropriate Gram Panchayat']);    
+                    }
+                    $ac=$jsonData['data'][$data['district']][$data['block']][$data['gp']];
+                   if($ac[0]!=$data['ac'])
+                   {
+                        return redirect()->back()->withErrors(['error' => 'Assembly Constituency does not match with the Gram Panchayat']);
+                   } 
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['error' => 'District does not exists']);
+                }
+            }
+            $sanction->financial_year=$data['financial_year'];
+            $sanction->district=$data['district'];
+            $sanction->block=$data['block'];
+            $sanction->gp=$data['gp'];
+            $sanction->newGP=$req['newGP'];
+            $sanction->san_amount=$data['san_amount'];
+            $sanction->sanction_date=$data['sanction_date'];
+            $sanction->sanction_head=$data['sanction_head'];
+            $sanction->sanction_purpose=$data['sanction_purpose'];
+            $sanction->ac=$data['ac'];
+            $sanction->update();
+            return redirect(url('district/view-sanction'))->with("message","Sanction updated successfully!");
         }
         catch(\Exception $e)
         {

@@ -12,7 +12,7 @@
         @endif
     </div>
     <div class="card-body">
-        <form action="{{url('dir/sanction-update/'.$sanction->id)}}"  id="sanction" method="POST">
+        <form action="{{url('/district/update-sanction/'.$sanction->id)}}"  id="sanction" method="POST">
             @csrf
             @method('PUT')
             {{-- Financial Year --}}
@@ -37,7 +37,9 @@
             <div class="mb-3" id="blocks-block">
                 <label for="Block name" class="form-label">Select Block Name</label>
                 <select id="block-list" class="form-control" name="block">
-                    <option value="{{$sanction->block}}">{{$sanction->block}}</option>
+                    @foreach ($blocks as $key=>$value)
+                     <option value="{{$key}}"  {{$key==$sanction->block?'selected':''}}>{{$key}}</option>
+                    @endforeach
                 </select>
             </div>
              {{-- GramPanchayat Name --}}
@@ -102,25 +104,19 @@
    $(document).ready(function() {
             // Load the JSON data
             $.getJSON("{{asset('assets/json/output.json')}}", function(data) {
-
                 // Handle district selection
                 let selectedDistrict=$('#district-list option').attr('value');
-            // Handle block selection
             $("#blocks-block").on("change", "#block-list", function() {
-                
-                displayBlocks(Object.keys(data.data[selectedDistrict]));
-                var selectedDistrict = $("#district-list").val();
+                var selectedDistrict = $('#district-list option').attr('value');
                 var selectedBlock = $(this).val();
                 displayPanchayats(data.data[selectedDistrict][selectedBlock]);
             });
-
             // Handle block selection
             $("#blocks-block").on("click", "#block-list", function() {
                 var selectedDistrict = $("#district-list").val();
                 var selectedBlock = $(this).val();
                 displayPanchayats(data.data[selectedDistrict][selectedBlock]);
             });
-
             // Handle Gram Panchayat Selection
             $('#gp-block').on("change", "#panchayat-list", function() {
                 let selectedDistrict = $("#district-list").val();
