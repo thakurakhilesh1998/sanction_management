@@ -36,6 +36,8 @@
                     <option value="admin">Admin</option>
                     <option value="dir">Directorate</option>
                     <option value="district">District</option>
+                    <option value="block">Block</option>
+                    <option value="gp">Gram Panchayat</option>
                 </select>
             </div>
 
@@ -57,7 +59,14 @@
                     <option value="Una">Una</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <div class="mb-3" id="block_select">
+
+            </div>
+            <div class="mb-3" id="gp_select">
+
+            </div>
+            <button type="submit" class="btn btn-primary">Create Username</button>
           </form>
     </div>
 </div>
@@ -73,7 +82,7 @@
             let selectedRole=$(this).children("option:selected").val();
             if(selectedRole==='district')
             {
-               $("#districts_select").show();
+                $("#districts_select").show();
             }
             else
             {
