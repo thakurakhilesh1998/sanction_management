@@ -80,6 +80,15 @@
         $("select#role").change(function()
         {
             let selectedRole=$(this).children("option:selected").val();
+            switch(selectedRole)
+            {
+                case: 'district':
+                    showDistrict();
+                break;
+            }
+        });
+        function showDistrict()
+        {
             if(selectedRole==='district')
             {
                 $("#districts_select").show();
@@ -88,8 +97,18 @@
             {
                 $("#districts_select").hide();
             }
+        }
 
-        })
-    })
+        function showBlock()
+        {
+
+        }
+
+        function showGP()
+        {
+
+        }
+
+    });
 </script>
 @endsection
