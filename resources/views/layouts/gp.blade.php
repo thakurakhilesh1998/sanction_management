@@ -24,14 +24,14 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('layouts/inc/district-sidebar')
+        @include('layouts/inc/gp-sidebar')
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @include('layouts/inc/district-navbar')
+                @include('layouts/inc/gp-navbar')
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 <main>
@@ -40,7 +40,7 @@
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->
-            @include('layouts/inc/district-footer')
+            @include('layouts/inc/gp-footer')
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->

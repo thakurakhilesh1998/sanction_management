@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Dir\DirController;
 use App\Http\Controllers\District\DistrictController; 
+use App\Http\Controllers\GP\GPController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +21,9 @@ use App\Http\Controllers\District\DistrictController;
 Route::middleware(['web','preventCache'])->group(function()
 {
     Route::get('/',[Home::class,'index']);
-Route::get('/details/{data?}',[Home::class,'viewDetails']);
-Route::get('/showGpDetails/{gp}',[Home::class,'showGpDetails']);
-Auth::routes();
+    Route::get('/details/{data?}',[Home::class,'viewDetails']);
+    Route::get('/showGpDetails/{gp}',[Home::class,'showGpDetails']);
+    Auth::routes();
 
 
 Route::prefix('admin')->middleware(['auth','web','adminCheck'])->group(function()
@@ -74,5 +75,10 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::get('/editSanction/{id}',[DistrictController::class,'edit']);
     Route::put('/update-sanction/{id}',[DistrictController::class,'updateSanction']);
 });
+});
+
+Route::prefix('gp')->group(function()
+{
+    Route::get('/dashboard',[GPController::class,'dashboard']);
 });
 
