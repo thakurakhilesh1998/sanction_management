@@ -27,7 +27,9 @@ class UserDataRequest extends FormRequest
             'email'=>['required','email'],
             'password' => ['required','string','min:8','confirmed'],
             'role'=>['required','string'],
-            'district'=>['nullable','string']
+            'district'=>['nullable','string'],
+            'block_name'=>['nullable','string'],
+            'gp_name'=>['nullable','string'],
         ];
         return $rules;
     }

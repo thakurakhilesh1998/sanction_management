@@ -43,7 +43,7 @@
 
             <div class="mb-3" id="districts_select">
                 <label for="District Name" class="form-label">Select District</label>
-                <select name="district" id="" class="form-control">
+                <select name="district" id="districtlist" class="form-control">
                     <option value="0">--Select District--</option>
                     <option value="Bilaspur">Bilaspur</option>
                     <option value="Chamba">Chamba</option>
@@ -59,14 +59,11 @@
                     <option value="Una">Una</option>
                 </select>
             </div>
-
             <div class="mb-3" id="block_select">
-
             </div>
             <div class="mb-3" id="gp_select">
-
             </div>
-            <button type="submit" class="btn btn-primary">Create Username</button>
+            <button type="submit" class="btn btn-primary">Create User</button>
           </form>
     </div>
 </div>
@@ -76,37 +73,63 @@
 <script>
     $(document).ready(function()
     {
-        $('#districts_select').hide();
+        let dataFromJson;
+        $.getJSON("{{ asset('assets/json/output.json') }}",function(data)
+        {
+            dataFromJson=data;
+        })
+
+            $('#districts_select').hide();
         $("select#role").change(function()
         {
+            $('#districts_select').hide();
             let selectedRole=$(this).children("option:selected").val();
-            switch(selectedRole)
-            {
-                case: 'district':
-                    showDistrict();
-                break;
-            }
-        });
-        function showDistrict()
-        {
             if(selectedRole==='district')
             {
                 $("#districts_select").show();
             }
-            else
+            if(selectedRole==='block')
             {
-                $("#districts_select").hide();
+                $("#districts_select").show();
+                $('#districts_select').on("change","#districtlist",function()
+                {
+                    let selectedDistrict=$(this).val();
+                    showBlocks(Object.keys(dataFromJson.data[selectedDistrict]));
+                });
             }
+            if(selectedRole==='gp')
+            {
+                let selectedDistrict;
+                $("#districts_select").show();
+                $('#districts_select').on("change","#districtlist",function()
+                {
+                    selectedDistrict=$(this).val();
+                    showBlocks(Object.keys(dataFromJson.data[selectedDistrict]));
+                });
+                $('#block_select').on("change","#block-list",function()
+                {
+                    let selectedBlock=$(this).val();
+                    displayPanchayats(dataFromJson.data[selectedDistrict][selectedBlock]);
+                });
+            }
+        });
+
+        function showBlocks(blocks) {
+            var blockList = '<label for="Block name" class="form-label">Select Block Name</label><select id="block-list" class="form-control" name="block_name"><option value="-1">--Select Block--</option>';
+            $.each(blocks, function(index, block) {
+                blockList += '<option value="' + block + '">' + block + '</option>';
+            });
+            blockList += '</select>';
+            $("#block_select").html(blockList);
         }
 
-        function showBlock()
-        {
-
-        }
-
-        function showGP()
-        {
-
+        function displayPanchayats(panchayats) {
+             var panchayatList = '<label for="Gram Panchayat name" class="form-label">Select Gram Panchayat Name</label><select id="panchayat-list" class="form-control" name="gp_name"><option value="-1">--Select Gram Panchayat--</option>';
+            $.each(panchayats, function(panchayat, constituencies) {
+            panchayatList += '<option value="' + panchayat + '">' + panchayat + '</option>';
+             });
+             panchayatList += '</select>';
+            $("#gp_select").html(panchayatList);
         }
 
     });

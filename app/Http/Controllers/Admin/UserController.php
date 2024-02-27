@@ -27,6 +27,8 @@ class UserController extends Controller
         $user->password=Hash::make($req['password']);
         $user->role=$req['role'];
         $user->district=$req['district'];
+        $user->block_name=$req['block_name'];
+        $user->gp_name=$req['gp_name'];
         $user->save();
         return redirect(url('admin/user/view'))->with("message","User Created Successfully");
        }
