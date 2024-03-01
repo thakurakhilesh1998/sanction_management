@@ -39,9 +39,13 @@ class LoginController extends Controller
         {
             return redirect('/dir/dashboard');
         }
-        else if(Auth::user()->role="district")
+        else if(Auth::user()->role=="district")
         {
             return redirect('/district/dashboard');
+        }
+        else if(Auth::user()->role=="gp")
+        {   
+            return redirect('/gp/dashboard');
         }
         else
         {

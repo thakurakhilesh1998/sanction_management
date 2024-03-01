@@ -77,8 +77,9 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
 });
 });
 
-Route::prefix('gp')->group(function()
+Route::prefix('gp')->middleware(['auth','web','gpCheck'])->group(function()
 {
     Route::get('/dashboard',[GPController::class,'dashboard']);
+    Route::get('/status',[GPController::class,'viewStatus']);
 });
 

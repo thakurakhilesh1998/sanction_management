@@ -11,4 +11,9 @@ class GPController extends Controller
     {
         return view('GP.dashboard');
     }
+
+    public function viewStatus()
+    {
+        return view('GP.pgharstatus');
+    }
 }

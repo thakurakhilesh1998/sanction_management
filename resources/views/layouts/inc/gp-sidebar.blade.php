@@ -27,7 +27,7 @@
             aria-expanded="true" aria-controls="collapseTwo">
             <span>Update Progress</span>
         </a>
-        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
+        <a class="nav-link collapsed" href="{{url('gp/status')}}" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <span>Status of Panchayat Ghar</span>
         </a>
