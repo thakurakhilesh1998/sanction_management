@@ -16,4 +16,9 @@ class GPController extends Controller
     {
         return view('GP.pgharstatus');
     }
+
+    public function uploadImg()
+    {
+        echo "Upload image";
+    }
 }
