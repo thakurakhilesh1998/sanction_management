@@ -4,6 +4,9 @@ namespace App\Http\Controllers\GP;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\PGharStatus\PGharStatusImg;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Gp_List;
 
 class GPController extends Controller
 {
@@ -17,8 +20,35 @@ class GPController extends Controller
         return view('GP.pgharstatus');
     }
 
-    public function uploadImg()
+    public function uploadImg(PGharStatusImg $data)
     {
-        echo "Upload image";
+        
+        try
+        {
+            $validatedStatus=$data->validated();
+            $district=Auth::user()->district;
+            $block=Auth::user()->block_name;
+            $gpName=Auth::user()->gp_name;
+            $gp_id=Gp_List::where('district_name',$district)->where('block_name',$block)->where('gp_name',$gpName)->first();
+            if($data->hasFile('p_image'))
+            {
+                $uploadedStatus=$data->file('p_image');
+                foreach($uploadedStatus as $u)
+                {
+                    dd($u);
+                    $filename=$gp_id->id.'_'.time().'_'.$u->getClientOriginalName();
+                    $u->move('uploads/pghar_images',$filename);
+                }
+            }
+
+
+            
+
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);;
+        }
+        
     }
 }

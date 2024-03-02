@@ -23,11 +23,9 @@ class DistrictController extends Controller
             $sanctionCount=Sanction::where('district', $district)->count();
             $totalFundRecived=Sanction::where('district', $district)->sum('san_amount');
             $totalNewGP=Sanction::where('district', $district)->where('newGP','yes')->count();
-    
             $progressRecord=Progress::where('isFreeze','yes');
-    
             $sanctionId=$progressRecord->pluck('sanction_id');
-    
+
             $sanctionData=Sanction::whereIn('id',$sanctionId)->where('district', $district)->get();
             $freezedSanction=$sanctionData->count();
             $totalUtilized=$sanctionData->sum('san_amount');
