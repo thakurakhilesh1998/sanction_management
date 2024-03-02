@@ -9,7 +9,7 @@ use App\Models\Gp_List;
 class Pghar_Image extends Model
 {
     use HasFactory;
-    protected $table="gp_list";
+    protected $table="pghar_image";
     protected $fillable=['gp_id','image_path'];
 
     public function gp_list()

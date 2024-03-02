@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PGharStatus\PGharStatusImg;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gp_List;
+use App\Models\Pghar_Image;
 
 class GPController extends Controller
 {
@@ -35,15 +36,15 @@ class GPController extends Controller
                 $uploadedStatus=$data->file('p_image');
                 foreach($uploadedStatus as $u)
                 {
-                    dd($u);
                     $filename=$gp_id->id.'_'.time().'_'.$u->getClientOriginalName();
                     $u->move('uploads/pghar_images',$filename);
+                    $gharStatus=new Pghar_Image;
+                    $gharStatus->image_path=$filename;
+                    $gharStatus->gp_id=$gp_id->id;
+                    $gharStatus->save();
                 }
+                return redirect()->back();   
             }
-
-
-            
-
         }
         catch (\Exception $e)
         {
