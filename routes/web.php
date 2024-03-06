@@ -82,5 +82,6 @@ Route::prefix('gp')->middleware(['auth','web','gpCheck'])->group(function()
     Route::get('/dashboard',[GPController::class,'dashboard']);
     Route::get('/status',[GPController::class,'viewStatus']);
     Route::post('/uploadimg',[GPController::class,'uploadImg']);
+    Route::get('/view-sanction',[GPController::class,'viewSanction']);
 });
 

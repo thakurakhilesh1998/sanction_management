@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\PGharStatus\PGharStatusImg;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Sanction;
+use App\Models\Progress;
 use App\Models\Gp_List;
 use App\Models\Pghar_Image;
 
@@ -51,5 +53,15 @@ class GPController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);;
         }
         
+    }
+
+    public function viewSanction()
+    {
+        $gp_name=Auth::user()->gp_name;
+        $block=Auth::user()->block_name;
+        $district=Auth::user()->district;
+        $sanction=Sanction::where('district',$district)->where('block',$block)->where('gp',$gp_name)->doesntHave('progress')->get();
+        
+
     }
 }

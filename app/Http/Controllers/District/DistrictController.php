@@ -33,7 +33,6 @@ class DistrictController extends Controller
             ->leftJoin('progress', 'sanction.id', '=', 'progress.sanction_id')
             ->whereNull('progress.sanction_id')
             ->count();
-    
             return view('District.dashboard',compact('sanctionCount','totalFundRecived','totalNewGP','freezedSanction','totalUtilized','notReported'));
         }
         catch(\Exception $e)
