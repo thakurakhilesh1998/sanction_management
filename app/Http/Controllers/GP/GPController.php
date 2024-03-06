@@ -57,11 +57,46 @@ class GPController extends Controller
 
     public function viewSanction()
     {
-        $gp_name=Auth::user()->gp_name;
-        $block=Auth::user()->block_name;
-        $district=Auth::user()->district;
-        $sanction=Sanction::where('district',$district)->where('block',$block)->where('gp',$gp_name)->doesntHave('progress')->get();
-        
+        try
+        {
+            $gp_name=Auth::user()->gp_name;
+            $block=Auth::user()->block_name;
+            $district=Auth::user()->district;
+            $sanction=Sanction::where('district',$district)->where('block',$block)->where('gp',$gp_name)->doesntHave('progress')->get();
+            return view('GP.view-sanction',compact('sanction'));    
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);;
+        }
 
+    }
+
+    public function addProgress($id)
+    {
+        try
+        {
+            if($id==null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Id not be null']);
+            }
+            else
+            {
+                $gp_name=Auth::user()->gp_name;
+                $block=Auth::user()->block_name;
+                $district=Auth::user()->district;
+                $sanction=Sanction::where('id',$id)->where('district',$district)->where('block',$block)->where('gp',$gp_name)->first();
+                if($sanction->count===0)
+                {
+                    return redirect()->back()->withErrors(['error' => 'No data found for the given ID']);
+                }
+                return view('GP.progress',compact('sanction'));    
+
+            }
+        }
+        catch(\Exception $e)
+        {
+
+        }
     }
 }
