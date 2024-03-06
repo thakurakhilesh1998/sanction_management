@@ -42,7 +42,14 @@
                 </div>
                 <div class="mb-3" id="completion_per">
                     <label for="Progress Percentage" class="form-label">Percentage of Work Completed</label>
-                    <input type="text" class="form-control" id="p_completed_per" name="completion_percentage">
+                    <select name="" id="" class="form-control" name="completion_percentage">
+                        <option value="-1">--Select Status--</option>
+                        <option value="Tender Floated">Tender Floated</option>
+                        <option value="Tender Cancelled">Tender Cancelled</option>
+                        <option value="Tender Awarded">Tender Awarded</option>
+                        <option value="Work Started">Work Started</option>
+                    </select>
+                    {{-- <input type="text" class="form-control" id="p_completed_per" name="completion_percentage"> --}}
                   </div>
                 <div class="mb-3">
                     <label for="Progress Image" class="form-label">Select Progress Image</label>
