@@ -21,9 +21,10 @@ class ProgressData extends FormRequest
      */
     public function rules(): array
     {
+        $progressOption=['Tender Floated','Tender Cancelled','Tender Awarded','Work Started'];
         $rules=
         [
-            'completion_percentage'=>['nullable','numeric','regex:/^(\d{1,2}(\.\d{1,2})?|100(\.0{1,2})?)$/'],
+            'completion_percentage' => ['nullable', 'string', 'in:' . implode(',', $progressOption)],
             'p_isComplete'=>['required','string'],
             'p_uc'=> ['nullable','file','mimes:pdf','max:2048'],
             'p_image.*'=>['nullable','image','mimes:jpeg,jpg,png','max:400'],

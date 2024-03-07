@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="">
-            <form enctype="multipart/form-data" id="progress_form" method="POST" action="{{url('district/add-progress')}}">
+            <form enctype="multipart/form-data" id="progress_form" method="POST" action="{{url('gp/add-progress')}}">
                 @csrf
                 <input type="hidden" class="form-control" name="sanction_id" value="{{$sanction->id}}">
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="mb-3" id="completion_per">
                     <label for="Progress Percentage" class="form-label">Percentage of Work Completed</label>
-                    <select name="" id="" class="form-control" name="completion_percentage">
+                    <select name="completion_percentage" id="p_completed_per" class="form-control" name="completion_percentage">
                         <option value="-1">--Select Status--</option>
                         <option value="Tender Floated">Tender Floated</option>
                         <option value="Tender Cancelled">Tender Cancelled</option>
@@ -62,11 +62,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add Progress</button>
               </form>
-
-        </div>
-        
+        </div> 
     </div>
-    
 </div>
 @endsection
 @section('scripts')

@@ -16,9 +16,7 @@ $('document').ready(function()
         let uc_file=$('#uc_file')[0];
         let selectedFile=uc_file.files[0];
         let images=$('#imageInput')[0];
-        
-        console.log('Selected File'+selectedFile);
-
+    
         // Validate isCompleted
         if(isCompleted==='-1')
         {
@@ -85,8 +83,14 @@ $('document').ready(function()
     }
 
     function isValidPercentage(value) {
-    var percentageRegex = /^(\d{1,2}(\.\d{1,2})?|100(\.0{1,2})?)$/;
-    return percentageRegex.test(value);
+        if(value===-1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
   }
 
   function validateProgressImage()

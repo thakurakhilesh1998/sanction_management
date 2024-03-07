@@ -84,5 +84,6 @@ Route::prefix('gp')->middleware(['auth','web','gpCheck'])->group(function()
     Route::post('/uploadimg',[GPController::class,'uploadImg']);
     Route::get('/view-sanction',[GPController::class,'viewSanction']);
     Route::get('/add-progress/{id}',[GPController::class,'addProgress']);
+    
 });
 
