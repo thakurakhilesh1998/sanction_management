@@ -109,7 +109,15 @@ class GPController extends Controller
             $formatDate=$currentDate->format('Y-m-d H:i:s');
             $progressValidated=$data->validated();
             $progress=new Progress;
-            $progress->completion_percentage=$progressValidated['completion_percentage'];
+
+            if($progressValidated['completion_percentage']==-1)
+            {
+                $progress->completion_percentage='Completed';
+            }
+            else
+            {
+                $progress->completion_percentage=$progressValidated['completion_percentage'];
+            }
             $progress->p_isComplete=$progressValidated['p_isComplete'];
             if($data->hasFile('p_uc'))
             {
@@ -144,6 +152,22 @@ class GPController extends Controller
 
     public function update()
     {
-        echo "updated successfully!!";
+        try
+        {
+            $district=Auth::user()->district;
+            $block=Auth::user()->block_name;
+            $gp=Auth::user()->gp_name;
+
+            $sanction = Sanction::whereHas('progress', function ($query) use ($district, $block, $gp) {
+                $query->where('district', $district)
+                      ->where('block', $block)
+                      ->where('gp', $gp);
+            })->with('progress')->get();
+            return view('GP.update-progress',compact('sanction'));
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

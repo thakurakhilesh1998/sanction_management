@@ -152,7 +152,7 @@ class DistrictController extends Controller
         try
         {
             $district=Auth::user()->district;
-             $sanction = Sanction::whereHas('progress', function ($query) use ($district) {
+            $sanction = Sanction::whereHas('progress', function ($query) use ($district) {
             $query->where('district', $district);
             })->with('progress')->get();
             return view('district.update',compact('sanction'));

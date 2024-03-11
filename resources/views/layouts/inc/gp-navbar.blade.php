@@ -9,7 +9,7 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black">
-              Directorate <img class="img-profile rounded-circle"
+              Gram Panchayat <img class="img-profile rounded-circle"
               src="{{url(asset('assets/img/undraw_profile.svg'))}}">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">

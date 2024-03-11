@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('dir/dashboard')}}">
-        <div class="sidebar-brand-text mx-3">District</div>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('gp/dashboard')}}">
+        <div class="sidebar-brand-text mx-3">Gram Panchayat</div>
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -23,7 +23,7 @@
             aria-expanded="true" aria-controls="collapseTwo">
             <span>View Sanction <br>(Which are not reported)</span>
         </a>
-        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
+        <a class="nav-link collapsed" href="{{url('gp/update')}}" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <span>Update Progress</span>
         </a>

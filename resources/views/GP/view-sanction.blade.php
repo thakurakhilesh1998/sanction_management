@@ -1,4 +1,4 @@
-@extends('layouts/district')
+@extends('layouts/gp')
 @section('main')
 <div class="card m-4">
     <div class="card-header">
