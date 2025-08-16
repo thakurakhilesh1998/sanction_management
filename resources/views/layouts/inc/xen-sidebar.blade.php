@@ -25,6 +25,19 @@
         </a>
     </li>
     <hr class="sidebar-divider">
+
+    {{-- Sidebar divider --}}
+     <div class="sidebar-heading">
+        RD Sanction 
+    </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/xen/view-rd-sanction')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>View RD Sanction</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
     <!-- Heading -->
     
     <!-- Sidebar Toggler (Sidebar) -->

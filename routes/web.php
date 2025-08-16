@@ -9,6 +9,7 @@ use App\Http\Controllers\District\DistrictController;
 use App\Http\Controllers\GP\GPController;
 use App\Http\Controllers\Xen\XENController;
 use App\Http\Controllers\RD\DirRDController;
+use App\Http\Controllers\RD\XENRDController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -238,6 +239,10 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('update-progress/{gp}/{block}/{district}',[XENController::class,'updateProgress']);
     Route::post('change-progress/{id}',[XENController::class,'changeProgress']);
     Route::get('view-progress',[XENController::class,'viewProgress']);
+
+    // Routes for RD sanction
+    Route::get('/view-rd-sanction',[XENRDController::class,'viewSanction']);
+    Route::get('view-block-san/{district}/{block}/{work}',[XENRDController::class,'viewBlockWiseSan']);
 });
 
 // Route to view the Sanction uploaded by PR
