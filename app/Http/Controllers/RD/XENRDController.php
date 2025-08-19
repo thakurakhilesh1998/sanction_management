@@ -56,11 +56,12 @@ class XENRDController extends Controller
         }
     }
 
-    public function viewBlockWiseSan($district,$block,$work)
+    public function viewBlockWiseSan($district,$block,$work,$agency)
     {
         try
         {
-            $rdSanction=RDSanction::where('district',$district)->where('block',$block)->where('work',$work)->get();
+            $work=urldecode($work);
+            $rdSanction=RDSanction::where('district',$district)->where('block',$block)->where('work',$work)->where('agency','xen')->get();
             return view('XEN/RD/block-san',compact('rdSanction'));
         }   
         catch (Exception $e)

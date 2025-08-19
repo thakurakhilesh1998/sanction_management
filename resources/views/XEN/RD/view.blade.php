@@ -57,7 +57,7 @@
                                     <td>{{ $san->block }}</td>
                                     <td>{{$san->sanction_purpose}}</td>
                                     <td>
-                                        <a href="{{ url('xen/view-block-san/' . urlencode($san->district) . '/' . urlencode($san->block) . '/' . urlencode($san->work)) }}">
+                                        <a href="{{ url('xen/view-block-san/' . $san->district . '/' . $san->block. '/' . $san->work.'/'.$san->agency)}}">
                                             View Sanction
                                         </a>
                                     </td>

@@ -242,7 +242,7 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
 
     // Routes for RD sanction
     Route::get('/view-rd-sanction',[XENRDController::class,'viewSanction']);
-    Route::get('view-block-san/{district}/{block}/{work}',[XENRDController::class,'viewBlockWiseSan']);
+    Route::get('view-block-san/{district}/{block}/{work}/{agency}',[XENRDController::class,'viewBlockWiseSan']);
 });
 
 // Route to view the Sanction uploaded by PR
