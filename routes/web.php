@@ -210,6 +210,12 @@ Route::prefix('gp')->middleware(['auth','web','gpCheck'])->group(function()
 
 Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
 {
+     // Routes for RD sanction
+    Route::get('/view-rd-sanction',[XENRDController::class,'viewSanction']);
+    Route::get('view-block-san/{district}/{block}/{work}/{agency}',[XENRDController::class,'viewBlockWiseSan']);
+    Route::get('/add-progress-rd/{block}/{district}/{work}',[XENRDController::class,'addProgressRd']);
+    Route::post('/add-progress-rd',[XENRDController::class,'saveProgressRd']);
+
     Route::get('/',[XENController::class,'index']);
     Route::get('/dashboard',[XENController::class,'index']);
     Route::get('/view-sanction',[XENController::class,'viewSanciton']);
@@ -239,10 +245,6 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('update-progress/{gp}/{block}/{district}',[XENController::class,'updateProgress']);
     Route::post('change-progress/{id}',[XENController::class,'changeProgress']);
     Route::get('view-progress',[XENController::class,'viewProgress']);
-
-    // Routes for RD sanction
-    Route::get('/view-rd-sanction',[XENRDController::class,'viewSanction']);
-    Route::get('view-block-san/{district}/{block}/{work}/{agency}',[XENRDController::class,'viewBlockWiseSan']);
 });
 
 // Route to view the Sanction uploaded by PR

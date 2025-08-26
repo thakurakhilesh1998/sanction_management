@@ -20,14 +20,14 @@
         </div>
         @endif
         <h4 class="p-2">Sanctions for the Development Block
-            {{-- {{$sanction[0]->progress->count()}}
-            {{$sanction[0]->progress->completion_percentage}} --}}
-            {{-- @if(!isset($sanction[0]->progress) || optional($sanction[0]->progress)->completion_percentage === '-1')
+            {{-- {{$sanction[0]->progress_rd->count()}}
+            {{$sanction[0]->progress_rd->completion_percentage}} --}}
+            @if(!isset($rdSanction[0]->progress_rd) || optional($rdSanction[0]->progress_rd)->completion_percentage === '-1')
          
-                <a href="{{url("xen/add-progress".'/'.$sanction[0]->gp.'/'.$sanction[0]->block.'/'.$sanction[0]->district)}}" class="btn btn-primary btn-sm float-right">Add Progress</a>
+                <a href="{{url("xen/add-progress-rd".'/'.$rdSanction[0]->block.'/'.$rdSanction[0]->district.'/'.$rdSanction[0]->work)}}" class="btn btn-primary btn-sm float-right">Add Progress</a>
             @else
-                <a href="{{url("xen/update-progress".'/'.$sanction[0]->gp.'/'.$sanction[0]->block.'/'.$sanction[0]->district)}}" class="btn btn-primary btn-sm float-right">Update Progress</a> 
-            @endif  --}}
+                <a href="{{url("xen/update-progress-rd".'/'.$rdSanction[0]->block.'/'.$rdSanction[0]->district.'/'.$rdSanction[0]->work)}}" class="btn btn-primary btn-sm float-right">Update Progress</a> 
+            @endif  
         </h4>
         @if($rdSanction->isEmpty())
         
@@ -61,7 +61,7 @@
                             <td>{{$san->block}}</td>
                             <td>{{$san->san_amount}}</td>
                             <td>{{$san->financial_year}}</td>
-                            <td>{{$san->sanction_purpose}}</td>
+                            <td>{{$san->work}}</td>
                             <td>{{$san->sanction_head}}</td>
                             <td>{{$san->sanction_date}}</td>
                             <td>
