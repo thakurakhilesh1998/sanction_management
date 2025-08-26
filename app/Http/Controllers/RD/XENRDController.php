@@ -117,11 +117,11 @@ class XENRDController extends Controller
                 $progress->p_update=$formatDate;
                 $progress->work=$validated['work'];
                 $progress->save();
-                dd("progress saved successfully");
+                return redirect('xen/view-block-san'.'/'.$validated['district'].'/'.$validated['block'].'/'.$validated['work'].'/'.'xen')->with('message','Progress Added Successfully');  
             }
             else
             {
-                dd("Progress already added");
+                return redirect('xen/view-block-san'.'/'.$validated['district'].'/'.$validated['block'].'/'.$validated['work'].'/'.'xen')->with('message','Progress Already Added');  
             }
         }
         catch (\Exception $e)
