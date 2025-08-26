@@ -215,6 +215,8 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('view-block-san/{district}/{block}/{work}/{agency}',[XENRDController::class,'viewBlockWiseSan']);
     Route::get('/add-progress-rd/{block}/{district}/{work}',[XENRDController::class,'addProgressRd']);
     Route::post('/add-progress-rd',[XENRDController::class,'saveProgressRd']);
+    Route::get('update-progress-rd/{block}/{district}/{work}',[XENRDController::class,'updateFormRd']);
+
 
     Route::get('/',[XENController::class,'index']);
     Route::get('/dashboard',[XENController::class,'index']);

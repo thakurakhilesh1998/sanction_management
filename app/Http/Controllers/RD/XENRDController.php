@@ -129,4 +129,26 @@ class XENRDController extends Controller
             dd($e->getMessage());
         }
     }
+
+    public function updateFormRd($block,$district,$work)
+    {
+        try
+        {
+            if($block!=null && $work!=null && $district!=null)
+            {
+                $sanction=RDSanction::where('district',$district)->where('work',$work)->where('block',$block)->get();
+                $progress=ProgressRD::where('work',$work)->first();
+                if($progress->count()===0)
+                {
+                    return back()->withErrors(['error'=>'No Progress found with this Gram Panchayat']);
+                }
+                $images=$progress->images;
+                return view('XEN.RD.update-form',compact('progress','images','sanction'));
+            }
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error'=>$e->getMessage()]);
+        }
+    }
 }
