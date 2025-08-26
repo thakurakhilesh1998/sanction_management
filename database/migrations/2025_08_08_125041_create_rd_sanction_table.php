@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('sanction_head');
             $table->string('sanction_purpose');
             $table->string('agency');
-            $table->string('work')->nullable();
+            $table->string('work',255)->index();
             $table->string('san_pdf')->nullable();
             $table->string('uc')->nullable();
             $table->timestamps();

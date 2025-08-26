@@ -24,8 +24,8 @@ class RDSanction extends Model
         'uc'
     ];
 
-    public function progress()
+    public function progress_rd()
     {
-       return $this->hasOne(Progress::class,'work','work'); 
+       return $this->hasOne(ProgressRD::class,'work','work'); 
     }
 }
