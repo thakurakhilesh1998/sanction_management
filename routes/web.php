@@ -114,6 +114,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::post('/rd-saveSan',[DirRDController::class,'store']);
     Route::get('/view-rd',[DirRDController::class,'viewSanction']);
     Route::post('/upload-signed-sanction-rd',[DirRDController::class,'uploadSignedSanction'])->name('uploadSanctionRd');
+    Route::get('/view-rd-progress/{district}/{block}/{work}',[DirRDController::class,'viewBlockProgress']);  
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -216,6 +217,20 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('/add-progress-rd/{block}/{district}/{work}',[XENRDController::class,'addProgressRd']);
     Route::post('/add-progress-rd',[XENRDController::class,'saveProgressRd']);
     Route::get('update-progress-rd/{block}/{district}/{work}',[XENRDController::class,'updateFormRd']);
+    Route::post('change-progress-rd/{id}',[XENRDController::class,'changeProgressRd']);
+    Route::post('/upload-signed-sanction-rd',[XENRDController::class,'uploadUCRD']);
+
+
+    Route::get('/viewUCRD/{filename}',function($filename)
+    {
+        $privatePath=storage_path('app/private/UC/'.$filename);
+        if(!file_exists($privatePath))
+        {
+            abort(404,"File Not found");
+        }
+        return response()->file($privatePath);
+    });
+
 
 
     Route::get('/',[XENController::class,'index']);

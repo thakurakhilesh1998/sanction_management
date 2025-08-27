@@ -65,12 +65,12 @@
                             <td>{{$san->sanction_head}}</td>
                             <td>{{$san->sanction_date}}</td>
                             <td>
-                                <a href="{{ url('xen/view-sanction-file', ['filename' => $san->san_sign_pdf]) }}" target="_blank">View Sanction File</a>
+                                <a href="{{ url('xen/view-sanction-file', ['filename' => $san->san_pdf]) }}" target="_blank">View Sanction File</a>
                             </td>
                             <td>
                                 @if($san->uc==null)
-                                    @if($san->progress!==null)
-                                        @if($san->progress->completion_percentage==='Work Started' || $san->progress->completion_percentage==='Partial Completion' || $san->progress->completion_percentage==='Work Completed')
+                                    @if($san->progress_rd!==null)
+                                        @if($san->progress_rd->completion_percentage==='Work Started' || $san->progress_rd->completion_percentage==='Partial Completion' || $san->progress_rd->completion_percentage==='Work Completed')
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadUc"  data-sanction-id="{{$san->id}}">Upload UC</button>
                                         @else
                                             <span>Work Not started yet.</span>
@@ -80,7 +80,7 @@
                                     @endif
                                 </td>
                                 @else
-                                    <a href="{{url('xen/viewUCgp',['filename'=>$san->uc])}}" target="_blank">View UC file</a>
+                                    <a href="{{url('xen/viewUCRD',['filename'=>$san->uc])}}" target="_blank">View UC file</a>
                                  @endif
                             </td>
                         </tr>
@@ -94,7 +94,7 @@
 <div class="modal fade" id="uploadUc" tabindex="-1" aria-labelledby="uploadUcLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="uploadForm" action="{{route('uploadUC')}}" method="POST" enctype="multipart/form-data">
+            <form id="uploadForm" action="{{url('xen/upload-signed-sanction-rd')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="uploadModalLabel">Upload UC</h5>

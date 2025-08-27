@@ -28,8 +28,10 @@
                     <th>Sanction Amount</th>
                     <th>Sanction Date</th>
                     <th>Work Name</th>
+                    <th>Status</th>
                     <th>Upload Sanction PDF</th>
                     <th>Edit</th>
+                    <th>View</th>
                     
                 </thead>
                 <tbody>
@@ -42,6 +44,13 @@
                         <td>{{ addCommas($s->san_amount) }}</td>
                         <td>{{ $s->sanction_date }}</td>
                         <td>{{$s->work}}</td>
+                        <td><strong>
+                            @if(isset($s->progress_rd)) 
+                                <span>{{$s->progress_rd->completion_percentage}}</span>
+                            @else
+                                <span>Not reported</span>
+                            @endif
+                        </strong></td>
                         <td>
                             @if($s->san_pdf!=null)
                                 <a href="{{route('viewSignedSanctionFileRD',['filename'=>$s->san_pdf])}}" target="_blank">View Sanction</a>
@@ -50,6 +59,7 @@
                             @endif
                         </td>
                         <td><a href="#">Edit</a></td>
+                        <td><a href="{{url('dir/view-rd-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->work)}}">View Progress</a></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -11,7 +11,7 @@
     <div class="card-header">
         <div id="progressData" 
             data-completion-status="{{ $progress->completion_percentage }}" 
-            data-update-url="{{ url('xen/change-progress/'.$progress->id) }}">
+            data-update-url="{{ url('xen/change-progress-rd/'.$progress->id) }}">
         </div>
         <h4>Update Sanction Progress- RD Sanctions</h4>
         @if(session('message'))

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SanRequestRd;
 use App\Models\RDSanction;
+use App\Models\ProgressRD;
 use Illuminate\Support\Facades\Storage;
 class DirRDController extends Controller
 {
@@ -59,7 +60,7 @@ class DirRDController extends Controller
 
     public function viewSanction()
     {
-        $rdsanctions = RDSanction::all();
+        $rdsanctions = RDSanction::with('progress_rd')->get();
         return view('Directorate/RD/view_sanction', compact('rdsanctions'));
     }
 
@@ -87,6 +88,26 @@ class DirRDController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
+    }
+
+    public function viewBlockProgress($district,$block,$work)
+    {
+        $sanctionsForGP=RDSanction::where('district',$district)->where('block',$block)->where('work',$work)->with('progress_rd')->get();
+        $completion=0;
+        $days=0;
+        $delayNotReported=0;
+        if($sanctionsForGP[0]->progress_rd!==null)
+        {
+            $lastUpdateDate=\Carbon\Carbon::parse($sanctionsForGP[0]->progress_rd->updated_at);
+            $currentDate=\Carbon\Carbon::now();
+            $days=$lastUpdateDate->diffInDays($currentDate);
+            $completion=$sanctionsForGP[0]->progress_rd->completion_percentage;    
+        }
+        else
+        {
+            $completion="Not Reported";
+        }
+        return view('Directorate.RD.view-rd-progress',compact('sanctionsForGP','completion','days'));
     }
 
 }
