@@ -41,7 +41,20 @@
                         @endif
                     </div>
             </div>
+             <div class="col-md-4">
+                <div class="card-custom">
+                    <h5>Last Updated on:</h5>
+                    <p>
+                        @if($gpDetails->pghar_image[0]->updated_at == null)
+                            Not updated
+                        @else
+                            {{$gpDetails->pghar_image[0]->updated_at->format('d-m-Y')}}
+                        @endif
+                    </div>
+            </div>
         </div>
+        
+
     </div>
 </div>
 @endsection

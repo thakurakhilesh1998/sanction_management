@@ -115,6 +115,8 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::get('/view-rd',[DirRDController::class,'viewSanction']);
     Route::post('/upload-signed-sanction-rd',[DirRDController::class,'uploadSignedSanction'])->name('uploadSanctionRd');
     Route::get('/view-rd-progress/{district}/{block}/{work}',[DirRDController::class,'viewBlockProgress']);  
+    Route::get('/edit-rd-sanction/{id}',[DirRDController::class,'editSanctionRd']);
+    Route::put('/sanction-update-rd/{id}',[DirRDController::class,'updateSanctionRd']);
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -274,6 +276,8 @@ Route::get('/view-signed-sanction-file/{filename}',function($filename)
     }
     return response()->file($privatePath);
 })->middleware(['auth','web','dirCheck'])->name('viewSignedSanctionFile');
+
+
 
 // Route to view the Sanction uploaded by RD
 Route::get('/view-signed-sanction-file-rd/{filename}',function($filename)

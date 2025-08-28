@@ -58,7 +58,13 @@
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadsan" data-id="{{$s->id}}">Upload Sanction</button>
                             @endif
                         </td>
-                        <td><a href="#">Edit</a></td>
+                        <td>
+                            @if($s->san_pdf==null)    
+                                <a href="{{url('dir/edit-rd-sanction'.'/'.$s->id)}}">Edit</a>
+                            @else
+                               <strong>Freezed</strong> 
+                            @endif
+                        </td>
                         <td><a href="{{url('dir/view-rd-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->work)}}">View Progress</a></td>
                     </tr>
                     @endforeach

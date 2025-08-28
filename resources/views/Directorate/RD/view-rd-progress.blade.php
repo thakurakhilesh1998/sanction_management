@@ -56,29 +56,27 @@
     <div class="border p-3">
         <h4 class="red-line p-2">Current Status of Work</h4>
         <div class="row mt-4">
-            <div class="col-md-3">
+            <div class="col-md-4">
                   <div class="card-custom">
                     <img src="{{asset('assets/img/pending.png')}}" alt="" alt="Pending with">
                     <h5>Work is Executing</h5>
                     <p>
-                        @if($sanctionsForGP[0]->status=='xen')
+                        @if($sanctionsForGP[0]->agency=='xen')
                             Executive Engineer
-                        @elseif($sanctionsForGP[0]->status=='gp')
-                            Gram Panchayat
                         @else   
                             No Progress Added
                         @endif
                     </p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card-custom">
                     <img src="{{asset('assets/img/construction.png')}}" alt="status of work">
                     <h5>Status of Work</h5>
                     <p>{{$completion}}</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="card-custom">
                     <img src="{{asset('assets/img/delay.png')}}" alt="Delay">
                     <h5>Delay</h5>
@@ -92,8 +90,8 @@
                         @endif
                     </p>
                 </div>
-            </div>
-                 <div class="col-md-3">
+            </div> --}}
+                 <div class="col-md-4">
                 <div class="card-custom">
                     <img src="{{asset('assets/img/remarks.png')}}" alt="remarks">
                     <h5>Remarks</h5>
@@ -112,7 +110,7 @@
             </div>
         </div>
     </div>
-    <div class="border p-3 mt-3">
+    <div class="border p-3 mt-4">
         <h4 class="red-line p-2">Images of the Work</h4>
             @if($completion==='Work Started' || 'Partial Completion' || 'Work Completed')  
                 @if($completion=='Work Started')

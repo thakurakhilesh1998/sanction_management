@@ -18,7 +18,7 @@ class XENRDController extends Controller
         try
         {
             $zone=Auth::user()->zone;
-            $sanctionQuery=RDSanction::where('agency','xen');
+            $sanctionQuery=RDSanction::where('agency','xen')->whereNotNull('san_pdf');;
              if($zone==='Shimla')
             {
                 $sanctionQuery->where(function($query)

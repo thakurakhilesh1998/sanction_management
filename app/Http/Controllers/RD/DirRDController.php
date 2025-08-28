@@ -110,4 +110,75 @@ class DirRDController extends Controller
         return view('Directorate.RD.view-rd-progress',compact('sanctionsForGP','completion','days'));
     }
 
+    public function editSanctionRd($id)
+    {
+        try
+        {
+            if($id===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Id can not be null']);
+            }
+            $sanction=RDSanction::find($id);
+            if($sanction->count()===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No sanction find with this ID']);
+            }
+            return view('Directorate/RD/edit-sanction',compact('sanction'));
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateSanctionRd(SanRequestRd $req,$id)
+    {
+        try
+        {
+            if($id===null)
+            {
+                return redirect()->back()->withErrors(['error' => 'Sanction Id can not be null']);
+            }
+            $data=$req->validated();
+            $sanction=RDSanction::find($id);
+            if($sanction->count===0)
+            {
+                return redirect()->back()->withErrors(['error' => 'No data found with this sanction']);
+            }
+            $privatePath = storage_path('app/private');
+            $jsonFilePath = $privatePath . '/output.json';
+
+            if(file_exists($jsonFilePath))
+            {
+                $jsonData=json_decode(file_get_contents($jsonFilePath),true);
+
+                if(isset($jsonData['data'][$data['district']]))
+                {
+                    if(!isset($jsonData['data'][$data['district']][$data['block']]))
+                    {
+                        return redirect()->back()->withErrors(['error' => 'Please Select appropriate Details']);    
+                    }
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['error' => 'District does not exists']);
+                }
+            }
+           $sanction->financial_year=$data['financial_year'];
+           $sanction->district=$data['district'];
+           $sanction->block=$data['block'];
+           $sanction->san_amount=$data['san_amount'];
+           $sanction->sanction_date=$data['sanction_date'];
+           $sanction->sanction_head=$data['sanction_head'];
+           $sanction->sanction_purpose=$data['sanction_purpose'];
+           $sanction->agency=$data['agency'];
+           $sanction->update();
+           return redirect(url('dir/view-rd'))->with("message","Sanction updated successfully!");
+        }   
+        catch (\Exception $e)
+        {
+
+        }
+    }
+
 }

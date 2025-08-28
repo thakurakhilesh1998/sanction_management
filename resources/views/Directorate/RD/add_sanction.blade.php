@@ -67,12 +67,13 @@
             <select name="sanction_purpose" id="sanction_purpose" class="form-control">
                 <option value="-1">Select Sanction Purpose</option>
                 <option value="Construction of BDO Office">Construction of BDO Office</option>
+                <option value="Construction of MMLB">Construction of MMLB</option>
             </select>
            </div>
 
            {{-- Execution of Work --}}
            <div class="mb-3">
-            <label for="purpose of sanction" class="form-label">Work is to be executed by:</label>
+            <label for="Executing Agency" class="form-label">Work is to be executed by:</label>
             <select name="agency" id="agency" class="form-control">
                 <option value="-1">Select Executing Agency</option>
                 <option value="xen">Executive Engineer</option>
