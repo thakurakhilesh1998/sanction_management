@@ -56,8 +56,8 @@
             <label for="Head of Sanction" class="form-label">Select Sanction Head</label>
             <select name="sanction_head" id="sanction_head" class="form-control">
                 <option value="-1">--Select Head--</option>
-                <option value="Head 1">Head 1</option>
-                <option value="Head 2">Head 2</option>
+                <option value="Head 1">2515-00-102-14-SOON</option>
+                <option value="Head 2">2515-00-102-16-SOON</option>
             </select>
             {{-- <input type="text" name="sanction_head" id="sanction_head" class="form-control"> --}}
            </div>
@@ -66,8 +66,8 @@
             <label for="purpose of sanction" class="form-label">Purpose of Sanction</label>
             <select name="sanction_purpose" id="sanction_purpose" class="form-control">
                 <option value="-1">Select Sanction Purpose</option>
-                <option value="Construction of BDO Office">Construction of BDO Office</option>
-                <option value="Construction of MMLB">Construction of MMLB</option>
+                <option value="Construction of BDO Office">Construction of Office Building</option>
+                <option value="Construction of MMLB">Construction of Residential Building</option>
             </select>
            </div>
 

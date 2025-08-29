@@ -92,7 +92,7 @@
     </script>
     @yield('scripts')
     
-
+    <script src="https://cdn.ux4g.gov.in/tools/accessibility-widget.js" async></script>        
 </body>
 
 </html>

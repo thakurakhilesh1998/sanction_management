@@ -23,8 +23,9 @@
             {{-- {{$sanction[0]->progress_rd->count()}}
             {{$sanction[0]->progress_rd->completion_percentage}} --}}
             @if(!isset($rdSanction[0]->progress_rd) || optional($rdSanction[0]->progress_rd)->completion_percentage === '-1')
-         
                 <a href="{{url("xen/add-progress-rd".'/'.$rdSanction[0]->block.'/'.$rdSanction[0]->district.'/'.$rdSanction[0]->work)}}" class="btn btn-primary btn-sm float-right">Add Progress</a>
+            @elseif(!isset($rdSanction[0]->progress_rd) || optional($rdSanction[0]->progress_rd)->completion_percentage === 'Work Completed')    
+                <a href="{{url("xen/update-progress-rd".'/'.$rdSanction[0]->block.'/'.$rdSanction[0]->district.'/'.$rdSanction[0]->work)}}" class="btn btn-primary btn-sm float-right">View Progress Added</a> 
             @else
                 <a href="{{url("xen/update-progress-rd".'/'.$rdSanction[0]->block.'/'.$rdSanction[0]->district.'/'.$rdSanction[0]->work)}}" class="btn btn-primary btn-sm float-right">Update Progress</a> 
             @endif  
@@ -35,7 +36,7 @@
         
         @else 
             <div class="table-responsive">
-                <table class="table table-bordered text-center" >
+                <table class="table table-bordered text-center" id="datatable">
                     <thead>
                         <th>Sr. No.</th>
                         <th>District Name</th>

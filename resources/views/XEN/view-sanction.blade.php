@@ -33,7 +33,7 @@
                     $seen = [];   
                     $i = 1;
                 @endphp
-                <table class="table table-bordered text-center">
+                <table class="table table-bordered text-center" id="datatable">
                     <thead>
                         <tr>
                             <th>Sr. No.</th>
