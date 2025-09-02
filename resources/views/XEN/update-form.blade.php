@@ -84,12 +84,34 @@
                             @else
                                 <td>No image uploaded yet!</td>
                             @endif
+                            @if($images && $images->count() > 0 && $images->work_started_image)
+                                <td> 
+                                    <button class="btn btn-success updateImageBtn" 
+                                    data-type="work_started_image" 
+                                    data-url="{{ url('xen/update-progress-image/'.$progress->id) }}">
+                                    Update Image
+                                    </button>
+                                </td>
+                            @else
+                                <td>No image uploaded yet!</td>
+                            @endif
                         </tr>
                         <tr>
                             <td>2.</td>
                             <td>Partial Completion Image</td>
                             @if($images && $images->count() > 0 && $images->work_partial_image)
                                 <td><a href="{{ url('uploads/images/'.$images->work_partial_image) }}" target="_blank">View Image</a></td>
+                            @else
+                                <td>No image uploaded yet!</td>
+                            @endif
+                            @if($images && $images->count() > 0 && $images->work_partial_image)
+                                <td> 
+                                    <button class="btn btn-success updateImageBtn" 
+                                    data-type="work_partial_image" 
+                                    data-url="{{ url('xen/update-progress-image/'.$progress->id) }}">
+                                    Update Image
+                                    </button>
+                                </td>
                             @else
                                 <td>No image uploaded yet!</td>
                             @endif
@@ -102,6 +124,17 @@
                             @else
                                 <td>No image uploaded yet!</td>
                             @endif
+                            @if($images && $images->count() > 0 && $images->work_completed_image)
+                                <td> 
+                                    <button class="btn btn-success updateImageBtn" 
+                                    data-type="work_completed_image" 
+                                    data-url="{{ url('xen/update-progress-image/'.$progress->id) }}">
+                                    Update Image
+                                    </button>
+                                </td>
+                            @else
+                                <td>No image uploaded yet!</td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>
@@ -109,8 +142,56 @@
         </div>
     </div>
 </div>
+
+{{-- Start of Image Update Modal --}}
+
+<!-- Modal -->
+<div class="modal fade" id="updateImageModal" tabindex="-1" aria-labelledby="updateImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="updateImageForm" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('POST')
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateImageModalLabel">Update Progress Image</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <input type="hidden" name="image_type" id="imageType"> <!-- work_started_image / work_partial_image / work_completed_image -->
+              <div class="mb-3">
+                  <label for="newImage" class="form-label">Choose New Image</label>
+                  <input type="file" class="form-control" name="new_image" id="newImage" accept="image/*" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update Image</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+
 @endsection
 
 @section('scripts')
+
+<script>
+$(document).ready(function () {
+    $('.updateImageBtn').click(function () {
+        let imageType = $(this).data('type');
+        let url = $(this).data('url');
+
+        // Set form action and hidden field
+        $('#updateImageForm').attr('action', url);
+        $('#imageType').val(imageType);
+
+        // Show modal
+        $('#updateImageModal').modal('show');
+    });
+});
+</script>
+
+
 <script src="{{asset('assets/js/progress_update_validation.js')}}"></script>
 @endsection

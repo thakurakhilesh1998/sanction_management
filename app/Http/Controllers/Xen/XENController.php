@@ -114,7 +114,7 @@ class XENController extends Controller
     {
         try
         {
-            $sanction=Sanction::where('district',$district)->where('block',$block)->where('gp',$gp)->with('progress')->get();
+            $sanction=Sanction::where('district',$district)->where('block',$block)->where('gp',$gp)->where('status','xen')->with('progress')->get();
             return view('XEN/view-gpsanction',compact('sanction'));
         }
         catch(Exception $e)
@@ -358,4 +358,62 @@ class XENController extends Controller
     {
 
     }
+
+    public function updateProgressImage(Request $request, $id)
+    {
+        $progress=Progress::where('id',$id)->first();
+        $request->validate([
+            'image_type' => 'required|in:work_started_image,work_partial_image,work_completed_image',
+            'new_image' => 'required|image|mimes:jpeg,png,jpg|max:1024',
+        ]);
+
+        $progressImage = Image::where('progress_id', $id)->firstOrFail();
+        $imageType = $request->image_type;
+        
+          // Delete old image if exists
+        if ($progressImage->$imageType && file_exists(public_path('uploads/images/'.$progressImage->$imageType))) {
+            unlink(public_path('uploads/images/'.$progressImage->$imageType));
+        }
+
+         // Save new image
+        $filename=$progress->gp.'_'.time().'_'.$request->file('new_image')->getClientOriginalName();
+        $request->file('new_image')->move(public_path('uploads/images'), $filename);
+
+        $progressImage->$imageType = $filename;
+        $progressImage->save();
+
+        return redirect()->back()->with('message', 'Image updated successfully!');
+    }
+
+    public function revertSanction(Request $request)
+    {
+        try
+        {
+            $sanctionId = $request->sanction_id;
+            $gp = $request->gp;
+            // Fetch sanction
+            $sanction = Sanction::findOrFail($sanctionId);
+            // Check if it's the only sanction for that GP
+            $sanctionCount = Sanction::where('gp', $gp)->where('status','xen')->count();
+            // dd($sanctionCount);
+            // Check if progress exists for that GP
+            $progressExists = Progress::where('gp', $gp)->exists();
+            // dd($progressExists);
+            if ($sanctionCount === 1 && $progressExists) {
+            // Set status to null
+                return redirect()->back()->withErrors([
+            'error' => 'Revert not allowed! There is already progress added for this Sanction'
+            ]); 
+            }
+            $sanction->status = null;
+            $sanction->save();
+            return redirect('xen/view-sanction')->with('message', 'Sanction reverted successfully!');
+        }
+        catch (Exception $e)
+        {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+        
+        }
+   
 }

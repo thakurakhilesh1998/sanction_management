@@ -48,6 +48,7 @@
                         <th>Sanction Date</th>
                         <th>Sanction File</th>
                         <th>Upload UC if Sanction amount is fully utilized</th>
+                        <th>Revert Sanction Back <b>If sanction wrongly sent</b></b></th>
                     </thead>
                     @php
                         $i=1;    
@@ -85,6 +86,14 @@
                                     <a href="{{url('xen/viewUCgp',['filename'=>$san->uc])}}" target="_blank">View UC file</a>
                                  @endif
                             </td>
+                            <td>
+                                @if($san->uc==null)
+                                    <button class="btn btn-danger revertBtn"
+                                    data-sanction-id="{{ $san->id }}" data-gp="{{ $san->gp }}">Revert</button>
+                                @else
+                                    <span>UC is alread uploaded</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </table>
@@ -119,17 +128,52 @@
         </div>
     </div>
 </div>
+
+{{-- Start of Confirmation Modal --}}
+<!-- Revert Confirmation Modal -->
+<div class="modal fade" id="revertModal" tabindex="-1" aria-labelledby="revertModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="revertForm" method="POST" action="{{ route('xen.revertSanction') }}">
+        @csrf
+        <input type="hidden" name="sanction_id" id="revertSanctionId">
+        <input type="hidden" name="gp" id="revertGp">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="revertModalLabel">Confirm Revert</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to <strong>revert this sanction</strong>?  
+            <br>This action <span class="text-danger">cannot be undone</span>.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Revert</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
 {{-- End of Modal --}}
 @endsection
 @section('scripts')
 <script>
     $(document).ready(function()
-    {   
+    {  
+        $('.revertBtn').on('click', function () {
+        let sanctionId = $(this).data('sanction-id');
+        let gp = $(this).data('gp');
+        
+        $('#revertSanctionId').val(sanctionId);
+        $('#revertGp').val(gp);
+
+        $('#revertModal').modal('show');
+        }); 
         $('button[data-bs-target="#uploadUc"]').on('click',function()
-    {
-        let sanctionId=$(this).data('sanction-id');
-        $('#sanction_id').val(sanctionId);
-    })
-    })
+        {
+            let sanctionId=$(this).data('sanction-id');
+            $('#sanction_id').val(sanctionId);
+        })
+    });
 </script>
 @endsection

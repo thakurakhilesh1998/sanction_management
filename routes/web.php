@@ -264,6 +264,15 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('update-progress/{gp}/{block}/{district}',[XENController::class,'updateProgress']);
     Route::post('change-progress/{id}',[XENController::class,'changeProgress']);
     Route::get('view-progress',[XENController::class,'viewProgress']);
+
+
+    Route::post('/update-progress-image/{id}', [XENController::class, 'updateProgressImage'])
+     ->name('xen.updateProgressImage');
+
+    Route::post('/xen/revert-sanction', [XENController::class, 'revertSanction'])
+     ->name('xen.revertSanction');
+
+
 });
 
 // Route to view the Sanction uploaded by PR
