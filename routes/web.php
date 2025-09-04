@@ -44,7 +44,7 @@ Route::prefix('admin')->middleware(['auth','web','adminCheck'])->group(function(
     Route::get('/change-password',[UserController::class,'changePassword']);
     Route::put('/change-password',[UserController::class,'updatePassword']);
     Route::get('/manage-sanction',[AdminController::class,'manageSanction']);
-    Route::post('sanction-delete/{id}',[AdminController::class,'deleteSanction']);
+    Route::delete('sanction-delete/{id}',[AdminController::class,'deleteSanction']);
     // Manage Sanction
     Route::get('/sanction-edit/{id}',[AdminController::class,'editSanction'])->name('admin.edit');
     Route::put('/sanction-update/{id}',[AdminController::class,'updateSanction'])->name('admin.update');
@@ -107,7 +107,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
         return response()->file($privatePath);
     })->name('viewSanctionFileGenerated');
 
-
+    Route::get('/xenreport',[DirController::class,'viewXenReport']);
 
     // Rural Development Sanction
     Route::get('/rd-add',[DirRDController::class,'addSanction']);

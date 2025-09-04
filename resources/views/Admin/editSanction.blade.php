@@ -62,6 +62,14 @@
                     <option value="bdo" {{$sanction->status=='bdo'?'selected':''}}>bdo</option>
                 </select>
         </div>
+        <div class="mb-3">
+            <label for="Delete UC">Are you really want to delete UC?</label>
+            <select name="deleteuc" id="deleteuc" class="form-control">
+                    <option value="-1">--Select Head--</option>
+                    <option value="yes">Yes</option>
+                     <option value="no">No</option>
+            </select>
+        </div>
             <button type="submit" class="btn btn-success">Update</button>
     </form>
 </div>

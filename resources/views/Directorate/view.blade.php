@@ -28,6 +28,7 @@
                     <th>Financial Year</th>
                     <th>Sanction Amount</th>
                     <th>Sanction Date</th>
+                    <th>Head</th>
                     <th>Currently With</th>
                     <th>Status</th>
                     {{-- <th>View Generated Sanction</th> --}}
@@ -48,6 +49,7 @@
                         <td>{{ $s->financial_year}}</td>
                         <td>{{ addCommas($s->san_amount) }}</td>
                         <td>{{ $s->sanction_date }}</td>
+                        <td>{{$s->sanction_head}}</td>
                         <td>
                             @if($s->status===NULL)
                                  <span>Not Forwarded by District</span>

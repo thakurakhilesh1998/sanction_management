@@ -580,4 +580,9 @@ class DirController extends Controller
         }
         return view('Directorate.Dashboard.completed',compact('completedWorks','iscompletedWorks'));
     }
+
+    public function viewXenReport()
+    {
+        
+    }
 }

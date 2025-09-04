@@ -54,7 +54,8 @@
                 url: "{{url('admin/sanction-delete')}}/"+id,
                 type:'POST',
                 data:{
-                    "_token":'{{ csrf_token() }}'
+                    "_token":'{{ csrf_token() }}',
+                    "_method": "DELETE"
                 },
                 success: function(response){
                     alert("Deleted Successfully");

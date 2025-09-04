@@ -31,6 +31,12 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/dir/xenreport')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>View Ex. En. Wise Report</span>
+        </a>
+    </li>
     
     <hr class="sidebar-divider">
 

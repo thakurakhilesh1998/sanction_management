@@ -22,7 +22,7 @@ class Home extends Controller
             {
                 $query->where('isFreeze','yes');
             })->get();
-            $utilizedSan=$sanctionU->count();
+            $utilizedSan=Sanction::whereNotNull('uc')->sum('san_amount');
             $sanUtilized=$sanctionU->sum('san_amount');
             $newGP=Sanction::where('newGP','yes')->count();
             return view('FrontEnd/index',compact('totalSanction','sanUtilized','sanctionCount','utilizedSan','newGP'));

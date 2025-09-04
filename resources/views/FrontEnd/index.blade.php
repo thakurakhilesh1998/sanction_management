@@ -24,7 +24,7 @@
                     <div class="card cardt hidden text-white mb-4" style="background-color: #2f4b7c">
                         <div class="card-body">
                             Total Utilized Amount
-                            <h3>{{addCommas($sanUtilized)}}</h3>
+                            <h3>{{addCommas($utilizedSan)}}</h3>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             {{-- <a class="small text-white stretched-link" href="{{url('/details/utilized')}}">View Details</a>

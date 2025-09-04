@@ -65,9 +65,15 @@ class AdminController extends Controller
             'sanction_date'   => 'required|date',
             'sanction_head'   => 'required',
             'sanction_purpose'=> 'required',
-            'status'           => 'nullable',
+            'status'          => 'nullable',
+            'deleteuc'         => 'nullable|in:yes,no,-1',
         ]);
         $sanction=Sanction::findOrFail($id);
+
+         if ($request->deleteuc === 'yes') {
+            $sanction->uc = null; // clear UC column
+        }
+
         $sanction->update([
         'financial_year'  => $request->financial_year,
         'district'         => $request->district,
