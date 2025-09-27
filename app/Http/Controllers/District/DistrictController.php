@@ -465,4 +465,45 @@ class DistrictController extends Controller
         
     }
 
+    public function changeSanction()
+    {
+        $district=Auth::user()->district;
+        $sanction=Sanction::where('district',$district)->get();
+        return view('District/changesanction',compact('sanction'));
+    }
+
+    public function changeSanctionDist($id)
+    {
+        try
+        {
+            $privatePath=storage_path('app/private');
+            $jsonFilePath=$privatePath . '/output.json';
+            $districtU=Auth::user()->district;
+            $blocks='';
+
+            if(file_exists($jsonFilePath))
+            {
+                $jsonData = json_decode(file_get_contents($jsonFilePath), true);
+                $blocks=$jsonData['data'][$districtU];
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Something went wrong']);
+            }
+            if($id!=null)        
+            {
+                $sanction=Sanction::findorfail($id);
+                return view('District/change-san-form',compact('sanction','blocks'));
+            }   
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Sanction Id can not be null']);   
+            }
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);   
+        }
+        
+    }
 }

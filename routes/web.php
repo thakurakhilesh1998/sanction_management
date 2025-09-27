@@ -117,6 +117,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::get('/view-rd-progress/{district}/{block}/{work}',[DirRDController::class,'viewBlockProgress']);  
     Route::get('/edit-rd-sanction/{id}',[DirRDController::class,'editSanctionRd']);
     Route::put('/sanction-update-rd/{id}',[DirRDController::class,'updateSanctionRd']);
+    
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -161,7 +162,8 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::get('/view-block-status',[DistrictController::class,'viewBlockStatus']);
     Route::get('/viewGPs/{block}',[DistrictController::class,'getGPStatus']);
     Route::get('/viewGPData/{gp}/{block}',[DistrictController::class,'getGPPData']);
-
+    Route::get('/change-sanction-district',[DistrictController::class,'changeSanction']);
+    Route::get('/changeform/{gp}',[DistrictController::class,'changeSanctionDist']);
 });
 });
 
