@@ -164,6 +164,7 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::get('/viewGPData/{gp}/{block}',[DistrictController::class,'getGPPData']);
     Route::get('/change-sanction-district',[DistrictController::class,'changeSanction']);
     Route::get('/changeform/{gp}',[DistrictController::class,'changeSanctionDist']);
+    Route::get('/change-sanction-gp/{gp}',[DistrictController::class,'changeSanctionGP']);
 });
 });
 

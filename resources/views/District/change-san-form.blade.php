@@ -12,7 +12,7 @@
         @endif
     </div>
     <div class="card-body">
-        <form action="{{url('/district/update-sanction/'.$sanction->id)}}"  id="sanction" method="POST">
+        <form action="{{url('/district/change-sanction-gp/'.$sanction->id)}}"  id="sanction" method="POST">
             @csrf
             @method('PUT')
             {{-- Financial Year --}}
@@ -100,7 +100,7 @@
 
            {{-- Upload file of sanction --}}
            <div class="mb-3">
-            <label for="Sanction File" class="form-label">Sanction File</label>
+            <label for="Sanction File" class="form-label">New Sanction File</label>
             <input type="file" id="san_sign_pdf" name="san_sign_pdf" accept="application/pdf" class="form-control">
            </div>
            
@@ -160,5 +160,5 @@
     }
    
 </script>
-<script src="{{asset('assets/js/validation.js')}}"></script>
+<script src="{{asset('assets/js/validation_change.js')}}"></script>
 @endsection

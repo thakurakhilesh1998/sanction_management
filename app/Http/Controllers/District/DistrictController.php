@@ -506,4 +506,66 @@ class DistrictController extends Controller
         }
         
     }
+
+    public function changeSanctionGP(Request $req,$id)
+    {
+        try
+        {
+            $districtU=Auth::user()->district;
+
+            if($id===null)
+            {
+                return redirect()->back()->withErrors(['error'=>'Sanction Id can not be null']);
+            }
+
+            if($districtU!=$req[$district]){
+                return redirect()->back()->withErrors(['error'=>'District does not match']);
+            }
+
+            $sanction=Sanction::find($id);
+
+            if(!$sanction)
+            {
+                return redirect()->back()->withErrors(['error'=>'No data found with this sanction']);
+            }
+
+            $privatePath = storage_path('app/private');
+            $jsonFilePath = $privatePath . '/output.json';
+
+            if(file_exists($jsonFilePath))
+            {
+                $jsonData=json_decode(file_get_contents($jsonFilePath),true);
+
+                if (isset($jsonData['data'][$data['district']])) {
+                    if (!isset($jsonData['data'][$data['district']][$data['block']])) {
+                        return redirect()->back()->withErrors(['error' => 'Please select appropriate Gram Panchayat']);
+                    }
+                }
+            }
+            else
+            {
+                 return redirect()->back()->withErrors(['error' => 'District does not exist']);
+            }
+
+                $validated=$request->validate([
+                'financial_year'   => 'required|not_in:-1',
+                'district'         => 'required|not_in:-1',
+                'block'            => 'required|not_in:-1',
+                'gp'               => 'required|not_in:-1',
+                'newGP'            => 'required|in:yes,no',   // assuming values "yes" or "no"
+                'sanction_amt'     => 'required|numeric|min:1',
+                'sanction_date'    => 'required|date|before_or_equal:today',
+                'sanction_head'    => 'required|not_in:-1',
+                'sanction_purpose' => 'required|not_in:-1',
+                'san_sign_pdf'     => 'required|mimes:pdf|max:1024', 
+            ]);
+            
+        }
+        catch (\Exception $e)
+        {
+
+        }
+
+        
+    }
 }
