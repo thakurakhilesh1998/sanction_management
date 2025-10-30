@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;  
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SanctionAddedMail;
+
 class DirController extends Controller
 {
 
@@ -548,7 +551,14 @@ class DirController extends Controller
             $sanction=Sanction::find($request->input('sanction_id'));
             $sanction->san_sign_pdf=$filename;
             $sanction->save();
-            return redirect()->back()->with('success', 'File uploaded successfully!');
+
+            // Send email to the District
+
+            $gpName=$sanction->gp ?? "Not Available";
+            $blockName=$sanction->block ?? "Not Available";
+
+            Mail::to('thakurakhileshm21@gmail.com')->send(new SanctionAddedMail($gpName,$blockName));
+            return redirect()->back()->with('success', 'File uploaded successfully and mail sent successfully!');
         }
         catch (\Exception $e)
         {
