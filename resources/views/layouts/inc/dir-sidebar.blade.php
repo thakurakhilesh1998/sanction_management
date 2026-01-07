@@ -40,6 +40,27 @@
     
     <hr class="sidebar-divider">
 
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+       RGSA Sanction 
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/dir/add-csc')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>Add Sanction CSC</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/dir/view-csc')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>View Sanction CSC</span>
+        </a>
+    </li>
+
     {{-- Rural Development Department Sanction --}}
     <!-- Heading -->
     <div class="sidebar-heading">

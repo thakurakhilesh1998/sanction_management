@@ -10,6 +10,8 @@ use App\Http\Controllers\GP\GPController;
 use App\Http\Controllers\Xen\XENController;
 use App\Http\Controllers\RD\DirRDController;
 use App\Http\Controllers\RD\XENRDController;
+use App\Http\Controllers\RGSA\RGSAController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -117,6 +119,11 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::get('/view-rd-progress/{district}/{block}/{work}',[DirRDController::class,'viewBlockProgress']);  
     Route::get('/edit-rd-sanction/{id}',[DirRDController::class,'editSanctionRd']);
     Route::put('/sanction-update-rd/{id}',[DirRDController::class,'updateSanctionRd']);
+
+
+    // RGSA Sanction
+    Route::get('/add-csc',[RGSAController::class,'addCSCSanction']);
+    Route::get('/view-csc',[RGSAController::class,'viewCSCSanction']);
     
 });
 
