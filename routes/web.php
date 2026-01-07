@@ -107,7 +107,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
         return response()->file($privatePath);
     })->name('viewSanctionFileGenerated');
 
-    Route::get('/xenreport',[DirController::class,'viewXenReport']);
+    // Route::get('/xenreport',[DirController::class,'viewXenReport']);
 
     // Rural Development Sanction
     Route::get('/rd-add',[DirRDController::class,'addSanction']);
@@ -162,9 +162,28 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     Route::get('/view-block-status',[DistrictController::class,'viewBlockStatus']);
     Route::get('/viewGPs/{block}',[DistrictController::class,'getGPStatus']);
     Route::get('/viewGPData/{gp}/{block}',[DistrictController::class,'getGPPData']);
-    Route::get('/change-sanction-district',[DistrictController::class,'changeSanction']);
-    Route::get('/changeform/{gp}',[DistrictController::class,'changeSanctionDist']);
-    Route::get('/change-sanction-gp/{gp}',[DistrictController::class,'changeSanctionGP']);
+
+    // Chanage Sanction
+
+    // Route::get('/change-sanction-district',[DistrictController::class,'changeSanction']);
+    // Route::get('/changeform/{gp}',[DistrictController::class,'changeSanctionDist']);
+    // Route::get('/change-sanction-gp/{gp}',[DistrictController::class,'changeSanctionGP']);
+    
+
+    // View Progress of Sanction Forwarded by the District to either XEN or GP
+    
+    Route::get('/view-progress-gp/{gp}/{block}',[DistrictController::class,'viewProgressGp']);
+
+    // View UC for the work uploaded. 
+    Route::get('/viewUCgp/{filename}',function($filename)
+    {
+        $privatePath=storage_path('app/private/UC/' . $filename);
+        if(!file_exists($privatePath))
+        {
+            abort(404,'File Not Found.');
+        }
+        return response()->file($privatePath);
+    });
 });
 });
 

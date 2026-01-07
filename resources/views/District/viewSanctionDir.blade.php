@@ -26,6 +26,7 @@
                     <th>Amount</th>
                     <th>Sanction Order</th>
                     <th>Action</th>
+                    <th>View Progress</th>
             </thead>
             <tbody>
                 @php
@@ -57,6 +58,7 @@
                             @endif
 
                         </td>
+                        <td><a href="{{url('district/view-progress-gp/'.$s->gp.'/'.$s->block)}}">View</a></td>
                     </tr>
                 @endif
                 @endforeach

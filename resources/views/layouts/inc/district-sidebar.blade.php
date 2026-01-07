@@ -49,12 +49,15 @@
         <span>View Sanction</span>
     </a>
     </li>
-    <li class="nav-item">
+    
+    
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{url('district/change-sanction-district')}}" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
         <span>Change Sanction</span>
     </a>
-    </li>
+    </li> --}}
+
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Panchayat Ghar Details

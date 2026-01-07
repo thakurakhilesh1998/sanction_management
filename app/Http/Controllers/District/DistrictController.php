@@ -465,6 +465,7 @@ class DistrictController extends Controller
         
     }
 
+    /* 
     public function changeSanction()
     {
         $district=Auth::user()->district;
@@ -564,8 +565,27 @@ class DistrictController extends Controller
         catch (\Exception $e)
         {
 
+        }        
+    }
+    */
+    
+    public function viewProgressGp($gp,$block)
+    {
+        $sanctionsForGP=Sanction::where('gp',$gp)->with('progress')->get();
+        $completion=0;
+        $days=0;
+        $delayNotReported=0;
+        if($sanctionsForGP[0]->progress!==null)
+        {
+            $lastUpdateDate=\Carbon\Carbon::parse($sanctionsForGP[0]->progress->updated_at);
+            $currentDate=\Carbon\Carbon::now();
+            $days=$lastUpdateDate->diffInDays($currentDate);
+            $completion=$sanctionsForGP[0]->progress->completion_percentage;    
         }
-
-        
+        else
+        {
+            $completion="Not Reported";
+        }
+        return view('District.viewGpDetails',compact('sanctionsForGP','completion','days'));
     }
 }
