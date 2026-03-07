@@ -22,4 +22,9 @@ class CSCSanction extends Model
         'san_pdf',
         'uc'
     ];
+
+    public function progress_csc()
+    {
+        return $this->hasOne(Progress_CSC::class,'work','work');
+    }
 }

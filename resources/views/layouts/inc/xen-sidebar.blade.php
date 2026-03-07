@@ -39,7 +39,23 @@
     </li>
     <hr class="sidebar-divider">
     <!-- Heading -->
+
+    {{-- Sidebar divider --}}
+     <div class="sidebar-heading">
+        RGSA Sanction 
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/xen/view-csc-sanction')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>View CSC (RGSA) Sanction</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <!-- Heading -->
     
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

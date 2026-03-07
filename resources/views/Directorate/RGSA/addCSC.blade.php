@@ -16,7 +16,7 @@
     </div>
     <div class="card-body">
         <h4>Add Sanction for Construction of CSC</h3>
-        <form action="{{url('dir/sanction-add')}}"  id="sanction" method="POST">
+        <form action="{{url('dir/store-csc')}}"  id="sanction" method="POST">
             @csrf
             {{-- Financial Year --}}
             <div class="mb-3">
@@ -185,5 +185,5 @@
     }
 </script>
 
-<script src="{{asset('assets/js/validation.js')}}"></script>
+<script src="{{asset('assets/js/val_csc.js')}}"></script>
 @endsection

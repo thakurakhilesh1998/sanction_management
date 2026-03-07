@@ -11,6 +11,7 @@ use App\Http\Controllers\Xen\XENController;
 use App\Http\Controllers\RD\DirRDController;
 use App\Http\Controllers\RD\XENRDController;
 use App\Http\Controllers\RGSA\RGSAController;
+use App\Http\Controllers\RGSA\XENRGSAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,8 +124,11 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
 
     // RGSA Sanction
     Route::get('/add-csc',[RGSAController::class,'addCSCSanction']);
+    Route::post('/store-csc',[RGSAController::class,'storeCSCSanction']); 
     Route::get('/view-csc',[RGSAController::class,'viewCSCSanction']);
-    
+    Route::get('/edit-csc/{id}',[RGSAController::class,'viewEditPageCSC']);
+    Route::put('/sanction-update-csc/{id}',[RGSAController::class,'updateSanctionCSC']);
+    Route::post('/upload-signed-sanction-csc',[RGSAController::class,'uploadSignedSanction'])->name('uploadSanctionCSC');
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -251,6 +255,12 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::post('change-progress-rd/{id}',[XENRDController::class,'changeProgressRd']);
     Route::post('/upload-signed-sanction-rd',[XENRDController::class,'uploadUCRD']);
 
+    // Routes for RGSA Sanction
+    Route::get('view-csc-sanction',[XENRGSAController::class,'viewSanction']);
+    Route::get('view-gp-san-rgsa/{distric}/{block}/{gp}/{work}/{agency}',[XENRGSAController::class,'viewGPSanRGSA']);
+    Route::get('add-progress-csc/{gp}/{block}/{district}/{work}',[XENRGSAController::class,'addProgressCSC']);
+    Route::post('/add-progress-csc',[XENRGSAController::class,'saveProgressCSC']);
+
 
     Route::get('/viewUCRD/{filename}',function($filename)
     {
@@ -300,6 +310,8 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
 
     Route::post('/xen/revert-sanction', [XENController::class, 'revertSanction'])
      ->name('xen.revertSanction');
+
+    
 
 
 });
