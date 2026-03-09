@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CSCSanction;
 use App\Models\Progress_CSC;
+use App\Models\ProgressImgCsc;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Progress\CSCProgressData;
 
@@ -136,6 +137,140 @@ class XENRGSAController extends Controller
         catch (\Exception $e)
         {
             dd($e->getMessage());
+        }
+    }
+
+    public function updateFormCSC($gp,$block,$district,$work)
+    {
+        try
+        {
+            if($gp!=null && $work!=null && $district!=null && $block!=null)
+            {
+                $sanction=CSCSanction::where('gp',$gp)->where('work',$work)->where('district',$district)->where('block',$block)->get();
+                $progress=Progress_CSC::where('work',$work)->first();
+                if($progress->count()===0)
+                {
+                    return back()->withErrors(['error'=>'No Progress found with this Gram Panchayat']);
+                }
+                $images=$progress->images;
+                return view('XEN.CSC.update-form',compact('progress','images','sanction'));
+            }
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function changeProgressCSC(Request $request,$id)
+    {
+         try
+        {
+            $request->validate([
+                'completion_status' => 'required|string',
+                'statusImage' => 'nullable|image|max:1000', 
+            ]);
+        
+            $progress=Progress_CSC::findOrFail($id);
+            $currentStage=$progress->completion_percentage;
+            $stage=$request->input('completion_status');
+            // Stage order
+            $stageOrder=[
+                'Tender Floated' => ['Tender Awarded'],
+                'Tender Awarded' => ['Work Started'],
+                'Work Started' => ['Partial Completion'],
+                'Partial Completion' => ['Work Completed'],
+                'Work Completed' => []
+            ];
+
+            // If Tender Cancelled selected reset the progress
+            if($stage==='Tender Cancelled')
+            {
+                $progress->completion_percentage=-1;
+                $progress->save();
+                return response()->json(
+                    ['message'=>'Tender Cancelled Updated',
+                     'redirect_url'=>url('xen/view-gp-san-rgsa'.'/'.$progress->district.'/'.$progress->block.'/'.$progress->gp.'/'.$progress->work.'/'.'xen')]);
+            }
+
+            if(!in_array($stage,$stageOrder[$currentStage]))
+            {
+                return response()->json(['error'=>'Invalid progress flow.'],400);
+            }
+
+            if(in_array($stage,['Work Started', 'Partial Completion', 'Work Completed'])){
+                if(!$request->hasFile('status_image'))
+                {
+                    return response()->json(['error' => 'Image is required for this stage!'], 400);
+                }
+
+                $uploadedImage=$request->file('status_image');
+                $filename=$filename=$progress->gp.'_'.time().'_'.$uploadedImage->getClientOriginalName();
+                $filePath='uploads/images/'.$filename;
+                $uploadedImage->move(public_path('uploads/images'),$filename);
+                $image=ProgressImgCsc::where('progress_id', $progress->id)->first();
+                if($stage==='Work Started')
+                {
+                   if($image)
+                   {
+                    $image->work_started_image=$filename;
+                    $image->save();
+                   }
+                   else
+                   {
+                    ProgressImgCsc::create([
+                        'progress_id' => $progress->id,
+                        'work_started_image' => $filename
+                    ]);
+                   }   
+                }
+                else if($stage==='Partial Completion')
+                {
+                    if($image)
+                   {
+                    $image->work_partial_image=$filename;
+                    $image->save();
+                   }
+                else
+                   {
+                    ProgressImgCsc::create([
+                        'progress_id' => $progress->id,
+                        'work_partial_image' => $filename
+                    ]);
+                   } 
+                }
+                else if($stage==='Work Completed')
+                {
+                    $sanctions=CSCSanction::where('work',$progress->work)->where('block',$progress->block)->where('district',$progress->district)->where('gp',$progress->gp)->get();
+                    foreach($sanctions as $san)
+                    {
+                        if($san->uc==null)
+                        { 
+                            return response()->json(['error' => 'Please upload UC of all Sanctions before marking the Work as Completed'], 400);
+                        }
+                    }
+                    if($image)
+                   {
+                    $image->work_completed_image=$filename;
+                    $image->save();
+                   }
+                   else
+                   {
+                    ProgressImgCsc::create([
+                        'progress_id' => $progress->id,
+                        'work_completed_image' => $filename
+                    ]);
+                   }   
+                }
+            }
+            $progress->remarks=$request->input('remarks');
+            $progress->completion_percentage=$stage;
+            $progress->save();
+            return response()->json(['message' => 'Progress updated successfully!']);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
     }
 }

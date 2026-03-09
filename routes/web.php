@@ -260,8 +260,10 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::get('view-gp-san-rgsa/{distric}/{block}/{gp}/{work}/{agency}',[XENRGSAController::class,'viewGPSanRGSA']);
     Route::get('add-progress-csc/{gp}/{block}/{district}/{work}',[XENRGSAController::class,'addProgressCSC']);
     Route::post('/add-progress-csc',[XENRGSAController::class,'saveProgressCSC']);
-
-
+    Route::get('/update-progress-csc/{gp}/{block}/{district}/{work}',[XENRGSAController::class,'updateFormCSC']);
+    Route::post('/change-progress-csc/{id}',[XENRGSAController::class,'changeProgressCSC']);
+    
+       
     Route::get('/viewUCRD/{filename}',function($filename)
     {
         $privatePath=storage_path('app/private/UC/'.$filename);

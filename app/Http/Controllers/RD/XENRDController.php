@@ -163,7 +163,7 @@ class XENRDController extends Controller
 
     public function changeProgressRd(Request $request,$id)
     {
-           try
+        try
         {
             $request->validate([
                 'completion_status' => 'required|string',

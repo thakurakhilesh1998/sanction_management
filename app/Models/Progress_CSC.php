@@ -23,4 +23,9 @@ class Progress_CSC extends Model
     {
          return $this->belongsTo(CSCSanction::class, 'work', 'work');
     }
+
+      public function images()
+    {
+        return $this->hasOne(ProgressImgCsc::class, 'progress_id', 'id');
+    }  
 }
