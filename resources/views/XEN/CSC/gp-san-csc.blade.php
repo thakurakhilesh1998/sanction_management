@@ -97,7 +97,7 @@
 <div class="modal fade" id="uploadUc" tabindex="-1" aria-labelledby="uploadUcLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="uploadForm" action="{{url('xen/upload-signed-sanction-rd')}}" method="POST" enctype="multipart/form-data">
+            <form id="uploadForm" action="{{url('xen/upload-signed-sanction-csc')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="uploadModalLabel">Upload UC</h5>

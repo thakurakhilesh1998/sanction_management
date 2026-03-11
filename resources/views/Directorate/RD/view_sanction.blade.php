@@ -65,7 +65,7 @@
                                <strong>Freezed</strong> 
                             @endif
                         </td>
-                        <td><a href="{{url('dir/view-rd-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->work)}}">View Progress</a></td>
+                        <td><a href="{{url('dir/view-csc-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->work)}}">View Progress</a></td>
                     </tr>
                     @endforeach
                 </tbody>

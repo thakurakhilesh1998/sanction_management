@@ -9,7 +9,7 @@ use App\Models\Progress_CSC;
 use App\Models\ProgressImgCsc;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Progress\CSCProgressData;
-
+use Illuminate\Support\Facades\Storage;
 class XENRGSAController extends Controller
 {
     public function viewSanction()
@@ -273,4 +273,56 @@ class XENRGSAController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
     }
+
+    public function uploadUCCSC(Request $request)
+    {
+        try
+        {
+            $request->validate([
+                'file' => 'required|file|mimes:pdf|max:1000', 
+                'sanction_id' => 'required|integer|exists:csc_sanction,id',
+            ]);
+            $file=$request->file('file');
+            $filename='uploaded_uc' . time() . '.' . $file->getClientOriginalExtension();
+            $privatePath='private/UC'.'/'. $filename;
+             // Store the file
+            Storage::put($privatePath, file_get_contents($file));
+            //  Update the database
+            $sanction=CSCSanction::find($request->input('sanction_id'));
+            $sanction->uc=$filename;
+            $sanction->save();
+            return redirect()->back()->with('success', 'File uploaded successfully!');
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateProgressImage(Request $request, $id)
+    {
+        $progress=Progress_CSC::where('id',$id)->first();
+        $request->validate([
+            'image_type' => 'required|in:work_started_image,work_partial_image,work_completed_image',
+            'new_image' => 'required|image|mimes:jpeg,png,jpg|max:1024',
+        ]);
+
+        $progressImage = ProgressImgCsc::where('progress_id', $id)->firstOrFail();
+        $imageType = $request->image_type;
+        
+          // Delete old image if exists
+        if ($progressImage->$imageType && file_exists(public_path('uploads/images/'.$progressImage->$imageType))) {
+            unlink(public_path('uploads/images/'.$progressImage->$imageType));
+        }
+
+         // Save new image
+        $filename=$progress->gp.'_'.time().'_'.$request->file('new_image')->getClientOriginalName();
+        $request->file('new_image')->move(public_path('uploads/images'), $filename);
+
+        $progressImage->$imageType = $filename;
+        $progressImage->save();
+
+        return redirect()->back()->with('message', 'Image updated successfully!');
+    }
+
 }

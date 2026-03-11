@@ -129,6 +129,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::get('/edit-csc/{id}',[RGSAController::class,'viewEditPageCSC']);
     Route::put('/sanction-update-csc/{id}',[RGSAController::class,'updateSanctionCSC']);
     Route::post('/upload-signed-sanction-csc',[RGSAController::class,'uploadSignedSanction'])->name('uploadSanctionCSC');
+    Route::get('/view-csc-progress/{district}/{block}/{gp}/{work}',[RGSAController::class,'viewProgress']);
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -262,7 +263,10 @@ Route::prefix('xen')->middleware(['auth','web','xenCheck'])->group(function()
     Route::post('/add-progress-csc',[XENRGSAController::class,'saveProgressCSC']);
     Route::get('/update-progress-csc/{gp}/{block}/{district}/{work}',[XENRGSAController::class,'updateFormCSC']);
     Route::post('/change-progress-csc/{id}',[XENRGSAController::class,'changeProgressCSC']);
-    
+    Route::post('/upload-signed-sanction-csc',[XENRGSAController::class,'uploadUCCSC']);
+    Route::post('/update-progress-image-csc/{id}', [XENRGSAController::class, 'updateProgressImage'])
+     ->name('xen.updateProgressImage');
+
        
     Route::get('/viewUCRD/{filename}',function($filename)
     {

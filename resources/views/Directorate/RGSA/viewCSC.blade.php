@@ -24,6 +24,7 @@
                     <th>Sr. No.</th>
                     <th>District Name</th>
                     <th>Block Name</th>
+                    <th>Gram Panchayat</th>
                     <th>Financial Year</th>
                     <th>Sanction Amount</th>
                     <th>Sanction Date</th>
@@ -40,13 +41,14 @@
                         <td>{{$index+1}}</td>
                         <td>{{ $s->district }}</td>
                         <td>{{ $s->block }}</td>
+                        <td>{{$s->gp}}</td>
                         <td>{{ $s->financial_year}}</td>
                         <td>{{ addCommas($s->san_amount) }}</td>
                         <td>{{ $s->sanction_date }}</td>
                         <td>{{$s->work}}</td>
                         <td><strong>
-                            @if(isset($s->progress_rd)) 
-                                <span>{{$s->progress_rd->completion_percentage}}</span>
+                            @if(isset($s->progress_csc)) 
+                                <span>{{$s->progress_csc->completion_percentage}}</span>
                             @else
                                 <span>Not reported</span>
                             @endif
@@ -65,7 +67,7 @@
                                <strong>Freezed</strong> 
                             @endif
                         </td>
-                        <td><a href="{{url('dir/view-rd-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->work)}}">View Progress</a></td>
+                        <td><a href="{{url('dir/view-csc-progress'.'/'.$s->district.'/'.$s->block.'/'.$s->gp.'/'.$s->work)}}">View Progress</a></td>
                     </tr>
                     @endforeach
                 </tbody>

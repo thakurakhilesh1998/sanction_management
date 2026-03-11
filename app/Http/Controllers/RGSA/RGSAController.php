@@ -148,4 +148,24 @@ class RGSAController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    public function viewProgress($district,$block,$gp,$work)
+    {
+        $sanctionsForGP=CSCSanction::where('district',$district)->where('block',$block)->where('gp',$gp)->where('work',$work)->with('progress_csc')->get();
+        $completion=0;
+        $days=0;
+        $delayNotReported=0;
+        if($sanctionsForGP[0]->progress_csc!==null)
+        {
+            $lastUpdateDate=\Carbon\Carbon::parse($sanctionsForGP[0]->progress_csc->updated_at);
+            $currentDate=\Carbon\Carbon::now();
+            $days=$lastUpdateDate->diffInDays($currentDate);
+            $completion=$sanctionsForGP[0]->progress_csc->completion_percentage;    
+        }
+        else
+        {
+            $completion="Not Reported";
+        }
+        return view('Directorate.RGSA.view-csc-progress',compact('sanctionsForGP','completion','days'));
+    }
 }
