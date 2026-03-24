@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SanRequestCSC;
 use App\Models\CSCSanction;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\DB;
 class RGSAController extends Controller
 {
     public function addCSCSanction()
@@ -168,4 +170,61 @@ class RGSAController extends Controller
         }
         return view('Directorate.RGSA.view-csc-progress',compact('sanctionsForGP','completion','days'));
     }
+
+    public function downloadpghardata()
+    {
+    $filename = "pghar_data.csv";
+
+    $response = new StreamedResponse(function () {
+        $handle = fopen('php://output', 'w');
+
+        // Header row
+        fputcsv($handle, [
+            'District',
+            'Block',
+            'GP Name',
+            'Latitude',
+            'Longitude',
+            'Rooms',
+            'Updated At',
+            'Remarks',
+        ]);
+
+        // Data
+        DB::table('pghar_image as pi')
+            ->join('gp_list as gp', 'pi.gp_id', '=', 'gp.id')
+            ->select(
+                'pi.lat',
+                'pi.long',
+                'pi.rooms',
+                'pi.updated_at',
+                'pi.remarks',
+                'gp.district_name',
+                'gp.block_name',
+                'gp.gp_name'
+            )
+            ->orderBy('pi.updated_at', 'desc')
+            ->chunk(4000, function ($rows) use ($handle) {
+                foreach ($rows as $row) {
+                    fputcsv($handle, [
+                       $row->district_name,
+                        $row->block_name,
+                        $row->gp_name,
+                        $row->lat,
+                        $row->long,
+                        $row->rooms,
+                        $row->updated_at,
+                        $row->remarks
+                    ]);
+                }
+            });
+
+        fclose($handle);
+    });
+
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', "attachment; filename=$filename");
+
+    return $response;
 }
+    }

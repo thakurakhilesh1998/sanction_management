@@ -130,6 +130,10 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     Route::put('/sanction-update-csc/{id}',[RGSAController::class,'updateSanctionCSC']);
     Route::post('/upload-signed-sanction-csc',[RGSAController::class,'uploadSignedSanction'])->name('uploadSanctionCSC');
     Route::get('/view-csc-progress/{district}/{block}/{gp}/{work}',[RGSAController::class,'viewProgress']);
+
+    // Download details of the Panchayat Ghars uploaded by the Gram Panchayats
+    Route::get('/downloaddetails',[RGSAController::class,'downloadpghardata']);
+    
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()

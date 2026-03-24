@@ -31,5 +31,8 @@
             </table>
         </div>
     </div>
+    <div class='px-3 py-1'>
+        <a href="{{ url('dir/downloaddetails') }}">Download Data in Excel File.</a>
+    </div>
 </div>
 @endsection
