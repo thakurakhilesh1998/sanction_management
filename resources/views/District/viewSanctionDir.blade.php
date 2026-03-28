@@ -27,6 +27,7 @@
                     <th>Sanction Order</th>
                     <th>Action</th>
                     <th>View Progress</th>
+                    <th>Delete Sanction</th>
             </thead>
             <tbody>
                 @php
@@ -59,6 +60,7 @@
 
                         </td>
                         <td><a href="{{url('district/view-progress-gp/'.$s->gp.'/'.$s->block)}}">View</a></td>
+                        <td><a href="javascript:void(0)" class="btn btn-danger" data-id="{{$s->id}}" id="delbtn">Delete</a></td>
                     </tr>
                 @endif
                 @endforeach
@@ -109,6 +111,28 @@
         }
     });
 });
+
+$(document).on('click','#delbtn',function(){
+        
+        var id=$(this).data('id');;
+        if(confirm("Are you sure you want to delete this sanction?")){
+            $.ajax({
+                url: "{{url('district/sanction-delete')}}/"+id,
+                type:'POST',
+                data:{
+                    "_token":'{{ csrf_token() }}',
+                    "_method": "DELETE"
+                },
+                success: function(response){
+                    alert("Deleted Successfully");
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert("Error Deleting the record");
+                }
+            });
+        }
+    });
 </script>
 @endsection
 

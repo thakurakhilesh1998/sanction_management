@@ -26,6 +26,7 @@
                     <option value="2023-24" {{$sanction->financial_year=='2023-24'?'selected':''}}>2023-24</option>
                     <option value="2024-25" {{$sanction->financial_year=='2024-25'?'selected':''}}>2024-25</option>
                     <option value="2025-26" {{$sanction->financial_year=='2025-26'?'selected':''}}>2025-26</option>
+                    <option value="2026-27" {{$sanction->financial_year=='2026-27'?'selected':''}}>2026-27</option>
                 </select>
             </div>
             {{-- District Name --}}

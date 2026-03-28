@@ -262,7 +262,7 @@ class DistrictController extends Controller
             $districtU=Auth::user()->district;
             if($data==null)
             {
-                $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->where('district',$districtU)->where('added_by','district')->get();
+                $sanction=Sanction::with('progress')->orderBy('created_at','DESC')->where('district',$districtU)->where('added_by','district')->where('revert',0)->get();
                 return view('District/viewSanction',compact('sanction'));
             }
             elseif($data=='freeze')
@@ -391,7 +391,7 @@ class DistrictController extends Controller
     public function viewSanctionDir()
     {
         $district=Auth::user()->district;
-        $sanction=Sanction::where('district',$district)->get();
+        $sanction=Sanction::where('district',$district)->where('revert',0)->get();
         return view('District/viewSanctionDir',compact('sanction'));
     }
 
@@ -587,5 +587,23 @@ class DistrictController extends Controller
             $completion="Not Reported";
         }
         return view('District.viewGpDetails',compact('sanctionsForGP','completion','days'));
+    }
+
+    public function revertSanction()
+    {
+        $district=Auth::user()->district;
+        $sanction=Sanction::where('district',$district)->where('revert',1)->get();
+        return view('District.viewRevertedSan',compact('sanction'));
+    }
+
+    public function deleteSanction($id)
+    {
+        $sanction = Sanction::findOrFail($id);
+        if(!$sanction)
+        {
+            return response()->json(['error'=>'Sanction not found'],404);
+        }
+        $sanction->delete();
+        return response()->json(['success' => true]);
     }
 }

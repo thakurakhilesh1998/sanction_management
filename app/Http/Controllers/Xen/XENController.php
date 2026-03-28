@@ -406,6 +406,7 @@ class XENController extends Controller
             ]); 
             }
             $sanction->status = null;
+            $sanction->revert=1;
             $sanction->save();
             return redirect('xen/view-sanction')->with('message', 'Sanction reverted successfully!');
         }

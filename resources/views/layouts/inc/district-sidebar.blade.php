@@ -47,16 +47,16 @@
         <a class="nav-link collapsed" href="{{url('district/view-sanction-dir')}}" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
         <span>View Sanction</span>
-    </a>
+        </a>
     </li>
     
     
-    {{-- <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url('district/change-sanction-district')}}" data-toggle="collapse" data-target="#collapseTwo"
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('district/view-revereted-sanction')}}" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
-        <span>Change Sanction</span>
+        <span>View Reverted Sanction</span>
     </a>
-    </li> --}}
+    </li>
 
     <hr class="sidebar-divider">
     <div class="sidebar-heading">

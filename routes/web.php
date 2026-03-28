@@ -185,7 +185,11 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     // Route::get('/changeform/{gp}',[DistrictController::class,'changeSanctionDist']);
     // Route::get('/change-sanction-gp/{gp}',[DistrictController::class,'changeSanctionGP']);
     
+    // Reverted Sanction
 
+    Route::get('/view-revereted-sanction',[DistrictController::class,'revertSanction']);
+    
+    Route::delete('sanction-delete/{id}',[AdminController::class,'deleteSanction']);
     // View Progress of Sanction Forwarded by the District to either XEN or GP
     
     Route::get('/view-progress-gp/{gp}/{block}',[DistrictController::class,'viewProgressGp']);
@@ -200,6 +204,8 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
         }
         return response()->file($privatePath);
     });
+
+
 });
 });
 
