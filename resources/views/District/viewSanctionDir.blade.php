@@ -1,4 +1,4 @@
-@extends('layouts/district')
+@extends('layouts.district')
 @section('main')
 <div class="card m-4">
     @if(session('message'))
@@ -128,7 +128,11 @@ $(document).on('click','#delbtn',function(){
                     location.reload();
                 },
                 error: function(xhr) {
-                    alert("Error Deleting the record");
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        alert(xhr.responseJSON.error);
+                    } else {
+                        alert("Error Deleting the record");
+                    }
                 }
             });
         }

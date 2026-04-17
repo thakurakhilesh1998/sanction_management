@@ -603,6 +603,9 @@ class DistrictController extends Controller
         {
             return response()->json(['error'=>'Sanction not found'],404);
         }
+        if ($sanction->status === 'xen' || $sanction->status === 'gp') {
+            return response()->json(['error'=>'You can not delete this sanction as this sanction is already forwarded to XEN or GP'], 403);
+        }
         $sanction->delete();
         return response()->json(['success' => true]);
     }

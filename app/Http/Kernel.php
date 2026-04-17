@@ -23,6 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\AddSecurityHeaders::class,
         \App\Http\Middleware\SessionTimeout::class,
+        \App\Http\Middleware\SecureHeaders::class,
         // \App\Http\Middleware\EnforceHost::class,
     ];
 

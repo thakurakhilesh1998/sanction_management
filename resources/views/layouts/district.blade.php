@@ -93,7 +93,7 @@
     </script>
     @yield('scripts')
     
-
+<script src="https://cdn.ux4g.gov.in/accessibility-beta-v1.15/accessibility-widget.js" defer></script>
 </body>
 
 </html>
