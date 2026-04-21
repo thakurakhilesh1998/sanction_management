@@ -1,205 +1,204 @@
 @extends('layouts/dir')
-@section('main')
-<div class="card m-4">
 
-    @if(session('message'))
-        <div class="alert alert-success">{{session('message')}}</div>
-    @endif
-    @if($errors->has('error'))
+@section('main')
+<div class="card m-4 shadow">
+
+    {{-- Header --}}
+    <div class="card-header text-white d-flex justify-content-between align-items-center"
+        style="background: linear-gradient(90deg, #0d6efd, #198754);">
+
+        <h4 class="mb-0">
+            GP: <strong>{{$sanctionsForGP[0]->gp}}</strong> |
+            Block: <strong>{{$sanctionsForGP[0]->block}}</strong>
+        </h4>
+
+        <button id="back" class="btn btn-light btn-sm">⬅ Back</button>
+    </div>
+
+    <div class="card-body">
+
+        {{-- Alerts --}}
+        @if(session('message'))
+            <div class="alert alert-success">{{session('message')}}</div>
+        @endif
+
+        @if($errors->has('error'))
             <div class="alert alert-danger">
                 {{ $errors->first('error') }}
             </div>
-    @endif
-    <div class="card-header">
-        <h3 class="h3 mb-3 text-gray-800">View Progress of Sanctions for Gram Panchayat <strong>{{$sanctionsForGP[0]->gp}}</strong>
-        ,Development Block <strong>{{$sanctionsForGP[0]->block}}</strong>   
-        </h3>
-    </div>
-    <div class="card-body">
-        <div class="border p-3">
-            <div class="">
-                <h4 class="red-line p-2">View Sanctions for Gram Panchayat</h4>
+        @endif
+
+        {{-- 🔷 Sanction Table --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                Sanction Details
             </div>
+
             <div class="table-responsive">
-                <table class="table table-bordered text-center table-striped">
-                    <thead>
+                <table class="table table-bordered table-hover text-center align-middle">
+
+                    <thead class="table-primary">
                         <tr>
                             <th>Sr. No.</th>
                             <th>Sanction Amount</th>
-                            <th>Sanction Date</th>
-                            <th>Sanction Head</th>
-                            <th>Sanction Purpose</th>
-                            <th>View UC(if uploaded)</th>
+                            <th>Date</th>
+                            <th>Head</th>
+                            <th>Purpose</th>
+                            <th>UC</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach ($sanctionsForGP as $index=>$detail)
                         <tr>
                             <td>{{$index+1}}</td>
-                            <td>{{$detail->san_amount}}</td>
+
+                            <td class="fw-bold text-primary">
+                                ₹ {{ number_format($detail->san_amount,2) }}
+                            </td>
+
                             <td>{{$detail->sanction_date}}</td>
                             <td>{{$detail->sanction_head}}</td>
                             <td>{{$detail->sanction_purpose}}</td>
-                            @if($detail->uc!==null)
-                                <td><a href="{{url('dir/viewUCgp',['filename'=>$detail->uc])}}" target="_blank">View UC</a></td>
-                            @else
-                                <td>UC not uploaded</td>
-                            @endif
-                        </tr>    
+
+                            <td>
+                                @if($detail->uc)
+                                    <a href="{{url('dir/viewUCgp',['filename'=>$detail->uc])}}"
+                                       target="_blank"
+                                       class="btn btn-sm text-white"
+                                       style="background:#198754;">
+                                        View UC
+                                    </a>
+                                @else
+                                    <span class="badge bg-secondary">Not Uploaded</span>
+                                @endif
+                            </td>
+                        </tr>
                         @endforeach
-                        
                     </tbody>
+
                 </table>
             </div>
         </div>
-    {{-- View Progress of Sanction --}}
-    <div class="border p-3">
-        <h4 class="red-line p-2">Current Status of Work</h4>
-        <div class="row mt-4">
+
+        {{-- 🔷 Status Cards --}}
+        <div class="row text-center mb-4">
+
+            {{-- Executing Authority --}}
             <div class="col-md-3">
-                  <div class="card-custom">
-                    <img src="{{asset('assets/img/pending.png')}}" alt="" alt="Pending with">
-                    <h5>Work is Executing</h5>
-                    <p>
+                <div class="card shadow-sm p-3">
+                    <h6 class="text-muted">Executing Authority</h6>
+                    <h5 class="text-primary">
                         @if($sanctionsForGP[0]->status=='xen')
                             Executive Engineer
                         @elseif($sanctionsForGP[0]->status=='gp')
                             Gram Panchayat
-                        @else   
-                            No Progress Added
+                        @else
+                            Not Available
                         @endif
-                    </p>
+                    </h5>
                 </div>
             </div>
+
+            {{-- Work Status --}}
             <div class="col-md-3">
-                <div class="card-custom">
-                    <img src="{{asset('assets/img/construction.png')}}" alt="status of work">
-                    <h5>Status of Work</h5>
-                    <p>{{$completion}}</p>
+                <div class="card shadow-sm p-3">
+                    <h6 class="text-muted">Work Status</h6>
+                    <h5 class="text-success">{{$completion}}</h5>
                 </div>
             </div>
+
+            {{-- Delay --}}
             <div class="col-md-3">
-                <div class="card-custom">
-                    <img src="{{asset('assets/img/delay.png')}}" alt="Delay">
-                    <h5>Delay</h5>
-                    <p>
+                <div class="card shadow-sm p-3">
+                    <h6 class="text-muted">Delay</h6>
+                    <h5 class="text-danger">
                         @if($days===0)
-                            Not reported
+                            Not Reported
                         @elseif($completion==='Work Completed')
-                            Work Completed
+                            Completed
                         @else
-                            {{$days}}&nbsp;days
+                            {{$days}} days
                         @endif
+                    </h5>
+                </div>
+            </div>
+
+            {{-- Remarks --}}
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3">
+                    <h6 class="text-muted">Remarks</h6>
+                    <p class="mb-0">
+                        {{ $sanctionsForGP[0]->progress->remarks ?? 'No Remarks' }}
                     </p>
                 </div>
             </div>
-                 <div class="col-md-3">
-                <div class="card-custom">
-                    <img src="{{asset('assets/img/remarks.png')}}" alt="remarks">
-                    <h5>Remarks</h5>
-                    <p>
-                        @if($sanctionsForGP[0]->progress!=null)
-                            @if($sanctionsForGP[0]->progress->remarks!=null)
-                                {{$sanctionsForGP[0]->progress->remarks}}
-                            @else
-                                No Remarks
-                            @endif
-                        @else
-                            No Remarks
-                        @endif
-                    </p>
+
+        </div>
+
+        {{-- 🔷 Images Section --}}
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                Work Progress Images
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    @if(!empty($sanctionsForGP[0]->progress->image->work_started_image))
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm">
+                            <img src="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_started_image)}}"
+                                 class="card-img-top">
+                            <div class="card-body text-center">
+                                <strong>Work Started</strong><br>
+                                <a href="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_started_image)}}"
+                                   target="_blank">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                    @if(!empty($sanctionsForGP[0]->progress->image->work_partial_image))
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm">
+                            <img src="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}"
+                                 class="card-img-top">
+                            <div class="card-body text-center">
+                                <strong>Partial Completion</strong><br>
+                                <a href="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}"
+                                   target="_blank">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                    @if(!empty($sanctionsForGP[0]->progress->image->work_completed_image))
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm">
+                            <img src="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_completed_image)}}"
+                                 class="card-img-top">
+                            <div class="card-body text-center">
+                                <strong>Work Completed</strong><br>
+                                <a href="{{asset('uploads/images/'.$sanctionsForGP[0]->progress->image->work_completed_image)}}"
+                                   target="_blank">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                 </div>
             </div>
         </div>
-    </div>
-    <div class="border p-3 mt-3">
-        <h4 class="red-line p-2">Images of the Work</h4>
-            @if($completion==='Work Started' || 'Partial Completion' || 'Work Completed')  
-                @if($completion=='Work Started')
-                    @if(!empty($sanctionsForGP[0]->progress->image->work_started_image))
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Work Started</h5>
-                                    <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" target="_blank">View Work Started Image</a>            
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                    @endif
-                @endif
-                @if($completion=='Partial Completion')
-                    @if(!empty($sanctionsForGP[0]->progress->image->work_started_image) && !empty($sanctionsForGP[0]->progress->image->work_partial_image))
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Work Started</h5>
-                                    <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" target="_blank">View Work Started Image</a>            
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Work Partial Completed</h5>
-                                    <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}" target="_blank">View Work Started Image</a>            
-                                </div>
-                            </div>
-                        </div>
-                
-                    </div>    
-                    @endif
-                @endif
-                @if($completion=='Work Completed')
-                    @if(!empty($sanctionsForGP[0]->progress->image->work_started_image) && !empty($sanctionsForGP[0]->progress->image->work_partial_image) && !empty($sanctionsForGP[0]->progress->image->work_completed_image))
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
-                                    <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">Work Started</h5>
-                                        <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_started_image)}}" target="_blank" class="img-fluid">View Work Started Image</a>            
-                                    </div>
-                                </div>
-                            </div> 
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
-                                    <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">Work Partial Completed</h5>
-                                        <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_partial_image)}}" target="_blank">View Work Started Image</a>            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
-                                    <img src="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_completed_image)}}" alt="Work Started Image" class="card-img-top img-fluid fixed-size">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">Work Completed</h5>
-                                        <a href="{{asset('uploads/images'.'/'.$sanctionsForGP[0]->progress->image->work_completed_image)}}" target="_blank">View Work Started Image</a>            
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-            @endif
-    </div>
-    </div>
-    <div class="m-3">
-        <button  id='back' class="ml-3 btn btn-primary btn-sm float-right">Back</button>
+
     </div>
 </div>
 @endsection
+
 @section('scripts')
 <script>
-    document.getElementById('back').addEventListener('click', function() {
-        window.history.back();
-    });
+document.getElementById('back').addEventListener('click', function() {
+    window.history.back();
+});
 </script>
 @endsection

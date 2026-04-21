@@ -110,7 +110,9 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
         return response()->file($privatePath);
     })->name('viewSanctionFileGenerated');
 
-    // Route::get('/xenreport',[DirController::class,'viewXenReport']);
+    Route::get('/xenreport',[DirController::class,'viewXenReport']);
+    Route::get('/xen/details/{division}/{type}', [DirController::class, 'divisionDetails'])
+    ->name('xen.details');
 
     // Rural Development Sanction
     Route::get('/rd-add',[DirRDController::class,'addSanction']);
@@ -133,6 +135,7 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
 
     // Download details of the Panchayat Ghars uploaded by the Gram Panchayats
     Route::get('/downloaddetails',[RGSAController::class,'downloadpghardata']);
+    
     
 });
 

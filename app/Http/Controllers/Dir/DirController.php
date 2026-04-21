@@ -592,7 +592,108 @@ class DirController extends Controller
     }
 
     public function viewXenReport()
-    {
-        
+{
+    $gps = Sanction::with('progress')
+        ->where('status', 'xen')
+        ->where('revert', 0)
+        ->select('gp', 'block', 'district')
+        ->distinct()
+        ->get();
+
+    // Initialize all divisions
+    $report = [
+        'Shimla' => ['total'=>0,'not_reported'=>0,'in_progress'=>0,'completed'=>0],
+        'Dharamshala' => ['total'=>0,'not_reported'=>0,'in_progress'=>0,'completed'=>0],
+        'Mandi' => ['total'=>0,'not_reported'=>0,'in_progress'=>0,'completed'=>0],
+        'Bangana' => ['total'=>0,'not_reported'=>0,'in_progress'=>0,'completed'=>0],
+    ];
+
+    foreach ($gps as $item) {
+
+        $division = $this->getDivision($item->district, $item->block);
+
+        if (!$division) continue;
+
+        $report[$division]['total']++;
+
+        if (!$item->progress) {
+            $report[$division]['not_reported']++;
+        } else {
+            if ($item->progress->completion_percentage == 'Work Completed') {
+                $report[$division]['completed']++;
+            } else {
+                $report[$division]['in_progress']++;
+            }
+        }
     }
+    return view('Directorate.Dashboard.xenwisereport', compact('report'));
+}
+private function getDivision($district, $block)
+{
+    if (
+        in_array($district, ['Shimla','Sirmaur','Solan','Kinnaur']) ||
+        in_array($block, ['Spiti','Anni','Nirmand'])
+    ) {
+        return 'Shimla';
+    }
+
+    if (
+        in_array($district, ['Kangra']) ||
+        in_array($block, ['Bharmour','Bhatiyat','Chamba','Mehla','Salooni','Tissa','Pangi'])
+    ) {
+        return 'Dharamshala';
+    }
+
+    if (
+        in_array($district, ['Mandi','Bilaspur']) ||
+        in_array($block, ['Banjar','Bhunter','Kullu','Naggar','Lahaul'])
+    ) {
+        return 'Mandi';
+    }
+
+    if (
+        in_array($district, ['Una','Hamirpur'])
+    ) {
+        return 'Bangana';
+    }
+
+    return null;
+}
+
+public function divisionDetails($division, $type)
+{
+    // Step 1: Get GP-wise total sanction
+    $gps = Sanction::where('status', 'xen')
+        ->where('revert', 0)
+        ->selectRaw('gp, block, district, SUM(san_amount) as total_amount')
+        ->groupBy('gp', 'block', 'district')
+        ->get();
+
+    // Step 2: Get progress mapped by GP
+    $progressData = Progress::get()->keyBy('gp');
+
+    $filtered = [];
+
+    foreach ($gps as $item) {
+
+        $div = $this->getDivision($item->district, $item->block);
+        if ($div !== $division) continue;
+
+        $progress = $progressData[$item->gp] ?? null;
+
+        // Apply filters
+        if ($type === 'not_reported' && $progress) continue;
+
+        if ($type === 'in_progress' && (!$progress || $progress->completion_percentage == 'Work Completed')) continue;
+
+        if ($type === 'completed' && (!$progress || $progress->completion_percentage != 'Work Completed')) continue;
+
+        // Attach progress
+        $item->progress = $progress;
+
+        $filtered[] = $item;
+    }
+
+    return view('Directorate.Dashboard.division_details', compact('filtered', 'division', 'type'));
+}
 }
