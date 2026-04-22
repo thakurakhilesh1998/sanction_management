@@ -68,6 +68,17 @@
         <span>Panchayat Ghar Status</span>
     </a>
     </li>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Elected Representative Details
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('district/add-er')}}" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+        <span>Add Elected Representative</span>
+    </a>
+    </li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

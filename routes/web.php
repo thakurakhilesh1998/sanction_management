@@ -12,6 +12,7 @@ use App\Http\Controllers\RD\DirRDController;
 use App\Http\Controllers\RD\XENRDController;
 use App\Http\Controllers\RGSA\RGSAController;
 use App\Http\Controllers\RGSA\XENRGSAController;
+use App\Http\Controllers\ER\ERController;
 
 /*
 |--------------------------------------------------------------------------
@@ -208,7 +209,22 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
         return response()->file($privatePath);
     });
 
+    //Elected Representative Dashboard
+    Route::get('/add-er',[ERController::class,'addER']); 
+    Route::get('/add-zila-parishad',[ERController::class,'create'])->name('add.zp');
+    Route::post('store-zila-parishad',[ERController::class,'storeZP'])->name('storeZP');
+    Route::delete('/zila-delete/{id}', [ERController::class, 'destroy'])->name('zila.delete');
 
+    // Panchayat Samiti 
+    Route::get('/add-panchayat-samiti',[ERController::class,'createPS'])->name('add.ps');
+    Route::post('/store-panchayat-samiti',[ERController::class,'storePS'])->name('storePS');
+    Route::delete('/panchayat-samiti-delete/{id}', [ERController::class, 'destroyPS'])->name('ps.delete');
+
+    // Gram Panchayat
+    Route::get('/add-gram-panchayat',[ERController::class,'createGP'])->name('add.gp');
+    Route::post('/store-gram-panchayat',[ERController::class,'storeGP'])->name('storeGP');
+    Route::delete('/gram-panchayat-delete/{id}', [ERController::class, 'destroyGP'])->name('gp.delete');
+    
 });
 });
 
