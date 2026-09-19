@@ -554,11 +554,11 @@ class DirController extends Controller
 
             // Send email to the District
 
-            $gpName=$sanction->gp ?? "Not Available";
-            $blockName=$sanction->block ?? "Not Available";
+            // $gpName=$sanction->gp ?? "Not Available";
+            // $blockName=$sanction->block ?? "Not Available";
 
-            Mail::to('thakurakhileshm21@gmail.com')->send(new SanctionAddedMail($gpName,$blockName));
-            return redirect()->back()->with('success', 'File uploaded successfully and mail sent successfully!');
+            // Mail::to('thakurakhileshm21@gmail.com')->send(new SanctionAddedMail($gpName,$blockName));
+            return redirect()->back()->with('success', 'File uploaded successfully.');
         }
         catch (\Exception $e)
         {

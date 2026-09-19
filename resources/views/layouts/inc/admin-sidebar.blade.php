@@ -55,6 +55,17 @@
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
+    <div class="sidebar-heading">
+        Manage Buildings 
+    </div>
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/admin/asset-report')}}" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <span>Manage Buildings</span>
+        </a>
+    </li>
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

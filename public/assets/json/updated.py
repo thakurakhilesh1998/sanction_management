@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 # Read Excel file into a DataFrame
-df = pd.read_excel('gp name constituency wise.xlsx')
+df = pd.read_excel('Sanction Management portal new GPs.xlsx')
 
 # Create a dictionary to store the hierarchy
 json_data = {}

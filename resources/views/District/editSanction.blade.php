@@ -26,6 +26,7 @@
                     <option value="2023-24" {{$sanction->financial_year=='2023-24'?'selected':''}}>2023-24</option> --}}
                     <option value="2024-25" {{$sanction->financial_year=='2024-25'?'selected':''}}>2024-25</option>
                     <option value="2025-26" {{$sanction->financial_year=='2025-26'?'selected':''}}>2025-26</option>
+                    <option value="2026-27" {{$sanction->financial_year=='2026-27'?'selected':''}}>2026-27</option>
                 </select>
             </div>
             {{-- District Name --}}
@@ -92,6 +93,8 @@
                 <option value="SDP" {{$sanction->sanction_head=='SDP'?'selected':''}}>SDP</option>
                 <option value="BASP" {{$sanction->sanction_head=='BASP'?'selected':''}}>BASP</option>
                 <option value="VKVNY" {{$sanction->sanction_head=='VKVNY'?'selected':''}}>VKVNY</option>
+                <option value="13th FC Unspent" {{$sanction->sanction_head=='13th FC Unspent'?'selected':''}}>13th FC Unspent</option>
+                <option value="14th FC Unspent" {{$sanction->sanction_head=='14th FC Unspent'?'selected':''}}>14th FC Unspent</option>
             </select>
            </div>
            {{-- Purpose of sanction --}}

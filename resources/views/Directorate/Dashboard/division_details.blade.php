@@ -24,6 +24,7 @@
                         <th>Gram Panchayat</th>
                         <th>Sanction Amount</th>
                         <th>Status</th>
+                        </th>
                         <th>View Details</th>
                     </tr>
                 </thead>
@@ -44,7 +45,7 @@
                                 @elseif($item->progress->completion_percentage == 'Work Completed')
                                     <span class="badge bg-success">Completed</span>
                                 @else
-                                    <span class="badge bg-warning text-dark">In Progress</span>
+                                    <span class="badge bg-warning text-dark">{{ $item->progress->completion_percentage }}</span>
                                 @endif
                             </td>
                             <td>

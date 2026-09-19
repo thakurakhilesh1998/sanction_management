@@ -13,6 +13,10 @@ use App\Http\Controllers\RD\XENRDController;
 use App\Http\Controllers\RGSA\RGSAController;
 use App\Http\Controllers\RGSA\XENRGSAController;
 use App\Http\Controllers\ER\ERController;
+use App\Http\Controllers\GPAssetController;
+use App\Http\Controllers\StateAssetReportController;
+use App\Http\Controllers\AdminAssetController;
+use App\Http\Controllers\GpAssetDiagnosticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +28,15 @@ use App\Http\Controllers\ER\ERController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::middleware(['auth', 'web'])->group(function () {
+
+    Route::get(
+        '/gp/asset-diagnostic',
+        [GpAssetDiagnosticController::class, 'index']
+    )->name('gp.asset.diagnostic');
+
+});
 
 Route::middleware(['web','preventCache'])->group(function()
 {
@@ -54,6 +67,12 @@ Route::prefix('admin')->middleware(['auth','web','adminCheck'])->group(function(
     Route::put('/sanction-update/{id}',[AdminController::class,'updateSanction'])->name('admin.update');
     // Manage Progress
     Route::get('/manage-progress',[AdminController::class,'manageProgress']);
+
+
+    Route::get('asset-report', [AdminAssetController::class, 'index'])->name('admin.assets.index');
+    Route::get('asset-report/gp/{gpId}', [AdminAssetController::class, 'viewGp'])->name('admin.assets.view-gp');
+    Route::post('asset-report/gp/{gpId}/unfreeze', [AdminAssetController::class, 'unfreeze'])->name('admin.assets.unfreeze');
+    Route::get('asset-report/get-blocks', [AdminAssetController::class, 'getBlocks'])->name('admin.assets.get-blocks');
 
 });
 Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
@@ -137,7 +156,13 @@ Route::prefix('dir')->middleware(['auth','web','dirCheck'])->group(function()
     // Download details of the Panchayat Ghars uploaded by the Gram Panchayats
     Route::get('/downloaddetails',[RGSAController::class,'downloadpghardata']);
     
-    
+
+    Route::get('/asset-report',[StateAssetReportController::class, 'dashboard'])->name('state.asset-report.dashboard');
+   
+    Route::get('/asset-report/district/{district}',[StateAssetReportController::class, 'district'])->name('state.asset-report.district');
+    Route::get('/asset-report/block/{district}/{block}',[StateAssetReportController::class, 'block'])->name('state.asset-report.block');
+    Route::get('/asset-report/gp/{district}/{block}/{gp}',[StateAssetReportController::class, 'gp'])->name('state.asset-report.gp');
+    Route::get('/asset-report/export',[StateAssetReportController::class, 'export'])->name('state.asset-report.export');
 });
 
 Route::prefix('district')->middleware(['auth','web','distCheck'])->group(function()
@@ -210,20 +235,20 @@ Route::prefix('district')->middleware(['auth','web','distCheck'])->group(functio
     });
 
     //Elected Representative Dashboard
-    Route::get('/add-er',[ERController::class,'addER']); 
-    Route::get('/add-zila-parishad',[ERController::class,'create'])->name('add.zp');
-    Route::post('store-zila-parishad',[ERController::class,'storeZP'])->name('storeZP');
-    Route::delete('/zila-delete/{id}', [ERController::class, 'destroy'])->name('zila.delete');
+    // Route::get('/add-er',[ERController::class,'addER']); 
+    // Route::get('/add-zila-parishad',[ERController::class,'create'])->name('add.zp');
+    // Route::post('store-zila-parishad',[ERController::class,'storeZP'])->name('storeZP');
+    // Route::delete('/zila-delete/{id}', [ERController::class, 'destroy'])->name('zila.delete');
 
     // Panchayat Samiti 
-    Route::get('/add-panchayat-samiti',[ERController::class,'createPS'])->name('add.ps');
-    Route::post('/store-panchayat-samiti',[ERController::class,'storePS'])->name('storePS');
-    Route::delete('/panchayat-samiti-delete/{id}', [ERController::class, 'destroyPS'])->name('ps.delete');
+    // Route::get('/add-panchayat-samiti',[ERController::class,'createPS'])->name('add.ps');
+    // Route::post('/store-panchayat-samiti',[ERController::class,'storePS'])->name('storePS');
+    // Route::delete('/panchayat-samiti-delete/{id}', [ERController::class, 'destroyPS'])->name('ps.delete');
 
     // Gram Panchayat
-    Route::get('/add-gram-panchayat',[ERController::class,'createGP'])->name('add.gp');
-    Route::post('/store-gram-panchayat',[ERController::class,'storeGP'])->name('storeGP');
-    Route::delete('/gram-panchayat-delete/{id}', [ERController::class, 'destroyGP'])->name('gp.delete');
+    // Route::get('/add-gram-panchayat',[ERController::class,'createGP'])->name('add.gp');
+    // Route::post('/store-gram-panchayat',[ERController::class,'storeGP'])->name('storeGP');
+    // Route::delete('/gram-panchayat-delete/{id}', [ERController::class, 'destroyGP'])->name('gp.delete');
     
 });
 });
@@ -269,8 +294,20 @@ Route::prefix('gp')->middleware(['auth','web','gpCheck'])->group(function()
     });
 
     Route::put('/updatestatus/{id}',[GPController::class,'updateStatus']);
-    
+
+
+    // Route for Gram Panchayat Assets
+    Route::get('/add-assets',[GPAssetController::class,'addAsset'])->name('gp.assets.create');
+    Route::post('/assets',[GPAssetController::class, 'store'])->name('gp.assets.store');
+    Route::get('/view-assets',[GPAssetController::class, 'viewAssets'])->name('gp.assets.index');
+    Route::get('/assets/{id}/edit',[GPAssetController::class, 'edit'])->name('gp.assets.edit');
+    Route::put('/assets/{id}',[GPAssetController::class, 'update'])->name('gp.assets.update');
+    Route::delete('/assets/{id}',[GPAssetController::class, 'destroy'])->name('gp.assets.destroy');
+
+    Route::post('/gp/assets/final-submit', [GPAssetController::class, 'finalSubmit'])
+    ->name('gp.assets.final-submit');
 });
+
 
 //XEN 
 

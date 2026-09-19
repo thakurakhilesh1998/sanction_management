@@ -23,6 +23,7 @@
                     <option value="2022-23">2022-23</option> --}}
                     {{-- <option value="{{$current}}">{{$current}}</option> --}}
                     <option value="2025-26">2025-26</option>
+                    <option value="2026-27">2026-27</option>
                 </select>
             </div>
             {{-- District Name --}}
@@ -74,6 +75,9 @@
                 <option value="SDP">SDP</option>
                 <option value="BASP">BASP</option>
                 <option value="VKVNY">VKVNY</option>
+                <option value="13th FC Unspent">13th FC Unspent</option>
+                <option value="14th FC Unspent">14th FC Unspent</option>
+
             </select>
             {{-- <input type="text" name="sanction_head" id="sanction_head" class="form-control"> --}}
            </div>

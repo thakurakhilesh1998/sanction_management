@@ -1,38 +1,150 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('gp/dashboard')}}">
-        <div class="sidebar-brand-text mx-3">Gram Panchayat</div>
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+    id="accordionSidebar">
+
+    <!-- =========================================================
+         SIDEBAR BRAND
+         ========================================================= -->
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+       href="{{ url('gp/dashboard') }}">
+
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-landmark"></i>
+        </div>
+
+        <div class="sidebar-brand-text mx-2">
+            Gram Panchayat
+        </div>
+
     </a>
+
+
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-    <!-- Nav Item - Dashboard -->
+
+
+    <!-- =========================================================
+         DASHBOARD
+         ========================================================= -->
+
     <li class="nav-item active">
-        <a class="nav-link" href="{{url('gp/dashboard')}}">
+
+        <a class="nav-link"
+           href="{{ url('gp/dashboard') }}">
+
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+
+            <span>Dashboard</span>
+
+        </a>
+
     </li>
+
+
     <!-- Divider -->
     <hr class="sidebar-divider">
-    <!-- Heading -->
+
+
+    <!-- =========================================================
+         SANCTION
+         ========================================================= -->
+
     <div class="sidebar-heading">
-        Sanction 
+        Sanction
     </div>
-    <!-- Nav Item - Pages Collapse Menu -->
+
+
+    <!-- View Sanction -->
+
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url('gp/view-sanction')}}" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+
+        <a class="nav-link"
+           href="{{ url('gp/view-sanction') }}">
+
+            <i class="fas fa-fw fa-file-invoice-dollar"></i>
+
             <span>View Sanction</span>
+
         </a>
-        <a class="nav-link collapsed" href="{{url('gp/status')}}" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <span>Status of Panchayat Ghar</span>
-        </a>
+
     </li>
+
+
+    <!-- Status of Panchayat Ghar -->
+
+    <li class="nav-item">
+
+        <a class="nav-link"
+           href="{{ url('gp/status') }}">
+
+            <i class="fas fa-fw fa-home"></i>
+
+            <span>Status of Panchayat Ghar</span>
+
+        </a>
+
+    </li>
+
+
+    <!-- Divider -->
     <hr class="sidebar-divider">
-    <!-- Heading -->
-    
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+
+
+    <!-- =========================================================
+         BUILDINGS OWNED BY PRI
+         ========================================================= -->
+
+    <div class="sidebar-heading">
+        Building Owned by the PRI
     </div>
+
+
+    <!-- Add Building -->
+
+    <li class="nav-item">
+
+        <a class="nav-link"
+           href="{{ url('gp/add-assets') }}">
+
+            <i class="fas fa-fw fa-plus-square"></i>
+
+            <span>Add Building Owned by PRI</span>
+
+        </a>
+
+    </li>
+
+
+    <!-- View Buildings -->
+
+    <li class="nav-item">
+
+        <a class="nav-link"
+           href="{{ url('gp/view-assets') }}">
+
+            <i class="fas fa-fw fa-building"></i>
+
+            <span>View Building Owned by PRI</span>
+
+        </a>
+
+    </li>
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+
+    <!-- =========================================================
+         SIDEBAR TOGGLER
+         ========================================================= -->
+
+    <div class="text-center d-none d-md-inline">
+
+        <button class="rounded-circle border-0"
+                id="sidebarToggle">
+        </button>
+
+    </div>
+
 </ul>

@@ -102,7 +102,13 @@
         </a>
     </li>
     <!-- Heading -->
-    
+     <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('/dir/asset-report')}}" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <span>PRI Buildings Details</span>
+        </a>
+    </li>
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
